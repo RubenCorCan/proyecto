@@ -1,89 +1,26 @@
 <main class="container">
-  <h1 class="title mat-title">Nuestros mejores platos</h1>
-  
-  <div class="main-content">
-    <!-- Nueva Carta -->
-    <mat-card class="card mat-elevation-z4">
-      <img mat-card-image src="imagenes/card/plato_carta.jpg" alt="Imagen de carta" />
-    </mat-card>
-  
-    <h1 class="title mat-title text-center">CARTA</h1>
+  <h1 class="title">NUESTRA CARTA</h1>
 
-    <!-- Platos en pestañas -->
-    <div class="platos-carousel">
-      <mat-tab-group dynamicHeight>
-        <mat-tab *ngFor="let plato of platos">
-          <ng-template mat-tab-label>{{ plato.titulo }}</ng-template>
-          <mat-card class="plato-card mat-elevation-z4">
-            <img mat-card-image [src]="plato.imagen" alt="Imagen de plato" />
-            <mat-card-header>
-              <mat-card-title>{{ plato.titulo }}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <p>{{ plato.descripcion }}</p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button color="primary">VER PLATO</button>
-            </mat-card-actions>
-          </mat-card>
-        </mat-tab>
-      </mat-tab-group>
-    </div>    
-    
-    <section>
-      <h2 class="text-center mt-5">Categorías</h2>
-      <div class="category-grid">
-        <mat-card *ngFor="let categoria of categorias" class="categoria-card" [ngStyle]="{ 'background-image': 'url(' + categoria.imagen + ')' }">
-          <div class="categoria-overlay">
-            <h5>{{ categoria.nombre }}</h5>
+  <section class="menu-accordion-section">
+    <div class="accordion">
+      <div *ngFor="let categoria of categorias; let i = index" class="accordion-item">
+        <button class="accordion-header" (click)="toggleCategoria(i)">
+          <span class="categoria-nombre">{{ categoria.nombre }}</span>
+          <span class="arrow" [class.open]="categoriaAbierta === i">&#9660;</span>
+        </button>
+        <div class="accordion-body" *ngIf="categoriaAbierta === i">
+          <div class="plato-list">
+            <div *ngFor="let plato of categoria.platos" class="plato-card">
+              <img [src]="plato.imagen" alt="Imagen de {{ plato.titulo }}" class="plato-img" />
+              <div class="plato-info">
+                <h4>{{ plato.nombre }}</h4>
+                <p class="plato-precio">{{ plato.precio | currency:'EUR':'symbol':'1.2-2' }}</p>
+                <p>{{ plato.descripcion }}</p>
+              </div>
+            </div>
           </div>
-        </mat-card>
+        </div>
       </div>
-    </section>    
-
-    <!-- Ordena Fácil y Rápido -->
-    <div class="order-section">
-      <mat-card class="card mat-elevation-z4">
-        <mat-card-header>
-          <mat-card-title>¡Ordena fácil y rápido!</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Haz tu pedido en línea y recíbelo en tu puerta o listo para llevar.</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary" routerLink="/pedir">¡PIDE AHORA!</button>
-        </mat-card-actions>
-      </mat-card>
-      <img src="imagenes/home/fondo_imagen_pedido.webp" class="order-img" alt="Imagen de pedido">
     </div>
-  
-    <!-- Ven a Disfrutar -->
-    <div class="company-section">
-      <img src="imagenes/home/restaurante.jpg" class="restaurant-img" alt="Imagen de restaurante">
-      <mat-card class="card mat-elevation-z4">
-        <mat-card-header>
-          <mat-card-title>¡Ven a disfrutar con nosotros!</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Visítanos en L’Essenza y vive una experiencia única.</p>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317193.22496740746!2d12.372073943171212!3d41.90278349995716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f6194e887a8c9%3A0x7b5383dc2b6933f!2sRoma%2C%20Italia!5e0!3m2!1ses!2ses!4v1713191850431!5m2!1ses!2ses"
-            width="100%" height="200" style="border:0;" loading="lazy">
-          </iframe>
-        </mat-card-content>
-        <mat-card-content class="contact-info">
-          <h3>CONTACTO</h3>
-          <div class="contact-item">
-            <mat-icon>phone</mat-icon>
-            <a href="tel:6666666">6666666</a>
-          </div>
-          <div class="contact-item">
-            <mat-icon>email</mat-icon>
-            <a href="mailto:lessenzacontact@gmail.com">lessenzacontactgmail.com</a>
-          </div>
-          <button mat-raised-button color="primary" routerLink="/conocenos">¡CONÓCENOS!</button>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
+  </section>
 </main>

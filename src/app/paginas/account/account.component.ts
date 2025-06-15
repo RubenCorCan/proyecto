@@ -16,6 +16,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { sendEmailVerification } from 'firebase/auth';
+import { MisPedidosComponent } from './mis-pedidos.component';
+import { MisReservasComponent } from './mis-reservas.component';
+
 
 @Component({
   selector: 'app-account',
@@ -33,6 +36,8 @@ import { sendEmailVerification } from 'firebase/auth';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
+    MisPedidosComponent,
+    MisReservasComponent,
   ]
 })
 export class AccountComponent implements OnInit {

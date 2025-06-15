@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { sendEmailVerification } from 'firebase/auth';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { switchMap, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -134,6 +135,24 @@ export class AuthService {
   }
 
   get authState$(): Observable<any> {
-    return authState(this.auth);  
+    return authState(this.auth).pipe(
+      switchMap(async (user) => {
+        if (!user) return null;
+
+        const userRef = doc(this.firestore, `clientes/${user.uid}`);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+          return { uid: user.uid, email: user.email, ...userSnap.data() };
+        } else {
+          return {
+            uid: user.uid,
+            email: user.email,
+            nombre: user.displayName || 'Sin nombre',
+            telefono: user.phoneNumber || '',
+          };
+        }
+      })
+    );
   }
 }

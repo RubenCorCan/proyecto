@@ -1,41 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { FirestoreService } from '../../servicios/firestore.service';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-carta',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTabsModule,
-    MatGridListModule,
-    MatIconModule
+    RouterModule
   ],
   templateUrl: './carta.component.html',
   styleUrl: './carta.component.css'
 })
-export class CartaComponent {
-  platos: any[] = [];
+export class CartaComponent implements OnInit {
   categorias: any[] = [];
+  categoriaAbierta: number | null = null;
 
   constructor(private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
-    this.firestoreService.getAllPlatos().subscribe(data => {
-      this.platos = data;
+    // Cargamos categorías y platos, y los agrupamos
+    this.firestoreService.getCategorias().subscribe(categorias => {
+      this.firestoreService.getAllPlatos().subscribe(platos => {
+        // Para cada categoría, añadimos los platos que le corresponden
+        this.categorias = categorias.map((cat: any) => ({
+          ...cat,
+          platos: platos.filter((plato: any) => plato.categoriaId === cat.id)
+        }));
+      });
     });
+  }
 
-    this.firestoreService.getCategorias().subscribe(data => {
-      this.categorias = data;
-    });
+  toggleCategoria(index: number) {
+    this.categoriaAbierta = this.categoriaAbierta === index ? null : index;
   }
 }

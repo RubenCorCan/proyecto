@@ -1,64 +1,48 @@
-<main class="container">
-  <h1 class="title mat-h1 text-center">NOVEDADES</h1>
-  
-  <div class="main-content">
-    <!-- Nueva Carta -->
-    <mat-card class="card mat-elevation-z4">
-      <img mat-card-image src="imagenes/home/plato_carta.jpg" alt="Imagen de carta">
-      <mat-card-header>
-        <mat-card-title>¡Descubre nuestra nueva carta!</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Platos elaborados con ingredientes frescos y el mejor sabor. ¡Te sorprenderán!</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/carta">VER LA CARTA</button>
-      </mat-card-actions>
-    </mat-card>
-  
-    <!-- Ordena Fácil y Rápido -->
-    <div class="order-section">
-      <mat-card class="card mat-elevation-z4">
-        <mat-card-header>
-          <mat-card-title>¡Ordena fácil y rápido!</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Haz tu pedido en línea y recíbelo en tu puerta o listo para llevar.</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary" routerLink="/pedir">¡PIDE AHORA!</button>
-        </mat-card-actions>
-      </mat-card>
-      <img src="imagenes/home/fondo_imagen_pedido.webp" class="order-img" alt="Imagen de pedido">
+<main class="inicio-landing">
+
+  <!-- NOVEDADES -->
+  <section class="inicio-novedades">
+    <h1 class="inicio-title">NOVEDADES</h1>
+  </section>
+
+  <!-- NUEVA CARTA (imagen al lado) s-->
+  <section class="inicio-section carta-flex">
+    <img class="inicio-img" src="imagenes/home/plato_carta.jpg" alt="Imagen de carta">
+    <div class="inicio-content no-bg">
+      <h2 class="inicio-subtitle">¡Descubre nuestra nueva carta!</h2>
+      <p>Platos elaborados con ingredientes frescos y el mejor sabor. ¡Te sorprenderán!</p>
+      <button class="inicio-btn" routerLink="/carta">VER LA CARTA</button>
     </div>
-  
-    <!-- Ven a Disfrutar -->
-    <div class="company-section">
-      <img src="imagenes/home/restaurante.jpg" class="restaurant-img" alt="Imagen de restaurante">
-      <mat-card class="card mat-elevation-z4">
-        <mat-card-header>
-          <mat-card-title>¡Ven a disfrutar con nosotros!</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Visítanos en L’Essenza y vive una experiencia única.</p>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317193.22496740746!2d12.372073943171212!3d41.90278349995716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f6194e887a8c9%3A0x7b5383dc2b6933f!2sRoma%2C%20Italia!5e0!3m2!1ses!2ses!4v1713191850431!5m2!1ses!2ses"
-            width="100%" height="200" style="border:0;" loading="lazy">
-          </iframe>
-        </mat-card-content>
-        <mat-card-content class="contact-info">
-          <h3>CONTACTO</h3>
-          <div class="contact-item">
-            <mat-icon>phone</mat-icon>
-            <a href="tel:6666666">6666666</a>
-          </div>
-          <div class="contact-item">
-            <mat-icon>email</mat-icon>
-            <a href="mailto:lessenzacontact@gmail.com">lessenzacontactgmail.com</a>
-          </div>
-          <button mat-raised-button color="primary" routerLink="/conocenos">¡CONÓCENOS!</button>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  </section>
+
+  <!-- PEDIR ONLINE (fondo con transición suave) -->
+<section class="inicio-section pedir-bg">
+  <div class="inicio-content no-bg">
+    <h2 class="inicio-subtitle">¡Ordena fácil y rápido!</h2>
+    <p>Haz tu pedido en línea y recíbelo en tu puerta o listo para llevar.</p>
+    <button class="inicio-btn" routerLink="/pedir">¡PIDE AHORA!</button>
   </div>
+</section>
+
+  <!-- VISÍTANOS -->
+  <section class="inicio-section visita-section">
+    <img src="imagenes/home/pizza2.png" alt="Pizza flotante" class="pizza-flotante pizza-derecha">
+    <img src="imagenes/home/albahaca.png" alt="Albahaca flotante" class="pizza-flotante pizza-izquierda">
+    <div class="inicio-content no-bg">
+      
+      <h2 class="inicio-subtitle visita-title">
+  <span class="material-icons visita-icon">location_on</span>
+  ¡Ven a disfrutar con nosotros!
+</h2>
+      <p>Visítanos en L’Essenza y vive una experiencia única.</p>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317193.22496740746!2d12.372073943171212!3d41.90278349995716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f6194e887a8c9%3A0x7b5383dc2b6933f!2sRoma%2C%20Italia!5e0!3m2!1ses!2ses!4v1713191850431!5m2!1ses!2ses"
+        width="100%" height="180" style="border:0;" loading="lazy"></iframe>
+      <div class="contacto-info">
+        <div><span class="material-icons">call</span> <a href="tel:6666666">6666666</a></div>
+        <div><span class="material-icons">mail</span> <a href="mailto:lessenzaoficial2025@gmail.com">lessenzaoficial2025&#64;gmail.com</a></div>
+      </div>
+      <button class="inicio-btn" routerLink="/conocenos">¡CONÓCENOS!</button>
+    </div>
+  </section>
 </main>

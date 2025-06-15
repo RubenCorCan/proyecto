@@ -1,15 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 import { CommonModule } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
 
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-register',
@@ -18,77 +12,82 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   styleUrls: ['./register.component.css'],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     FormsModule,
-    MatStepperModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatCheckboxModule,
     RouterLink
   ]
 })
-export class RegisterComponent implements OnInit {
-  step1!: FormGroup;
-  step2!: FormGroup;
-  step3!: FormGroup;
+export class RegisterComponent {
+  step: number = 1;
+  user = {
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    telefono: '',
+    direccion: '',
+    recibirNovedades: false,
+    recibirFacturasPorEmail: false
+  };
 
   constructor(
-    private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private snackBar: MatSnackBar
+    private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.step1 = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
-    });
+  get passwordMismatch(): boolean {
+  return !!(
+    this.user.password &&
+    this.user.confirmPassword &&
+    this.user.password !== this.user.confirmPassword
+  );
+}
 
-    this.step2 = this.fb.group({
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required]
-    }, { validators: this.passwordsMatch });
-
-    this.step3 = this.fb.group({
-      telefono: ['', Validators.required],
-      direccion: ['', Validators.required],
-      recibirNovedades: [false],
-      recibirFacturasPorEmail: [false]
-    });
+  nextStep() {
+    if (this.step === 1 && this.user.name && this.user.email) {
+      this.step = 2;
+    } else if (
+      this.step === 2 &&
+      this.user.password &&
+      this.user.confirmPassword &&
+      !this.passwordMismatch
+    ) {
+      this.step = 3;
+    }
   }
 
-  passwordsMatch(group: FormGroup): { [key: string]: boolean } | null {
-    const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return password && confirmPassword && password !== confirmPassword
-      ? { passwordMismatch: true }
-      : null;
+  prevStep() {
+    if (this.step > 1) {
+      this.step--;
+    }
   }
 
-  onSubmit(): void {
-    if (this.step1.valid && this.step2.valid && this.step3.valid) {
-      const { name, email } = this.step1.value;
-      const { password } = this.step2.value;
-      const { telefono, direccion, recibirNovedades, recibirFacturasPorEmail } = this.step3.value;
-
-      this.authService.registerWithEmail(email, password, name, telefono, direccion, recibirNovedades, recibirFacturasPorEmail)
+  onSubmit() {
+    if (
+      this.user.name &&
+      this.user.email &&
+      this.user.password &&
+      this.user.confirmPassword &&
+      !this.passwordMismatch
+    ) {
+      this.authService
+        .registerWithEmail(
+          this.user.email,
+          this.user.password,
+          this.user.name,
+          this.user.telefono,
+          this.user.direccion,
+          this.user.recibirNovedades,
+          this.user.recibirFacturasPorEmail
+        )
         .then(() => {
-          this.snackBar.open('Se ha enviado un correo de verificación. Revisa tu bandeja de entrada.', 'Cerrar', {
-            duration: 6000
-          });
+          alert('Se ha enviado un correo de verificación. Revisa tu bandeja de entrada.');
           this.router.navigate(['/login']);
         })
         .catch(() => {
-          this.snackBar.open('Error al registrar el usuario. Inténtalo nuevamente.', 'Cerrar', {
-            duration: 6000
-          });
+          alert('Error al registrar el usuario. Inténtalo nuevamente.');
         });
     } else {
-      this.snackBar.open('Completa correctamente todos los campos del formulario.', 'Cerrar', {
-        duration: 6000
-      });
+      alert('Completa correctamente todos los campos del formulario.');
     }
   }
 }

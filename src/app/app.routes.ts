@@ -7,7 +7,10 @@ import { InicioComponent } from './paginas/inicio/inicio.component';
 import { ConocenosComponent } from './paginas/conocenos/conocenos.component';
 import { CartaComponent } from './paginas/carta/carta.component';
 import { ReservaComponent } from './paginas/reserva/reserva.component';
-
+import { PedirComponent } from './paginas/pedir/pedir.component';
+import { PedirRecogerComponent } from './paginas/pedir-recoger/pedir-recoger.component';
+import { PedirRecogerCategoriaComponent } from './paginas/pedir-recoger-categoria/pedir-recoger-categoria.component';
+import { PedirRecogerPlatoComponent } from './paginas/pedir-recoger-plato/pedir-recoger-plato.component';
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
@@ -16,5 +19,9 @@ export const routes: Routes = [
     { path: 'conocenos', component: ConocenosComponent },
     { path: 'carta', component: CartaComponent },
     { path: 'reserva', component: ReservaComponent },
+    { path: 'pedir', component: PedirComponent },
+    { path: 'pedir/mipedido', component: PedirRecogerComponent },
+    { path: 'pedir/mipedido/:idCategoria', component: PedirRecogerCategoriaComponent },
+    { path: 'pedir/mipedido/:idCategoria/:idPlato', component: PedirRecogerPlatoComponent },
     { path: '', redirectTo: '/inicio', pathMatch: 'full' }
   ];  

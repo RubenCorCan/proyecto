@@ -1,289 +1,216 @@
-body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: #fdfdfd;
-  margin: 0;
-  padding: 0;
-  color: #333;
-}
-
+/* Fondo y estructura principal */
 .container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--shadow) 0%, var(--white) 50%, var(--light-gold) 100%);
   display: flex;
   flex-direction: column;
-  gap: 3rem;
   align-items: center;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  background-color: #fdfdfd;
+  padding: 48px 0 64px 0;
 }
 
 .title {
-  font-size: 2.6rem;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.main-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 36px;
-  padding: 0 16px 2rem;
-  width: 100%;
-}
-
-.card {
-  width: 100%;
-  max-width: 600px;
-  border-radius: 10px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-  padding: 1rem;
-}
-
-.card img {
-  margin: 20px;
-  border-radius: 10px;
-}
-
-mat-card-title {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-mat-card-content p {
-  font-size: 1rem;
-  color: #555;
-  line-height: 1.6;
-  margin: 0.5rem 0;
-}
-
-mat-card-actions {
-  display: flex;
-  justify-content: center;
-  padding-top: 1rem;
-}
-
-mat-card-actions button {
-  width: 100%;
-}
-
-mat-raised-button {
-  background-color: #B81426;
-  color: white;
-  font-weight: bold;
-  border-radius: 4px;
-  padding: 8px 16px;
-  box-shadow: none;
-  transition: background-color 0.3s ease;
-}
-
-mat-raised-button:hover {
-  background-color: #9E1120;
-}
-
-.order-section,
-.company-section {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 28px;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.order-img,
-.restaurant-img {
-  width: 100%;
-  max-width: 420px;
-  height: auto;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.contact-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.contact-info h3 {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 1rem;
-  color: #333;
-}
-
-.contact-item mat-icon {
-  color: #007bff;
-}
-
-.contact-item a {
-  text-decoration: none;
-  color: #007bff;
-  transition: color 0.3s ease;
-}
-
-.contact-item a:hover {
-  text-decoration: underline;
-  color: #0056b3;
-}
-
-iframe {
-  width: 100%;
-  height: 250px;
-  border-radius: 10px;
-  margin-top: 1rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 24px;
-  max-width: 1000px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-
-.categoria-card {
-  height: 200px;
+  font-family: 'Italiana', 'Playfair Display', serif;
+  color: var(--primary-red, #b81426);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  margin-bottom: 36px;
+  text-shadow: 0 2px 16px #d4af3722;
   position: relative;
-  border-radius: 12px;
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease;
-}
-
-.categoria-overlay {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.55);
-  color: #fff;
   text-align: center;
-  padding: 12px;
 }
 
-.categoria-overlay h5 {
-  font-size: 1.1rem;
-  margin: 0;
-  font-weight: 500;
+.title::after {
+  content: "";
+  display: block;
+  margin: 18px auto 0 auto;
+  width: 90px;
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--primary-red, #b81426) 100%);
+  box-shadow: 0 2px 8px #d4af3722;
 }
 
-h2.text-center {
-  font-size: 2rem;
-  color: #2c3e50;
-  margin-bottom: 1rem;
+/* Accordion */
+.menu-accordion-section {
+  width: 100vw;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
-.platos-carousel {
-  max-width: 100%;
-  margin: 2rem auto;
-  padding: 1rem;
-}
-
-.platos-carousel ::ng-deep .mat-tab-group {
-  border-radius: 12px;
-  background-color: #fff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-}
-
-.platos-carousel ::ng-deep .mat-tab-labels {
-  background-color: #f8f8f8;
-  border-bottom: 1px solid #ddd;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-.platos-carousel ::ng-deep .mat-tab-label {
-  padding: 1rem;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: #555;
-}
-
-.platos-carousel ::ng-deep .mat-tab-label.mat-tab-label-active {
-  color: #B81426;
-  border-bottom: 3px solid #B81426;
-  background-color: #ffffff;
-}
-
-.plato-card {
-  max-width: 100%;
-  margin-top: 1rem;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: none;
-  background-color: #fff;
-}
-
-.plato-card img {
-  height: 180px;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-}
-
-.plato-card mat-card-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.plato-card mat-card-content p {
-  font-size: 0.95rem;
-  color: #555;
-  line-height: 1.5;
-  margin: 0.5rem 0;
-}
-
-.plato-card mat-card-actions {
+.accordion {
   display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+  flex-direction: column;
+  gap: 22px;
 }
 
-@media (max-width: 1000px) {
-  .category-grid {
-    width: 100%;
-    max-width: 100%;
-  }
+.accordion-item {
+  background: rgba(255,255,255,0.92);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #d4af3722, 0 1px 6px #d4af3710;
+  border: 1.5px solid var(--gold);
+  overflow: hidden;
+  transition: box-shadow 0.22s;
+}
+
+.accordion-header {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 1.2em 2em 1.2em 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Italiana', 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--primary-red, #b81426);
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  transition:
+    background 0.38s cubic-bezier(.68,-0.55,.27,1.55),
+    color 0.38s cubic-bezier(.68,-0.55,.27,1.55),
+    transform 0.28s cubic-bezier(.68,-0.55,.27,1.55);
+  position: relative;
+}
+
+.accordion-header:hover,
+.accordion-header:focus-visible {
+  background: rgba(212, 175, 55, 0.09);
+}
+
+.categoria-nombre {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.arrow {
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-left: 18px;
+}
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Cuerpo del acordeón */
+.accordion-body {
+  animation: fadeInDown 0.35s;
+  padding: 0 1.5em 1.5em 1.5em;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-18px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+
+/* Lista de platos */
+.plato-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 18px;
+}
+
+/* Tarjeta de plato */
+.plato-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  background: rgba(255,251,233,0.7);
+  border-radius: 14px;
+  box-shadow: 0 1px 8px #d4af3710;
+  border-left: 4px solid var(--gold);
+  padding: 18px 18px;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.plato-card:hover {
+  box-shadow: 0 6px 24px var(--gold), 0 2px 12px #d4af3710;
+  transform: scale(1.015);
+}
+
+.plato-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid var(--gold);
+  background: #fff;
+  box-shadow: 0 2px 8px #d4af3710;
+}
+
+.plato-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.plato-info h4 {
+  font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
+  font-size: 1.18rem;
+  color: var(--primary-red, #b81426);
+  font-weight: 800;
+  margin: 0 0 2px 0;
+  letter-spacing: 0.5px;
+}
+
+.plato-precio {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1.08rem;
+  color: var(--gold);
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.plato-info p {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1.01rem;
+  color: #3a2b1c;
+  margin: 0;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .order-section,
-  .company-section {
+@media (max-width: 900px) {
+  .menu-accordion-section {
+    max-width: 98vw;
+  }
+  .accordion-header {
+    font-size: 1.15rem;
+    padding: 1em 1.2em 1em 1em;
+  }
+  .plato-card {
+    gap: 12px;
+    padding: 12px 8px;
+  }
+  .plato-img {
+    width: 54px;
+    height: 54px;
+  }
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.4rem;
+    margin-bottom: 18px;
+  }
+  .accordion-header {
+    font-size: 1rem;
+    padding: 0.8em 0.7em 0.8em 0.7em;
+  }
+  .plato-card {
     flex-direction: column;
-    text-align: center;
-  }
-
-  .contact-info {
     align-items: center;
+    gap: 8px;
+    padding: 8px 4px;
   }
-
-  .restaurant-img {
-    max-width: 100%;
-  }
-
-  .card {
-    padding: 1rem;
-  }
-
-  .contact-item {
-    font-size: 0.9rem;
+  .plato-img {
+    width: 44px;
+    height: 44px;
   }
 }

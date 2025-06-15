@@ -1,99 +1,304 @@
-/* Contenedor del stepper */
-mat-horizontal-stepper {
-    max-width: 600px;
-    margin: 20px auto;
-  }
-  
-  /* Paso individual */
-  mat-step {
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Formulario en cada paso */
-  mat-form-field {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-  
-  /* Estilo de los botones */
-  button {
-    margin-top: 20px;
-  }
-  
-  mat-raised-button {
-    width: 100%;
-    padding: 12px 0;
-  }
-  
-  mat-button {
-    margin-right: 10px;
-  }
-  
-  /* Diseño de los mensajes de error */
-  .error {
-    color: #f44336;
-    font-size: 14px;
-    margin-top: 8px;
-  }
-  
-  mat-checkbox {
-    margin-top: 16px;
-    display: block;
-  }
-  
-  /* Alineación de los pasos */
-  mat-step-header {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  mat-step-header .mat-step-icon {
-    font-size: 20px;
-    color: #5c6bc0;
-  }
-  
-  mat-step-header .mat-step-label {
-    font-size: 16px;
-    font-weight: 500;
-    color: #424242;
-  }
-  
-  mat-step-header .mat-step-optional {
-    font-size: 14px;
-    color: #757575;
-  }
-  
-  /* Color y apariencia cuando se pasa al siguiente paso */
-  mat-step-header.mat-step-active .mat-step-icon {
-    background-color: #5c6bc0;
-    color: white;
-  }
-  
-  mat-step-header.mat-step-completed .mat-step-icon {
-    background-color: #388e3c;
-    color: white;
-  }
-  
-  /* Estilo para el último paso */
-  mat-step:last-child {
-    margin-bottom: 40px;
-  }
-  .auth-button-group {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    gap: 1rem; 
-    margin-top: 1.5rem;
+body, :host {
+  background: linear-gradient(180deg, var(--shadow) 0%, var(--white) 50%, var(--light-gold) 100%);
+  min-height: 100vh;
+}
+
+.register-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+  gap: 0;
+  user-select: none;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  position: relative;
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fffbe9;
+  border: 2.5px solid var(--gold);
+  color: var(--primary-red, #b81426);
+  font-weight: 800;
+  font-size: 1.18rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  transition: background 0.22s, border-color 0.22s, color 0.22s;
+}
+
+.step.active .circle {
+  background: linear-gradient(90deg, var(--gold) 60%, #ffe066 100%);
+  border-color: var(--primary-red, #b81426);
+  color: var(--primary-red, #b81426);
+}
+
+.step.completed .circle {
+  background: var(--primary-red, #b81426);
+  border-color: var(--primary-red, #b81426);
+  color: var(--gold);
+}
+
+.label {
+  font-size: 0.98rem;
+  color: var(--primary-red, #b81426);
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.step.completed .label {
+  color: var(--primary-red, #b81426);
+  opacity: 0.7;
+}
+
+.step-connector {
+  width: 44px;
+  height: 3px;
+  background: var(--gold);
+  margin: 0 4px 18px 4px;
+  border-radius: 2px;
+  transition: background 0.22s;
+}
+
+.step-connector.completed {
+  background: var(--primary-red, #b81426);
+}
+
+.register-container {
+  max-width: 370px;
+  margin: 70px auto 0 auto;
+  border-radius: 22px;
+  padding: 38px 32px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: stretch;
+  animation: loginFadeIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+h2 {
+  text-align: center;
+  font-family: 'Italiana', 'Playfair Display', serif;
+  color: var(--primary-red, #b81426);
+  font-size: 2.1rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 16px #d4af3722;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  margin: 12px auto 0 auto;
+  width: 70px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--primary-red, #b81426) 100%);
+}
+
+.form-group {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1.01rem;
+  color: var(--primary-red, #b81426);
+  font-weight: 600;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+  padding: 0.7em 1em;
+  border: 1.5px solid var(--gold);
+  border-radius: 12px;
+  font-size: 1.08rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: #fffbe9;
+  color: #3a2b1c;
+  outline: none;
+  transition: border-color 0.22s, box-shadow 0.22s, background 0.22s;
+  box-shadow: none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus {
+  border-color: var(--primary-red, #b81426);
+  background: #fff8e1;
+}
+
+input:invalid:focus {
+  border-color: #e53935;
+  background: #fff0f0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.checkbox-group {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.checkbox-group label {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #3a2b1c;
+  letter-spacing: 0.2px;
+  margin-bottom: 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+  accent-color: var(--primary-red, #b81426);
+  margin-right: 8px;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.step-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.08rem;
+  border: none;
+  border-radius: 18px;
+  padding: 0.7em 2.2em;
+  cursor: pointer;
+  transition: 
+    background 0.22s, 
+    color 0.22s, 
+    transform 0.16s;
+  letter-spacing: 1px;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7em;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary-red, #b81426) 60%, #d32f2f 100%);
+  color: var(--gold);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: linear-gradient(90deg, var(--gold) 60%, #ffe066 100%);
+  color: var(--primary-red, #b81426);
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background: #fffbe9;
+  color: var(--primary-red, #b81426);
+  border: 1.5px solid var(--gold);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+  background: var(--gold);
+  color: var(--primary-red, #b81426);
+  transform: scale(1.05);
+}
+
+.btn-accent {
+  background: linear-gradient(90deg, var(--gold) 60%, #ffe066 100%);
+  color: var(--primary-red, #b81426);
+  font-weight: 800;
+  font-size: 1.05rem;
+  box-shadow: none;
+  border: 1.5px solid var(--gold);
+}
+
+.btn-accent:hover,
+.btn-accent:focus-visible {
+  background: linear-gradient(90deg, var(--primary-red, #b81426) 60%, #d32f2f 100%);
+  color: var(--gold);
+  transform: scale(1.05);
+  border-color: var(--primary-red, #b81426);
+}
+
+.error {
+  color: #e53935;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  margin-top: 2px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.auth-button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.auth-button-group p {
+  font-size: 0.98rem;
+  color: #3a2b1c;
+  margin-top: 8px;
+}
+
+.auth-button-group a {
+  color: var(--primary-red, #b81426);
+  font-weight: 700;
+  text-decoration: underline;
+  transition: color 0.18s;
+}
+
+.auth-button-group a:hover {
+  color: var(--gold);
+}
+
+@keyframes loginFadeIn {
+  from { opacity: 0; transform: translateY(40px) scale(0.98);}
+  to   { opacity: 1; transform: translateY(0) scale(1);}
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .register-container {
+    max-width: 98vw;
+    padding: 18px 4vw 18px 4vw;
+    margin-top: 60px;
   }
   h2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    margin-top: 10px;
+    font-size: 1.2rem;
   }
-  
+  .step-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,60 @@
+<div class="pizza-loader" *ngIf="isLoading">
+  <img src="imagenes/home/cargando.png" alt="Cargando..." />
+</div>
+<div class="pedir-bg">
+  <div class="pedir-bg-overlay"></div>
+  <div class="pedir-glass">
+    <h2>
+      <span class="h2-pedir-icon material-icons">shopping_bag</span>
+      Pedir para Recoger
+    </h2>
+    <form [formGroup]="pedidoForm" (ngSubmit)="hacerPedido()" class="pedido-form" >
+
+      <label class="form-label-stack" *ngIf="!usuario">
+        <div class="label-row">
+          <span>Nombre*</span>
+          <span class="error-inline" *ngIf="pedidoForm.get('nombre')?.invalid && pedidoForm.get('nombre')?.touched">
+            <span class="error-icon material-icons">error</span> El nombre es obligatorio.
+          </span>
+        </div>
+        <input type="text" formControlName="nombre" required />
+      </label>
+
+      <label class="form-label-stack" *ngIf="!usuario">
+        <div class="label-row">
+          <span>Teléfono*</span>
+          <span class="error-inline" *ngIf="pedidoForm.get('telefono')?.invalid && pedidoForm.get('telefono')?.touched">
+            <span class="error-icon material-icons">error</span> El teléfono es obligatorio.
+          </span>
+        </div>
+        <input type="text" formControlName="telefono" required />
+      </label>
+
+      <label class="form-label-stack" *ngIf="!usuario">
+        <div class="label-row">
+          <span>Correo Electrónico*</span>
+          <span class="error-inline" *ngIf="pedidoForm.get('email')?.invalid && pedidoForm.get('email')?.touched">
+            <ng-container *ngIf="pedidoForm.get('email')?.hasError('required')">
+              <span class="error-icon material-icons">error</span> El correo es obligatorio.
+            </ng-container>
+            <ng-container *ngIf="pedidoForm.get('email')?.hasError('email')">
+              <span class="error-icon material-icons">error</span> Correo no válido.
+            </ng-container>
+          </span>
+        </div>
+        <input type="email" formControlName="email" required />
+      </label>
+      <h3 *ngIf="usuario" class="haz-pedido-ahora">HAZ TU PEDIDO AHORA</h3>
+
+      <button type="submit"
+        [disabled]="pedidoForm.invalid"
+        class="btn-pedir-anim-wrap"
+        (mouseleave)="onBtnLeave()"
+      >
+        <span class="pizza-anim" [ngClass]="pizzaAnim" aria-hidden="true">🍕</span>
+        <span class="btn-pedir-anim material-icons" [ngClass]="carritoAnim">shopping_cart</span>
+        <span class="btn-pedir-text">CONTINUAR</span>
+      </button>
+    </form>
+  </div>
+</div>
