@@ -58,8 +58,6 @@ export class AuthService {
     name: string,
     telefono: string,
     direccion: string,
-    recibirNovedades: boolean,
-    recibirFacturasPorEmail: boolean
   ): Promise<void> {
     try {
       const result: UserCredential = await createUserWithEmailAndPassword(this.auth, email, password);
@@ -67,7 +65,7 @@ export class AuthService {
 
       if (user) {
         await sendEmailVerification(user);
-        await this.createUserInFirestore(user, name, telefono, direccion, recibirNovedades, recibirFacturasPorEmail);
+        await this.createUserInFirestore(user, name, telefono, direccion);
         this.snackBar.open('Se ha enviado un correo de verificación. Verifica tu correo antes de iniciar sesión.', 'Cerrar', { duration: 6000 });
         await this.auth.signOut();
         this.router.navigate(['/login']);
@@ -111,8 +109,6 @@ export class AuthService {
     name?: string,
     telefono?: string,
     direccion?: string,
-    recibirNovedades?: boolean,
-    recibirFacturasPorEmail?: boolean
   ): Promise<void> {
     const clienteRef = doc(this.firestore, `clientes/${user.uid}`);
     const clienteSnap = await getDoc(clienteRef);
@@ -123,8 +119,6 @@ export class AuthService {
         email: user.email,
         telefono: telefono || user.phoneNumber || '',
         direccion: direccion || '',
-        recibirNovedades: recibirNovedades || false,
-        recibirFacturasPorEmail: recibirFacturasPorEmail || false
       });
     }
   }

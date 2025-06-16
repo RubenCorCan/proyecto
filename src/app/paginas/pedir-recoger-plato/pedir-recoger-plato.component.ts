@@ -28,9 +28,11 @@ import { MetodoPagoPopupComponent } from '../popup/metodo-pago-popup/metodo-pago
 })
 export class PedirRecogerPlatoComponent {
   plato: any;
-
+  platos: any[] = [];
+  private todosLosPlatos: any[] = [];
   cliente: DatosCliente| null = null;
   pedido: PlatoPedido[] = [];
+  
   pedidoVisible = false;
 
   @Input() platoId: any;
@@ -46,14 +48,14 @@ export class PedirRecogerPlatoComponent {
     });
     this.pedirService.cliente$.subscribe(c => this.cliente = c);
     this.pedirService.pedido$.subscribe(p => this.pedido = p);
+    this.firestoreService.getAllPlatos().subscribe(data => {
+    this.todosLosPlatos = data;
+  });
   }
   agregarAlPedido(plato: any) {
     this.pedirService.agregarPlato({
       id: plato.id,
-      nombre: plato.nombre,
-      imagen: plato.imagen,
       cantidad: 1,
-      precio: plato.precio
     });
     this.snackBar.open(`${plato.nombre} añadido al pedido`, 'Cerrar', { duration: 2000 });
   }
@@ -66,10 +68,21 @@ export class PedirRecogerPlatoComponent {
     this.pedirService.quitarPlato(platoId);
   }
 
-  cancelarPedido() {
-    this.pedirService.cancelarPedido();
-    this.snackBar.open('Pedido cancelado', 'Cerrar', { duration: 3000 });
-    this.router.navigate(['/pedir']);
+  async cancelarPedido() {
+    const pedidoId = this.pedirService.getPedidoId();
+    if (!pedidoId) {
+      this.snackBar.open('No se encontró el pedido para cancelar.', 'Cerrar', { duration: 3000 });
+      return;
+    }
+
+    try {
+      await this.firestoreService.borrarPedido(pedidoId);
+      this.pedirService.cancelarPedido();
+      this.snackBar.open('Pedido eliminado correctamente.', 'Cerrar', { duration: 3000 });
+      this.router.navigate(['/pedir']);
+    } catch (error) {
+      this.snackBar.open('Error al eliminar el pedido.', 'Cerrar', { duration: 3000 });
+    }
   }
 
   finalizarPedido() {
@@ -89,29 +102,51 @@ export class PedirRecogerPlatoComponent {
       });
     }
   
-    confirmarPago(metodo: 'tarjeta' | 'efectivo') {
-      const pedidoId = this.pedirService.getPedidoId();
-      if (!pedidoId) {
-        this.snackBar.open('No se encontró el pedido. Vuelve a iniciar el proceso.', 'Cerrar', { duration: 3000 });
-        return;
+confirmarPago(metodo: 'tarjeta' | 'efectivo') {
+  const pedidoId = this.pedirService.getPedidoId();
+  const pedido = this.pedirService.getPedido();
+
+  if (!pedidoId || !pedido.length) {
+    this.snackBar.open('No se encontró el pedido. Vuelve a iniciar el proceso.', 'Cerrar', { duration: 3000 });
+    return;
+  }
+
+  this.firestoreService.actualizarPedidoConPlatos(pedidoId, pedido, metodo)
+    .then(async () => {
+      await this.firestoreService.agregarSeguimientoSiAutenticado(pedidoId);
+
+      this.snackBar.open(`Pedido confirmado pagando con ${metodo}. ¡Gracias!`, 'Cerrar', { duration: 3000 });
+      this.pedirService.cancelarPedido();
+      if (await this.firestoreService.existeUsuario()) {
+        this.router.navigate(['/pedir/mipedido/seguimiento']);
+      } else {
+        this.router.navigate(['/pedir']);
       }
-  
-      this.firestoreService.actualizarPedidoConPlatos(pedidoId, this.pedido, metodo).then(() => {
-        this.snackBar.open(`Pedido finalizado con éxito pagando con ${metodo}. ¡Gracias!`, 'Cerrar', { duration: 3000 });
-        this.pedirService.cancelarPedido();
-        this.router.navigate(['/pedir/mipedido/finalizado']);
-      }).catch((error) => {
-        console.error('Error actualizando pedido con platos:', error);
-        this.snackBar.open('Hubo un error al finalizar el pedido.', 'Cerrar', { duration: 3000 });
-      });
-    }
+    })
+    .catch(() => {
+      this.snackBar.open('Error al confirmar el pedido.', 'Cerrar', { duration: 3000 });
+    });
+}
 
   togglePedido() {
     this.pedidoVisible = !this.pedidoVisible;
   }
 
   getTotal(): number {
-    return this.pedido.reduce((acc, plato) => acc + plato.precio * plato.cantidad, 0);
+    let total = 0;
+
+    for (const pedidoPlato of this.pedido) {
+      const plato = this.todosLosPlatos.find(p => p.id === pedidoPlato.id);
+      if (plato && plato.precio) {
+        total += plato.precio * pedidoPlato.cantidad;
+      }
+    }
+
+    return total;
+  }
+
+  getPlatoCompleto(platoId: string) {
+    return this.todosLosPlatos.find(p => p.id === platoId);
   }
 
   volverAtras() {

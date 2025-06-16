@@ -25,8 +25,6 @@ export class RegisterComponent {
     confirmPassword: '',
     telefono: '',
     direccion: '',
-    recibirNovedades: false,
-    recibirFacturasPorEmail: false
   };
 
   constructor(
@@ -76,8 +74,6 @@ export class RegisterComponent {
           this.user.name,
           this.user.telefono,
           this.user.direccion,
-          this.user.recibirNovedades,
-          this.user.recibirFacturasPorEmail
         )
         .then(() => {
           alert('Se ha enviado un correo de verificación. Revisa tu bandeja de entrada.');

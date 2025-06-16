@@ -1,0 +1,21 @@
+<div class="seguimiento-container">
+  <h2>Seguimiento del Pedido</h2>
+
+  <div class="cronometro">
+    <strong>Tiempo transcurrido:</strong> {{ tiempoTranscurrido }}
+  </div>
+
+  <div class="estado">
+    <strong>Estado del pedido:</strong> {{ estado }}
+  </div>
+
+  <div class="platos">
+    <h3>Platos del pedido</h3>
+    <ul>
+      <li *ngFor="let plato of platos">
+        <strong>{{ plato.nombre }}</strong> - {{ plato.descripcion }}  
+        <span *ngIf="plato.precio">({{ plato.precio | currency:'EUR' }})</span>
+      </li>
+    </ul>
+  </div>
+</div>

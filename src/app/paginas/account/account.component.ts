@@ -43,7 +43,6 @@ import { MisReservasComponent } from './mis-reservas.component';
 export class AccountComponent implements OnInit {
   accountForm!: FormGroup;
   passwordForm!: FormGroup;
-  preferencesForm!: FormGroup;
   userData: any;
   activeTab = 0;
   isAuthenticated = false;
@@ -75,11 +74,6 @@ export class AccountComponent implements OnInit {
       validators: this.passwordMatchValidator
     });
 
-    this.preferencesForm = this.fb.group({
-      recibirNovedades: [false],
-      recibirFacturasPorEmail: [false]
-    });
-
     if (this.isAuthenticated) {
       this.loadUserData();
       this.detectEmailProvider();
@@ -106,7 +100,6 @@ export class AccountComponent implements OnInit {
       if (clienteSnap.exists()) {
         this.userData = clienteSnap.data();
         this.accountForm.patchValue(this.userData);
-        this.preferencesForm.patchValue(this.userData);
       } else {
         this.snackBar.open('El cliente no existe en la base de datos.', 'Cerrar', { duration: 5000 });
       }
@@ -136,21 +129,6 @@ export class AccountComponent implements OnInit {
       this.snackBar.open('Contraseña cambiada exitosamente.', 'Cerrar', { duration: 5000 });
     } catch {
       this.snackBar.open('Error al cambiar la contraseña.', 'Cerrar', { duration: 5000 });
-    }
-  }
-
-  async savePreferences() {
-    if (!this.preferencesForm.valid) return;
-
-    const user = this.auth.currentUser;
-    if (!user) return;
-
-    try {
-      const clienteRef = doc(this.firestore, `clientes/${user.uid}`);
-      await updateDoc(clienteRef, this.preferencesForm.value);
-      this.snackBar.open('Preferencias guardadas correctamente.', 'Cerrar', { duration: 5000 });
-    } catch {
-      this.snackBar.open('Error al guardar las preferencias.', 'Cerrar', { duration: 5000 });
     }
   }
 

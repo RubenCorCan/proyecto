@@ -116,6 +116,7 @@ label {
 }
 
 input[type="text"],
+input[type="password"],
 input[type="email"],
 input[type="tel"] {
   padding: 0.7em 1em;

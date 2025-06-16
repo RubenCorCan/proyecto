@@ -102,18 +102,6 @@
           class="full-width"
         />
       </div>
-      <div class="form-group checkbox-group">
-        <label>
-          <input type="checkbox" [(ngModel)]="user.recibirNovedades" name="recibirNovedades" />
-          Recibir novedades
-        </label>
-      </div>
-      <div class="form-group checkbox-group">
-        <label>
-          <input type="checkbox" [(ngModel)]="user.recibirFacturasPorEmail" name="recibirFacturasPorEmail" />
-          Recibir facturas por email
-        </label>
-      </div>
       <div class="step-buttons">
         <button type="button" class="btn btn-secondary" (click)="prevStep()">Volver</button>
         <button type="submit" class="btn btn-accent" [disabled]="!registerForm.form.valid">Registrar</button>

@@ -3,9 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface PlatoPedido {
   id: string;
-  nombre: string;
-  precio: number;
-  imagen: string;
   cantidad: number;
 }
 
@@ -13,7 +10,6 @@ export interface DatosCliente {
   nombre: string;
   telefono?: string;
   email: string;
-  observaciones?: string;
 }
 
 @Injectable({
@@ -41,11 +37,6 @@ export class PedirService {
     return this.pedidoSubject.value;
   }
 
-  setPedido(pedido: PlatoPedido[]) {
-    this.pedidoSubject.next(pedido);
-    this.savePedido(pedido);
-  }
-
   setCliente(datos: DatosCliente) {
     this.clienteSubject.next(datos);
     localStorage.setItem('cliente', JSON.stringify(datos));
@@ -55,14 +46,14 @@ export class PedirService {
     return this.clienteSubject.value;
   }
 
-  agregarPlato(plato: PlatoPedido) {
+  agregarPlato(plato: { id: string; cantidad: number }) {
     const pedido = [...this.pedidoSubject.value];
     const index = pedido.findIndex(p => p.id === plato.id);
 
     if (index !== -1) {
       pedido[index].cantidad += plato.cantidad;
     } else {
-      pedido.push(plato);
+      pedido.push({ id: plato.id, cantidad: plato.cantidad });
     }
 
     this.pedidoSubject.next(pedido);

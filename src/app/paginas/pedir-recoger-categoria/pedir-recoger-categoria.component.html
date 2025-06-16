@@ -63,21 +63,23 @@
     <section *ngIf="pedido.length === 0" class="pedido-vacio">
       <p>No has añadido platos a tu pedido.</p>
     </section>
-    <div *ngFor="let plato of pedido" class="cart-item">
-      <img [src]="plato.imagen" alt="{{ plato.nombre }}" class="cart-img" />
-      <div class="cart-info">
-        <div class="cart-title">{{ plato.nombre }}</div>
-        <div class="cart-price">{{ plato.precio | number:'1.2-2' }} €</div>
-      </div>
-      <div class="cart-qty">
-        <button (click)="cambiarCantidad(plato.id, plato.cantidad - 1)">-</button>
-        <span>{{ plato.cantidad }}</span>
-        <button (click)="cambiarCantidad(plato.id, plato.cantidad + 1)">+</button>
-      </div>
-      <button class="cart-remove" (click)="quitarPlato(plato.id)" aria-label="Eliminar">
-        &times;
-      </button>
+    <ng-container *ngFor="let plato of pedido">
+  <div class="cart-item" *ngIf="getPlatoCompleto(plato.id)?.nombre && getPlatoCompleto(plato.id)?.precio">
+    <img [src]="getPlatoCompleto(plato.id)?.imagen" alt="{{ getPlatoCompleto(plato.id)?.nombre }}" class="cart-img" />
+    <div class="cart-info">
+      <div class="cart-title">{{ getPlatoCompleto(plato.id)?.nombre }}</div>
+      <div class="cart-price">{{ getPlatoCompleto(plato.id)?.precio | number:'1.2-2' }} €</div>
     </div>
+    <div class="cart-qty">
+      <button (click)="cambiarCantidad(plato.id, plato.cantidad - 1)">-</button>
+      <span>{{ plato.cantidad }}</span>
+      <button (click)="cambiarCantidad(plato.id, plato.cantidad + 1)">+</button>
+    </div>
+    <button class="cart-remove" (click)="quitarPlato(plato.id)" aria-label="Eliminar">
+      &times;
+    </button>
+  </div>
+</ng-container>
   </div>
   <div class="cart-summary">
     <div class="cart-summary-row">

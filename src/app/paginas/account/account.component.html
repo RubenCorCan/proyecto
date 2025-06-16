@@ -5,7 +5,6 @@
   <ul>
     <li [class.active]="activeTab === 0" (click)="setActiveTab(0)">Información Personal</li>
     <li [class.active]="activeTab === 1" (click)="setActiveTab(1)">Cambiar Contraseña</li>
-    <li [class.active]="activeTab === 2" (click)="setActiveTab(2)">Preferencias</li>
     <li [class.active]="activeTab === 3" (click)="setActiveTab(3)">Mis Pedidos</li>
     <li [class.active]="activeTab === 4" (click)="setActiveTab(4)">Mis Reservas</li>
   </ul>
@@ -62,23 +61,6 @@
           <p>Tu cuenta está vinculada a Google. No puedes cambiar la contraseña desde aquí.</p>
         </div>
       </div>
-
-      <!-- Preferencias -->
-      <form *ngIf="isAuthenticated && activeTab === 2" [formGroup]="preferencesForm" (ngSubmit)="savePreferences()">
-        <div class="form-group checkbox-group">
-          <label>
-            <input type="checkbox" formControlName="recibirNovedades" />
-            Recibir Novedades
-          </label>
-        </div>
-        <div class="form-group checkbox-group">
-          <label>
-            <input type="checkbox" formControlName="recibirFacturasPorEmail" />
-            Recibir Facturas por Email
-          </label>
-        </div>
-        <button class="btn btn-primary" type="submit">Guardar Preferencias</button>
-      </form>
 
       <div *ngIf="isAuthenticated && activeTab === 3">
   <app-mis-pedidos [userEmail]="accountForm.get('email')?.value"></app-mis-pedidos>

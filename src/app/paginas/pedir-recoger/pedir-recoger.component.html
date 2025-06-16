@@ -65,11 +65,11 @@
       <p>No has añadido platos a tu pedido.</p>
     </section>
     <ng-container *ngFor="let plato of pedido">
-  <div class="cart-item" *ngIf="plato?.nombre && plato?.precio">
-    <img [src]="plato?.imagen" alt="{{ plato?.nombre }}" class="cart-img" />
+  <div class="cart-item" *ngIf="getPlatoCompleto(plato.id)?.nombre && getPlatoCompleto(plato.id)?.precio">
+    <img [src]="getPlatoCompleto(plato.id)?.imagen" alt="{{ getPlatoCompleto(plato.id)?.nombre }}" class="cart-img" />
     <div class="cart-info">
-      <div class="cart-title">{{ plato?.nombre }}</div>
-      <div class="cart-price">{{ plato?.precio | number:'1.2-2' }} €</div>
+      <div class="cart-title">{{ getPlatoCompleto(plato.id)?.nombre }}</div>
+      <div class="cart-price">{{ getPlatoCompleto(plato.id)?.precio | number:'1.2-2' }} €</div>
     </div>
     <div class="cart-qty">
       <button (click)="cambiarCantidad(plato.id, plato.cantidad - 1)">-</button>

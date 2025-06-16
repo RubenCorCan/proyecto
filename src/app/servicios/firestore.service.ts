@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, getDocs, query, where, addDoc } from '@angular/fire/firestore';
 import { getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { DatosCliente, PlatoPedido } from './pedir.service';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, private auth: Auth) {}
 
   getCategorias(): Observable<any[]> {
     const categoriasRef = collection(this.firestore, 'categorias');
@@ -177,5 +178,24 @@ export class FirestoreService {
     const reservaRef = doc(this.firestore, `reservas/${reservaId}`);
     await deleteDoc(reservaRef);
   }
+
+async agregarSeguimientoSiAutenticado(pedidoId: string): Promise<void> {
+  const user = await this.auth.currentUser;
+  if (!user) return;
+
+  const seguimientoRef = doc(
+    collection(this.firestore, `pedidos/${pedidoId}/seguimiento`)
+  );
+
+  await setDoc(seguimientoRef, {
+    estado: 'en preparación',
+    timer: Date.now()
+  });
+}
+
+async existeUsuario(): Promise<boolean> {
+  const user = await this.auth.currentUser;
+  return !!user;
+}
 
 }

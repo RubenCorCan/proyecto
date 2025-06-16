@@ -11,6 +11,8 @@ import { PedirComponent } from './paginas/pedir/pedir.component';
 import { PedirRecogerComponent } from './paginas/pedir-recoger/pedir-recoger.component';
 import { PedirRecogerCategoriaComponent } from './paginas/pedir-recoger-categoria/pedir-recoger-categoria.component';
 import { PedirRecogerPlatoComponent } from './paginas/pedir-recoger-plato/pedir-recoger-plato.component';
+import { PedidoIniciadoGuard } from './servicios/guard/pedido-iniciado.guard';
+import { PedirSeguimientoComponent } from './paginas/pedir-seguimiento/pedir-seguimiento.component';
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
@@ -20,8 +22,24 @@ export const routes: Routes = [
     { path: 'carta', component: CartaComponent },
     { path: 'reserva', component: ReservaComponent },
     { path: 'pedir', component: PedirComponent },
-    { path: 'pedir/mipedido', component: PedirRecogerComponent },
-    { path: 'pedir/mipedido/:idCategoria', component: PedirRecogerCategoriaComponent },
-    { path: 'pedir/mipedido/:idCategoria/:idPlato', component: PedirRecogerPlatoComponent },
+    {
+      path: 'pedir/mipedido',
+      canActivate: [PedidoIniciadoGuard],
+      component: PedirRecogerComponent
+    },
+    {
+      path: 'pedir/mipedido/:idCategoria',
+      canActivate: [PedidoIniciadoGuard],
+      component: PedirRecogerCategoriaComponent
+    },
+    {
+      path: 'pedir/mipedido/:idCategoria/:idPlato',
+      canActivate: [PedidoIniciadoGuard],
+      component: PedirRecogerPlatoComponent
+    },
+    {
+      path: 'pedir/mipedido/seguimiento',
+      component: PedirSeguimientoComponent
+    },
     { path: '', redirectTo: '/inicio', pathMatch: 'full' }
   ];  
