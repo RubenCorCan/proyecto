@@ -1,3 +1,7 @@
+.caja-principal {
+width: 100vw;
+background-color: var(--white);
+}
 .conocenos-main {
   max-width: 1100px;
   margin: 0 auto;
@@ -11,11 +15,8 @@
   display: flex;
   align-items: center;
   gap: 48px;
-  background: rgba(255,255,255,0.92);
   border-radius: 24px;
   padding: 36px 32px;
-  box-shadow: 0 4px 24px #d4af3722, 0 1px 6px #d4af3710;
-  animation: fadeInLeft 0.8s;
 }
 
 .about-hero-img {
@@ -134,7 +135,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: fadeInUp 0.8s;
 }
 
 .about-values h2 {
@@ -192,15 +192,6 @@
   font-family: 'Montserrat', Arial, sans-serif;
   margin-left: 8px;
   opacity: 0.85;
-}
-
-@keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-40px);}
-  to   { opacity: 1; transform: translateX(0);}
-}
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px);}
-  to   { opacity: 1; transform: translateY(0);}
 }
 
 /* Responsive */

@@ -57,7 +57,7 @@ export class PedirRecogerPlatoComponent {
       id: plato.id,
       cantidad: 1,
     });
-    this.snackBar.open(`${plato.nombre} añadido al pedido`, 'Cerrar', { duration: 2000 });
+    this.snackBar.open(`${plato.nombre} añadido al pedido`, 'Cerrar', { duration: 2000, panelClass: ['snackbar-success'] });
   }
 
    cambiarCantidad(platoId: string, cantidad: number) {
@@ -71,23 +71,23 @@ export class PedirRecogerPlatoComponent {
   async cancelarPedido() {
     const pedidoId = this.pedirService.getPedidoId();
     if (!pedidoId) {
-      this.snackBar.open('No se encontró el pedido para cancelar.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('No se encontró el pedido para cancelar.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
       return;
     }
 
     try {
       await this.firestoreService.borrarPedido(pedidoId);
       this.pedirService.cancelarPedido();
-      this.snackBar.open('Pedido eliminado correctamente.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('Pedido eliminado correctamente.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
       this.router.navigate(['/pedir']);
     } catch (error) {
-      this.snackBar.open('Error al eliminar el pedido.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('Error al eliminar el pedido.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
     }
   }
 
   finalizarPedido() {
       if (this.pedido.length === 0) {
-        this.snackBar.open('Tu carrito está vacío.', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Tu carrito está vacío.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-warning'] });
         return;
       }
       const dialogRef = this.dialog.open(MetodoPagoPopupComponent);
@@ -107,7 +107,7 @@ confirmarPago(metodo: 'tarjeta' | 'efectivo') {
   const pedido = this.pedirService.getPedido();
 
   if (!pedidoId || !pedido.length) {
-    this.snackBar.open('No se encontró el pedido. Vuelve a iniciar el proceso.', 'Cerrar', { duration: 3000 });
+    this.snackBar.open('No se encontró el pedido. Vuelve a iniciar el proceso.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
     return;
   }
 
@@ -115,7 +115,7 @@ confirmarPago(metodo: 'tarjeta' | 'efectivo') {
     .then(async () => {
       await this.firestoreService.agregarSeguimientoSiAutenticado(pedidoId);
 
-      this.snackBar.open(`Pedido confirmado pagando con ${metodo}. ¡Gracias!`, 'Cerrar', { duration: 3000 });
+      this.snackBar.open(`Pedido confirmado pagando con ${metodo}. ¡Gracias!`, 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
       this.pedirService.cancelarPedido();
       if (await this.firestoreService.existeUsuario()) {
         this.router.navigate(['/pedir/mipedido/seguimiento']);
@@ -124,7 +124,7 @@ confirmarPago(metodo: 'tarjeta' | 'efectivo') {
       }
     })
     .catch(() => {
-      this.snackBar.open('Error al confirmar el pedido.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('Error al confirmar el pedido.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
     });
 }
 

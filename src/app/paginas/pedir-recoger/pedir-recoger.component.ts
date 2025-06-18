@@ -34,6 +34,7 @@ export class PedirRecogerComponent implements OnInit {
   animatingSide: 'left' | 'right' | '' = '';
 outIndex: number | null = null;
 outDirection: 'left' | 'right' | '' = '';
+isAnimating = false;
 
   constructor(
     private firestoreService: FirestoreService,
@@ -62,7 +63,7 @@ outDirection: 'left' | 'right' | '' = '';
       id: plato.id,
       cantidad: 1,
     });
-    this.snackBar.open(`${plato.nombre} añadido al pedido`, 'Cerrar', { duration: 2000 });
+    this.snackBar.open(`${plato.nombre} añadido al pedido`, 'Cerrar', { duration: 2000, panelClass: ['snackbar-success'] });
   }
 
   getPlatoCompleto(platoId: string) {
@@ -80,23 +81,23 @@ outDirection: 'left' | 'right' | '' = '';
   async cancelarPedido() {
     const pedidoId = this.pedirService.getPedidoId();
     if (!pedidoId) {
-      this.snackBar.open('No se encontró el pedido para cancelar.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('No se encontró el pedido para cancelar.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
       return;
     }
 
     try {
       await this.firestoreService.borrarPedido(pedidoId);
       this.pedirService.cancelarPedido();
-      this.snackBar.open('Pedido eliminado correctamente.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('Pedido eliminado correctamente.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
       this.router.navigate(['/pedir']);
     } catch (error) {
-      this.snackBar.open('Error al eliminar el pedido.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('Error al eliminar el pedido.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
     }
   }
 
   finalizarPedido() {
     if (this.pedido.length === 0) {
-      this.snackBar.open('Tu carrito está vacío.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('Tu carrito está vacío.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-warning'] });
       return;
     }
     const dialogRef = this.dialog.open(MetodoPagoPopupComponent);
@@ -116,7 +117,7 @@ confirmarPago(metodo: 'tarjeta' | 'efectivo') {
   const pedido = this.pedirService.getPedido();
 
   if (!pedidoId || !pedido.length) {
-    this.snackBar.open('No se encontró el pedido. Vuelve a iniciar el proceso.', 'Cerrar', { duration: 3000 });
+    this.snackBar.open('No se encontró el pedido. Vuelve a iniciar el proceso.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
     return;
   }
 
@@ -124,7 +125,7 @@ confirmarPago(metodo: 'tarjeta' | 'efectivo') {
     .then(async () => {
       await this.firestoreService.agregarSeguimientoSiAutenticado(pedidoId);
 
-      this.snackBar.open(`Pedido confirmado pagando con ${metodo}. ¡Gracias!`, 'Cerrar', { duration: 3000 });
+      this.snackBar.open(`Pedido confirmado pagando con ${metodo}. ¡Gracias!`, 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
       this.pedirService.cancelarPedido();
       if (await this.firestoreService.existeUsuario()) {
         this.router.navigate(['/pedir/mipedido/seguimiento']);
@@ -133,7 +134,7 @@ confirmarPago(metodo: 'tarjeta' | 'efectivo') {
       }
     })
     .catch(() => {
-      this.snackBar.open('Error al confirmar el pedido.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('Error al confirmar el pedido.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error']});
     });
 }
 
@@ -156,28 +157,32 @@ confirmarPago(metodo: 'tarjeta' | 'efectivo') {
 
   // --- Carrusel infinito ---
 prevPlato() {
-  if (!this.platos.length) return;
+  if (!this.platos.length || this.isAnimating) return;
+  this.isAnimating = true;
   this.animatingSide = 'left';
   this.outDirection = 'right';
-  this.outIndex = (this.activeIndex + 1) % this.platos.length; // el que está en la derecha
+  this.outIndex = (this.activeIndex + 1) % this.platos.length;
   this.activeIndex = (this.activeIndex - 1 + this.platos.length) % this.platos.length;
   setTimeout(() => {
     this.animatingSide = '';
     this.outIndex = null;
     this.outDirection = '';
+    this.isAnimating = false;
   }, 400);
 }
 
 nextPlato() {
-  if (!this.platos.length) return;
+  if (!this.platos.length || this.isAnimating) return;
+  this.isAnimating = true;
   this.animatingSide = 'right';
   this.outDirection = 'left';
-  this.outIndex = (this.activeIndex - 1 + this.platos.length) % this.platos.length; // el que está en la izquierda
+  this.outIndex = (this.activeIndex - 1 + this.platos.length) % this.platos.length;
   this.activeIndex = (this.activeIndex + 1) % this.platos.length;
   setTimeout(() => {
     this.animatingSide = '';
     this.outIndex = null;
     this.outDirection = '';
+    this.isAnimating = false;
   }, 400);
 }
 
@@ -189,8 +194,7 @@ getCarruselPlatos() {
     if (n === 1) {
       pos = 'center';
     } else if (n === 2) {
-      if (i === this.activeIndex) pos = 'center';
-      else pos = 'left';
+      pos = (i === this.activeIndex) ? 'center' : 'left';
     } else {
       if (i === this.activeIndex) pos = 'center';
       else if (i === (this.activeIndex - 1 + n) % n) pos = 'left';
@@ -198,28 +202,28 @@ getCarruselPlatos() {
       else pos = '';
     }
 
-    // Animación de entrada
+    // Animación de entrada/salida
     let animClass = '';
     let animationKey = '';
     if (this.animatingSide === 'right' && pos === 'right' && i === (this.activeIndex + 1) % n) {
       animClass = 'anim-right-in';
-      animationKey = 'right-in-' + Date.now(); // fuerza re-render
+      animationKey = 'right-in';
     }
     if (this.animatingSide === 'left' && pos === 'left' && i === (this.activeIndex - 1 + n) % n) {
-      animClass = 'anim-left-in';
-      animationKey = 'left-in-' + Date.now();
+    animClass = 'anim-left-in';
+    animationKey = 'left-in';
     }
-    // Animación de salida
     if (this.outIndex === i && this.outDirection === 'right') {
       animClass = 'anim-out-right';
-      animationKey = 'out-right-' + Date.now();
+      animationKey = 'out-right';
     }
     if (this.outIndex === i && this.outDirection === 'left') {
       animClass = 'anim-out-left';
-      animationKey = 'out-left-' + Date.now();
+      animationKey = 'out-left';
     }
 
-    return { ...plato, pos, key: i + '-' + animationKey, animClass };
+    // Usa una key estable para evitar bugs de renderizado
+    return { ...plato, pos, key: `${i}-${animationKey}`, animClass };
   });
 }
   trackByKey(index: number, item: any) {

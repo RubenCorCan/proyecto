@@ -11,6 +11,7 @@ html, body {
   scroll-behavior: smooth;
   overflow-x: hidden;
   scrollbar-color: var(--dark-gray) transparent;
+  background-color: black;
 }
   
   :root {
@@ -120,6 +121,24 @@ html, body {
 }
 .snackbar-cancel .mat-mdc-snack-bar-action:hover,
 .snackbar-cancel .mat-mdc-snack-bar-action:focus {
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+/* Snackbar warning */
+.snackbar-warning {
+  background: #ffe066 !important;
+}
+.snackbar-warning .mat-mdc-snack-bar-label {
+  color: #b81426 !important;
+}
+.snackbar-warning .mat-mdc-snack-bar-action {
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+.snackbar-warning .mat-mdc-snack-bar-action:hover,
+.snackbar-warning .mat-mdc-snack-bar-action:focus {
   color: #fff !important;
   background: transparent !important;
   box-shadow: var(--dark-gray) 0px 0px 3px !important;

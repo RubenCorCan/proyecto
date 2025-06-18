@@ -1,7 +1,7 @@
 /* Fondo y estructura principal */
 .container {
   min-height: 100vh;
-  background: linear-gradient(180deg, var(--shadow) 0%, var(--white) 50%, var(--light-gold) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.756) 0%, var(--white) 50%, var(--light-gold) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;

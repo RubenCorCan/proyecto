@@ -190,16 +190,15 @@ input:invalid:focus {
 }
 
 .btn-primary {
-  background: linear-gradient(90deg, var(--primary-red, #b81426) 60%, #d32f2f 100%);
-  color: var(--gold);
+  background: linear-gradient(90deg, var(--gold) 60%, #ffe066 100%);
+  color: var(--dark-gray);
   
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  background: linear-gradient(90deg, var(--gold) 60%, #ffe066 100%);
-  color: var(--primary-red, #b81426);
   transform: scale(1.05);
+  box-shadow: 0 0px 12px var(--gold);
 }
 .btn-accent {
   background: linear-gradient(90deg, var(--gold) 60%, #ffe066 100%);

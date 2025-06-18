@@ -4,7 +4,7 @@
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  background: linear-gradient(180deg, var(--shadow) 0%, var(--white) 50%, var(--light-gold) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.756) 0%, var(--white) 50%, var(--light-gold) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -399,11 +399,12 @@
   font-weight: 600;
   letter-spacing: 0.5px;
   color: var(--gold);
+
 }
 
 .efecto-add-carrito:hover,
 .efecto-add-carrito:focus-visible {
-  width: 160px;
+  width: 170px;
   border-radius: 24px;
   background: var(--gold, #d4af37);
   color: var(--primary-red, #b81426);
@@ -667,10 +668,10 @@
   justify-content: flex-end;
   margin-top: 0.7em;
 }
-.cancelar-btn, .finalizar-btn {
-  background: var(--primary-red, #b81426);
+.cancelar-btn{
+  background: var(--primary-red);
   color: var(--gold);
-  border: none;
+  border: 2px solid var(--primary-red);
   border-radius: 14px;
   padding: 8px 18px;
   font-size: 1.01rem;
@@ -683,14 +684,100 @@
   align-items: center;
   gap: 0.5em;
 }
-.cancelar-btn:hover, .finalizar-btn:hover {
-  background: var(--gold);
-  color: var(--primary-red);
+.cancelar-btn:hover{
+  background: var(--primary-red);
   transform: scale(1.05);
 }
+.finalizar-btn {
+  background: var(--gold);
+  color: var(--primary-red);
+  border: 2px solid var(--primary-red);
+  border-radius: 14px;
+  padding: 8px 22px;
+  font-size: 1.01rem;
+  font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 
+    background 0.18s, 
+    color 0.18s, 
+    border-color 0.18s, 
+    box-shadow 0.18s, 
+    transform 0.15s;
+  box-shadow: 0 2px 8px #d4af3722;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  position: relative;
+  overflow: hidden;
+}
+
+.finalizar-btn .icon-finalizar {
+  color: var(--primary-red);
+  font-size: 1.3em;
+  transition: 
+    color 0.18s, 
+    transform 0.28s cubic-bezier(.68,-0.55,.27,1.55), 
+    filter 0.22s;
+  filter: drop-shadow(0 1px 4px #d4af3722);
+  position: relative;
+  z-index: 1;
+}
+
+/* Efecto hover: fondo dorado, texto rojo, icono rebota y se rellena de rojo */
+.finalizar-btn:hover,
+.finalizar-btn:focus-visible {
+  background: var(--gold, #d4af37);
+  color: var(--italy-green);
+  border-color: var(--italy-green);
+  box-shadow: 0 4px 18px #d4af3722;
+  transform: scale(1.05);
+  
+}
+
+.finalizar-btn:hover .icon-finalizar,
+.finalizar-btn:focus-visible .icon-finalizar {
+  animation: bag-bounce 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+  color: var(--italy-green, #007a33);
+  filter: drop-shadow(0 0 5px var(--white));
+}
+
+@keyframes bag-bounce {
+  0%   { transform: scale(1) translateY(0); }
+  30%  { transform: scale(1.25, 0.85) translateY(-4px); }
+  50%  { transform: scale(0.95, 1.15) translateY(2px); }
+  70%  { transform: scale(1.08, 0.92) translateY(-2px);}
+  100% { transform: scale(1) translateY(0);}
+}
+
+.finalizar-btn:active {
+  background: var(--gold, #d4af37);
+  color: var(--primary-red, #b81426);
+  transform: scale(0.97);
+  box-shadow: 0 1px 4px #d4af3712;
+}
+
 .finalizar-btn[disabled] {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  filter: grayscale(0.3);
+}
+
+.finalizar-text:hover{
+  filter: drop-shadow(0 0 5px var(--white));
+}
+
+.pedido-vacio {
+  text-align: center;
+  color: #b81426;
+  font-size: 1.08rem;
+  margin-top: 32px;
+  background: none;
+  border-radius: 0;
+  padding: 2em 1em;
+  box-shadow: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .pedido-vacio {
@@ -729,7 +816,7 @@ h2 {
   height: 35px;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 .anim-cancelar:hover .bin-top {
   transform: rotate(45deg);
@@ -737,6 +824,23 @@ h2 {
 .anim-cancelar:active {
   transform: scale(0.9);
 }
+
+/* 1. El fondo dorado del SVG debe tener una clase específica */
+.bin-bottom-bg {
+  fill: var(--gold);
+  transition: fill 0.2s;
+}
+
+/* 2. El resto del SVG (líneas, rellenos) dorados por defecto */
+.cancelar-btn svg [stroke]:not(.bin-bottom-bg),
+.cancelar-btn svg [fill]:not(.bin-bottom-bg),
+.cancelar-btn svg path:not(.bin-bottom-bg),
+.cancelar-btn svg line:not(.bin-bottom-bg) {
+  stroke: var(--gold);
+  fill: var(--gold);
+  transition: stroke 0.2s, fill 0.2s;
+}
+
 
 /* Responsive */
 @media (max-width: 900px) {

@@ -106,14 +106,14 @@ export class FirestoreService {
   }
 
   async crearPedidoCliente(datosCliente: DatosCliente): Promise<string> {
-    const pedidosRef = collection(this.firestore, 'pedidos');
-    const docRef = await addDoc(pedidosRef, {
-      cliente: datosCliente,
-      estado: 'pendiente',
-      creado: new Date().toISOString(),
-    });
-    return docRef.id;
-  }
+  const pedidosRef = collection(this.firestore, 'pedidos');
+  const docRef = await addDoc(pedidosRef, {
+    cliente: datosCliente,
+    estado: 'pendiente',
+    creado: new Date().toISOString(),
+  });
+  return docRef.id;
+}
 
   async actualizarPedidoConPlatos(pedidoId: string,pedidoGuardado: PlatoPedido[],metodoPago: 'efectivo' | 'tarjeta'
   ): Promise<void> {
@@ -162,6 +162,23 @@ export class FirestoreService {
     await deleteDoc(pedidoRef);
   }
 
+  async borrarPedidosPasados(userEmail: string) {
+  const hoy = new Date();
+  const pedidosRef = collection(this.firestore, 'pedidos');
+  const q = query(pedidosRef, where('cliente.email', '==', userEmail));
+  const snapshot = await getDocs(q);
+
+  snapshot.forEach(async (pedidoDoc) => {
+    const pedido = pedidoDoc.data();
+    if (
+  pedido['cliente']?.['fechaRecogida'] &&
+  new Date(pedido['cliente']['fechaRecogida']) < hoy
+) {
+  await deleteDoc(doc(this.firestore, 'pedidos', pedidoDoc.id));
+}
+  });
+}
+
   getPedidosByEmail(email: string): Observable<any[]> {
     const pedidosRef = collection(this.firestore, 'pedidos');
     const q = query(pedidosRef, where('cliente.email', '==', email));
@@ -198,4 +215,19 @@ async existeUsuario(): Promise<boolean> {
   return !!user;
 }
 
+async borrarReservasPasadas(email: string) {
+  const reservasRef = collection(this.firestore, 'reservas');
+  const snapshot = await getDocs(reservasRef);
+  const ahora = new Date();
+
+  for (const docSnap of snapshot.docs) {
+    const data = docSnap.data() as any;
+    if (data.email === email && data.fecha && data.hora) {
+      const fechaHora = new Date(`${data.fecha}T${data.hora}`);
+      if (fechaHora < ahora) {
+        await deleteDoc(doc(this.firestore, 'reservas', docSnap.id));
+      }
+    }
+  }
+}
 }

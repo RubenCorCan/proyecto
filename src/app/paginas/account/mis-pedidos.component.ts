@@ -4,11 +4,13 @@ import { FirestoreService } from '../../servicios/firestore.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { Observable } from 'rxjs';
+import { CapitalizeFirstPipe } from '../../pipes/capitalize-first.pipe';
+
 
 @Component({
   selector: 'app-mis-pedidos',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatListModule],
+  imports: [CommonModule, MatCardModule, MatListModule, CapitalizeFirstPipe],
   template: `
     <h2 class="pedidos-title">Mis Pedidos</h2>
     <ng-container *ngIf="pedidos$ | async as pedidos; else cargando">
@@ -21,6 +23,31 @@ import { Observable } from 'rxjs';
             </div>
             <span class="pedido-estado" [class.entregado]="pedido.estado === 'Entregado'">{{ pedido.estado }}</span>
           </div>
+
+          <!-- Día y hora de recogida -->
+          <div class="resumen-recogida"
+     *ngIf="pedido.cliente?.fechaRecogida || pedido.cliente?.horaRecogida">
+     <span class="pedido-section-title">Fecha y hora de recogida</span>
+  <div class="recogida-row">
+    <span class="recogida-icon-label">
+      <span class="material-icons recogida-icon">event</span>
+      <span class="recogida-label">Día:</span>
+    </span>
+    <span class="recogida-valor">
+      {{ pedido.cliente.fechaRecogida | date:"EEEE, d 'de' MMMM 'de' y":"es" | lowercase | capitalizeFirst }}
+    </span>
+  </div>
+  <div class="recogida-row">
+    <span class="recogida-icon-label">
+      <span class="material-icons recogida-icon">schedule</span>
+      <span class="recogida-label">Hora:</span>
+    </span>
+    <span class="recogida-valor">
+      {{ pedido.cliente.horaRecogida }}
+    </span>
+  </div>
+</div>
+
           <div class="pedido-info">
             <div class="pedido-section-title">Platos</div>
             <ul class="pedido-platos">
@@ -108,6 +135,55 @@ import { Observable } from 'rxjs';
       background: #c8e6c9;
       color: #388e3c;
     }
+    /* ----------- Recogida ----------- */
+    .resumen-recogida {
+  background: #fffbe9;
+  border-radius: 10px;
+  margin: 10px 0 10px 0;
+  box-shadow: 0 1px 6px #d4af3712;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 1.08rem;
+}
+
+.recogida-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.recogida-icon-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 120px;
+}
+
+.recogida-icon {
+  font-size: 1.2em;
+  color: var(--primary-red, #b81426);
+}
+
+.recogida-label {
+  color: var(--primary-red, #b81426);
+  font-weight: 700;
+  font-size: 1.05em;
+}
+
+.recogida-valor {
+  color: #3a2b1c;
+  font-weight: 500;
+  font-size: 1.05em;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  margin-left: -40px;
+}
+    /* ----------- Fin Recogida ----------- */
     .pedido-info {
       margin-bottom: 0;
       display: flex;
@@ -262,6 +338,9 @@ export class MisPedidosComponent implements OnInit {
   ngOnInit() {
     if (this.userEmail) {
       this.pedidos$ = this.firestoreService.getPedidosByEmail(this.userEmail);
+      this.firestoreService.borrarPedidosPasados(this.userEmail);
     }
   }
+
+  
 }

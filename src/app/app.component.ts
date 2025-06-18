@@ -3,6 +3,8 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet, NavigationStart, Na
 import { AuthService } from './servicios/auth.service';
 import { User } from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
+import { ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +14,20 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  @ViewChild('videoHero') videoHeroRef!: ElementRef<HTMLVideoElement>;
+
+  ngAfterViewInit() {
+    if (this.mostrarVideoHero && this.videoHeroRef) {
+      const video = this.videoHeroRef.nativeElement;
+      video.muted = true;
+      video.play().catch(() => {});
+    }
+  }
   isAuthenticated: boolean = false;
   userName: string | undefined = '';
   title = 'lessenza_pruebas';
 
-  get isInicio(): boolean {
-    return this.router.url === '/inicio' || this.router.url === '/';
-  }
+  mostrarVideoHero = false; // NUEVO
 
   // Loader pizza
   isLoading: boolean = false;
@@ -27,7 +36,7 @@ export class AppComponent implements OnInit {
   stickyTitle = false;
   titleTop = 50;
   titleFontSize = 4;
-
+  navbarScrollState: 'sticky' | 'solid' = 'sticky';
   // Para scroll automático por inactividad
   private inactivityTimeout: any;
   private animatingScroll = false;
@@ -35,6 +44,7 @@ export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
     public router: Router,
+    private cdr: ChangeDetectorRef,
     private ngZone: NgZone
   ) {
     // Loader pizza entre rutas
@@ -48,7 +58,15 @@ export class AppComponent implements OnInit {
       ) {
         this.isLoading = false;
       }
+
+      // Actualiza mostrarVideoHero en cada navegación
+      if (event instanceof NavigationEnd) {
+        this.actualizarVideoHero(event.urlAfterRedirects);
+      }
     });
+
+    // También lo actualiza al cargar el componente por primera vez
+    this.actualizarVideoHero(this.router.url);
   }
 
   ngOnInit(): void {
@@ -62,23 +80,21 @@ export class AppComponent implements OnInit {
       }
     });
     this.resetInactivityTimer();
+    this.actualizarVideoHero(this.router.url);
+  this.cdr.detectChanges();
   }
 
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
+    localStorage.removeItem('pedido');
   }
 
   // Escucha actividad del usuario y reinicia el temporizador de inactividad
-  @HostListener('window:scroll', [])
   @HostListener('window:mousemove', [])
   @HostListener('window:touchstart', [])
-  onUserActivity() {
+  onUserActivity(event?: Event) {
     this.resetInactivityTimer();
-    // Si quieres que el título reaccione al scroll, llama aquí también a onWindowScroll()
-    if (event && event.type === 'scroll') {
-      this.onWindowScroll();
-    }
   }
 
   resetInactivityTimer() {
@@ -128,15 +144,17 @@ export class AppComponent implements OnInit {
     }, 4000); // 4 segundos de inactividad
   }
 
+  @HostListener('window:scroll', [])
   onWindowScroll() {
-    const videoHeight = window.innerHeight;
-    const scrollY = window.scrollY;
-    const percent = Math.min(scrollY / videoHeight, 1);
-
-    this.titleTop = 50 - percent * 40; // de 50vh a 10vh
-    this.titleFontSize = 4 - percent * 2; // de 4vw a 2vw
-    this.stickyTitle = percent === 1;
-    // No reiniciamos aquí el timer, ya lo hace onUserActivity
+    if (this.isInicio()) {
+      const video = document.querySelector('.video-hero-container') as HTMLElement;
+      const videoHeight = video ? video.offsetHeight : 400;
+      if (window.scrollY < videoHeight - 1) {
+        this.navbarScrollState = 'sticky';
+      } else {
+        this.navbarScrollState = 'solid';
+      }
+    }
   }
 
   getScrollTop(): number {
@@ -144,5 +162,15 @@ export class AppComponent implements OnInit {
   }
   getScrollFontSize(): string {
     return this.titleFontSize + 'vw';
+  }
+
+  // NUEVO: función para saber si estamos en inicio
+  isInicio(): boolean {
+    return this.router.url === '/inicio' || this.router.url === '/';
+  }
+
+  // NUEVO: actualiza la visibilidad del video hero
+  private actualizarVideoHero(url: string) {
+    this.mostrarVideoHero = (url === '/inicio' || url === '/');
   }
 }

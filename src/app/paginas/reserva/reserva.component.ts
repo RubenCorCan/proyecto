@@ -88,10 +88,15 @@ export class ReservaComponent implements OnInit {
   }
 
   selectDate(d: number | null) {
-    if (!d || this.isPastDay(d)) return;
-    this.fechaSeleccionada = new Date(this.anioActual, this.mesActual, d);
-    this.reservaForm.get('fecha')?.setValue(this.fechaSeleccionada.toISOString().slice(0, 10));
-  }
+  if (!d || this.isPastDay(d)) return;
+  this.fechaSeleccionada = new Date(this.anioActual, this.mesActual, d);
+  // Guarda la fecha como string local, no UTC
+  const yyyy = this.fechaSeleccionada.getFullYear();
+  const mm = (this.fechaSeleccionada.getMonth() + 1).toString().padStart(2, '0');
+  const dd = this.fechaSeleccionada.getDate().toString().padStart(2, '0');
+  const fechaLocal = `${yyyy}-${mm}-${dd}`;
+  this.reservaForm.get('fecha')?.setValue(fechaLocal);
+}
 
   isToday(d: number | null): boolean {
     if (!d) return false;

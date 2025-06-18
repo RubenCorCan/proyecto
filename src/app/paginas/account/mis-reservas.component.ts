@@ -15,7 +15,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       <div class="reservas-grid">
         <div class="reserva-card" *ngFor="let reserva of reservas">
           <div class="reserva-header">
-            <span class="reserva-fecha">{{ reserva.fecha | date:'dd/MM/yyyy' }}</span>
+            <span class="reserva-fecha">
+              {{ getFechaLocal(reserva.fecha) | date:'dd/MM/yyyy' }}
+            </span>
             <span class="reserva-hora">{{ reserva.hora }}</span>
           </div>
           <div class="reserva-detalles">
@@ -165,10 +167,15 @@ export class MisReservasComponent implements OnInit {
 
   constructor(private firestoreService: FirestoreService, private snackBar: MatSnackBar) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.userEmail) {
-      this.reservas$ = this.firestoreService.getReservasByEmail(this.userEmail);
-    }
+    await this.firestoreService.borrarReservasPasadas(this.userEmail);
+    this.reservas$ = this.firestoreService.getReservasByEmail(this.userEmail);
+  }
+  }
+
+  getFechaLocal(fecha: string): Date {
+    return new Date(fecha + 'T00:00:00');
   }
 
   cancelarReserva(reserva: any) {
@@ -186,4 +193,6 @@ export class MisReservasComponent implements OnInit {
       });
     }
   }
+
+  
 }

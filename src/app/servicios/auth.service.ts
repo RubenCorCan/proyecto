@@ -126,6 +126,7 @@ export class AuthService {
   async logout(): Promise<void> {
     await this.auth.signOut();
     this.router.navigate(['/login']);
+    localStorage.removeItem('pedido'); 
   }
 
   get authState$(): Observable<any> {

@@ -30,6 +30,23 @@ export class PedirComponent implements OnInit {
   isLoading: boolean = false;
   usuario: any = null;
 
+  // --- Calendario personalizado para pedidos ---
+  meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  diasSemana = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+  hoy = new Date();
+  anioActualPedido = this.hoy.getFullYear();
+  mesActualPedido = this.hoy.getMonth();
+  fechaSeleccionadaPedido: Date | null = null;
+
+  horasRecogida: string[] = [
+  '12:00', '12:15', '12:30', '12:45',
+  '13:00', '13:15', '13:30', '13:45',
+  '14:00', '14:15', '14:30', '14:45',
+  '19:00', '19:15', '19:30', '19:45',
+  '20:00', '20:15', '20:30', '20:45',
+  '21:00', '21:15', '21:30', '21:45'
+];
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -44,7 +61,8 @@ export class PedirComponent implements OnInit {
       nombre: ['', Validators.required],
       telefono: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      observaciones: ['']
+      fechaRecogida: ['', Validators.required],
+      horaRecogida: ['', Validators.required],
     });
 
     // Si ya hay cliente guardado, redirige automáticamente
@@ -70,29 +88,131 @@ export class PedirComponent implements OnInit {
     });
   }
 
+  getHorasDisponibles(): string[] {
+  const fechaForm = this.pedidoForm.get('fechaRecogida')?.value;
+  if (!fechaForm) return this.horasRecogida;
+  const hoy = new Date();
+  const fechaSeleccionada = new Date(fechaForm);
+
+  // Si el día seleccionado es hoy, filtra las horas pasadas
+  if (
+    fechaSeleccionada.getFullYear() === hoy.getFullYear() &&
+    fechaSeleccionada.getMonth() === hoy.getMonth() &&
+    fechaSeleccionada.getDate() === hoy.getDate()
+  ) {
+    const ahora = hoy.getHours() * 60 + hoy.getMinutes();
+    return this.horasRecogida.filter(hora => {
+      const [h, m] = hora.split(':').map(Number);
+      return h * 60 + m > ahora;
+    });
+  }
+  // Si es otro día, muestra todas las horas
+  return this.horasRecogida;
+}
+
+  // --- Lógica del calendario personalizado para pedidos ---
+  getCalendarDaysPedido(): (number | null)[] {
+    const primerDia = new Date(this.anioActualPedido, this.mesActualPedido, 1).getDay() || 7;
+    const diasEnMes = new Date(this.anioActualPedido, this.mesActualPedido + 1, 0).getDate();
+    const dias: (number | null)[] = [];
+    for (let i = 1; i < primerDia; i++) dias.push(null);
+    for (let d = 1; d <= diasEnMes; d++) dias.push(d);
+    while (dias.length < 42) dias.push(null);
+    return dias;
+  }
+
+  prevMonthPedido() {
+    if (this.mesActualPedido === this.hoy.getMonth() && this.anioActualPedido === this.hoy.getFullYear()) return;
+    if (this.mesActualPedido === 0) {
+      this.mesActualPedido = 11;
+      this.anioActualPedido--;
+    } else {
+      this.mesActualPedido--;
+    }
+  }
+
+  nextMonthPedido() {
+    if (this.mesActualPedido === 11) {
+      this.mesActualPedido = 0;
+      this.anioActualPedido++;
+    } else {
+      this.mesActualPedido++;
+    }
+  }
+
+  selectDatePedido(d: number | null) {
+  if (!d || this.isPastDayPedido(d)) return;
+  this.fechaSeleccionadaPedido = new Date(this.anioActualPedido, this.mesActualPedido, d);
+  const yyyy = this.fechaSeleccionadaPedido.getFullYear();
+  const mm = (this.fechaSeleccionadaPedido.getMonth() + 1).toString().padStart(2, '0');
+  const dd = this.fechaSeleccionadaPedido.getDate().toString().padStart(2, '0');
+  const fechaLocal = `${yyyy}-${mm}-${dd}`;
+  this.pedidoForm.get('fechaRecogida')?.setValue(fechaLocal);
+  this.pedidoForm.get('fechaRecogida')?.markAsTouched();
+}
+
+  isTodayPedido(d: number | null): boolean {
+    if (!d) return false;
+    const hoy = this.hoy;
+    return (
+      d === hoy.getDate() &&
+      this.mesActualPedido === hoy.getMonth() &&
+      this.anioActualPedido === hoy.getFullYear()
+    );
+  }
+
+  isSelectedPedido(d: number | null): boolean {
+    if (!d || !this.fechaSeleccionadaPedido) return false;
+    return (
+      d === this.fechaSeleccionadaPedido.getDate() &&
+      this.mesActualPedido === this.fechaSeleccionadaPedido.getMonth() &&
+      this.anioActualPedido === this.fechaSeleccionadaPedido.getFullYear()
+    );
+  }
+
+  isPastDayPedido(d: number | null): boolean {
+    if (!d) return true;
+    if (this.anioActualPedido === this.hoy.getFullYear() && this.mesActualPedido === this.hoy.getMonth()) {
+      return d < this.hoy.getDate();
+    }
+    if (
+      this.anioActualPedido < this.hoy.getFullYear() ||
+      (this.anioActualPedido === this.hoy.getFullYear() && this.mesActualPedido < this.hoy.getMonth())
+    ) {
+      return true;
+    }
+    return false;
+  }
+  // --- Fin lógica calendario personalizado ---
+
   onBtnLeave() {
     this.carritoAnim = 'reverse';
     this.pizzaAnim = 'rise';
   }
 
   hacerPedido(): void {
-    if (this.pedidoForm.valid) {
-      this.isLoading = true;
-      const datosCliente: DatosCliente = this.pedidoForm.getRawValue();
+  if (this.pedidoForm.valid) {
+    this.isLoading = true;
+    const datosCliente: DatosCliente = this.pedidoForm.getRawValue();
+    this.pedirService.setCliente(datosCliente);
 
-      this.pedirService.setCliente(datosCliente);
+    this.firestoreService.crearPedidoCliente(datosCliente).then(async id => {
+      this.pedirService.setPedidoId(id);
 
-      this.firestoreService.crearPedidoCliente(datosCliente).then(id => {
-        this.pedirService.setPedidoId(id);
-        this.snackBar.open('Datos ingresados correctamente. Redirigiendo...', 'Cerrar', { duration: 3000 });
-        this.isLoading = false;
-        this.router.navigate(['/pedir/mipedido']);
-      }).catch(() => {
-        this.isLoading = false;
-        this.snackBar.open('Error al guardar datos. Intenta nuevamente.', 'Cerrar', { duration: 3000 });
-      });
-    } else {
-      this.snackBar.open('Por favor, rellena todos los campos obligatorios.', 'Cerrar', { duration: 3000 });
-    }
+      // --- NUEVO: Añade los platos al pedido ---
+      const platos = this.pedirService.getPedido();
+      const metodoPago: 'efectivo' | 'tarjeta' = 'efectivo'; // O como lo recojas en tu app
+
+      await this.firestoreService.actualizarPedidoConPlatos(id, platos, metodoPago);
+
+      this.isLoading = false;
+      this.router.navigate(['/pedir/mipedido']);
+    }).catch(() => {
+      this.isLoading = false;
+      this.snackBar.open('Error al guardar datos. Intenta nuevamente.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error']});
+    });
+  } else {
+    this.snackBar.open('Por favor, rellena todos los campos obligatorios.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
   }
+}
 }

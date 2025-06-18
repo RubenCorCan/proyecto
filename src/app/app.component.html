@@ -1,21 +1,16 @@
-<div class="video-hero-container" *ngIf="router.url === '/inicio' || router.url === '/'">
-  <video autoplay muted loop class="video-bg">
-    <source src="imagenes/home/Video-Fondo.mp4" type="video/mp4" />
-    Tu navegador no soporta el video.
-  </video>
+<div class="video-hero-container" *ngIf="mostrarVideoHero">
+  <video #videoHero autoplay muted loop class="video-bg">
+  <source src="imagenes/home/Video-Fondo.mp4" type="video/mp4" />
+  Tu navegador no soporta el video.
+</video>
   <div class="video-overlay"></div>
-  <h1 class="video-title"
-  [class.sticky]="stickyTitle"
-  [ngStyle]="{
-    top: getScrollTop() + 'vh',
-    fontSize: getScrollFontSize()
-  }">
-  L'Essenza
-</h1>
+  <h1 class="video-title">
+    Tu experiencia gastronómica comienza aquí.
+  </h1>
 </div>
-<div class="app-container">
   <header>
-    <nav class="navbar enhanced-navbar">
+    <nav class="navbar enhanced-navbar"
+       [ngClass]="isInicio() ? navbarScrollState : 'static'">
       <div class="navbar-header">
         <a class="navbar-logo" routerLink="/inicio">
           <span class="brand-title">L'Essenza</span>
@@ -47,6 +42,9 @@
       </div>
     </nav>
   </header>
+
+  
+<div class="app-container">
   <a *ngIf="!isInicio" class="btn-volver-inicio" routerLink="/inicio">
   <span class="material-icons">home</span>
 </a>

@@ -10,6 +10,8 @@ export interface DatosCliente {
   nombre: string;
   telefono?: string;
   email: string;
+  fechaRecogida?: string;   // <-- Añadido
+  horaRecogida?: string;    // <-- Añadido
 }
 
 @Injectable({

@@ -8,7 +8,7 @@
 
 .inicio-novedades {
   display: flex;
-  background: linear-gradient(to bottom, var(--shadow) 0%, var(--white) 100%);
+  background: linear-gradient(to bottom, black 0%, var(--white) 50%);
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -23,6 +23,7 @@
   font-weight: 700;
   position: relative;
   margin-bottom: 12px;
+  margin-top: 5%;
 }
 
 .inicio-title::after {
@@ -86,6 +87,35 @@
 .inicio-img::after,
 .inicio-img:hover::after {
   display: none;
+}
+
+.essenza-marquee-section {
+  width: 100vw;
+  overflow: hidden;
+  background: black;
+  padding: 0.7em 0; 
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 0px 30px var(--gold);
+}
+.essenza-marquee {
+  display: flex;
+  white-space: nowrap;
+  font-size: 2.5rem;
+  font-family: 'Great Vibes', cursive;
+  color: #FFD700;
+  letter-spacing: 0.2em;
+  user-select: none;
+  pointer-events: none;
+  position: relative;
+  z-index: 101;
+  will-change: transform;
+  transition: none;
+}
+.essenza-marquee-text {
+  margin: 0 2vw;
+  opacity: 0.95;
+  text-shadow: 0 2px 8px #000;
 }
 
 .pedir-flex {
