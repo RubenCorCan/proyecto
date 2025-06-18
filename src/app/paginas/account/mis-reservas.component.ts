@@ -169,7 +169,6 @@ export class MisReservasComponent implements OnInit {
 
   async ngOnInit() {
     if (this.userEmail) {
-    await this.firestoreService.borrarReservasPasadas(this.userEmail);
     this.reservas$ = this.firestoreService.getReservasByEmail(this.userEmail);
   }
   }

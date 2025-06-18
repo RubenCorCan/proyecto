@@ -12,7 +12,7 @@ import { PedirRecogerComponent } from './paginas/pedir-recoger/pedir-recoger.com
 import { PedirRecogerCategoriaComponent } from './paginas/pedir-recoger-categoria/pedir-recoger-categoria.component';
 import { PedirRecogerPlatoComponent } from './paginas/pedir-recoger-plato/pedir-recoger-plato.component';
 import { PedidoIniciadoGuard } from './servicios/guard/pedido-iniciado.guard';
-import { PedirSeguimientoComponent } from './paginas/pedir-seguimiento/pedir-seguimiento.component';
+import { AtribucionesComponent } from './paginas/atribuciones/atribuciones.component';
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
@@ -38,8 +38,8 @@ export const routes: Routes = [
       component: PedirRecogerPlatoComponent
     },
     {
-      path: 'pedir/mipedido/seguimiento',
-      component: PedirSeguimientoComponent
+      path: 'atribuciones',
+      component: AtribucionesComponent
     },
     { path: '', redirectTo: '/inicio', pathMatch: 'full' }
   ];  

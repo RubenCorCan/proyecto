@@ -198,13 +198,6 @@ export class PedirComponent implements OnInit {
 
     this.firestoreService.crearPedidoCliente(datosCliente).then(async id => {
       this.pedirService.setPedidoId(id);
-
-      // --- NUEVO: Añade los platos al pedido ---
-      const platos = this.pedirService.getPedido();
-      const metodoPago: 'efectivo' | 'tarjeta' = 'efectivo'; // O como lo recojas en tu app
-
-      await this.firestoreService.actualizarPedidoConPlatos(id, platos, metodoPago);
-
       this.isLoading = false;
       this.router.navigate(['/pedir/mipedido']);
     }).catch(() => {

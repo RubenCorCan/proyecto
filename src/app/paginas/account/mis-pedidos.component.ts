@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { Observable } from 'rxjs';
 import { CapitalizeFirstPipe } from '../../pipes/capitalize-first.pipe';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -65,6 +66,7 @@ import { CapitalizeFirstPipe } from '../../pipes/capitalize-first.pipe';
             <span class="pedido-total-label">Total:</span>
             <span class="pedido-total">{{ pedido.total | currency:'EUR':'symbol' }}</span>
           </div>
+          <button class="btn-cancelar" (click)="cancelarPedido(pedido)">Cancelar</button>
         </div>
       </div>
     </ng-container>
@@ -327,20 +329,50 @@ import { CapitalizeFirstPipe } from '../../pipes/capitalize-first.pipe';
         padding: 14px 4vw 14px 4vw;
       }
     }
+    .btn-cancelar {
+      margin-top: 10px;
+      background: #fff;
+      color: #b81426;
+      border: 1.5px solid #b81426;
+      border-radius: 8px;
+      padding: 6px 18px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-cancelar:hover {
+      background: #b81426;
+      color: #fff;
+    }
   `]
 })
 export class MisPedidosComponent implements OnInit {
   @Input() userEmail: string = '';
   pedidos$!: Observable<any[]>;
 
-  constructor(private firestoreService: FirestoreService) {}
+  constructor(private firestoreService: FirestoreService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     if (this.userEmail) {
       this.pedidos$ = this.firestoreService.getPedidosByEmail(this.userEmail);
-      this.firestoreService.borrarPedidosPasados(this.userEmail);
     }
   }
 
+  cancelarPedido(pedido: any) {
+    if (confirm('¿Seguro que quieres cancelar este pedido?')) {
+      this.firestoreService.cancelarPedido(pedido.id).then(() => {
+        this.snackBar.open('Pedido cancelado correctamente.', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+      }).catch(() => {
+        this.snackBar.open('Error al cancelar el pedido.', 'Cerrar', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+      });
+    }
+  }
   
 }

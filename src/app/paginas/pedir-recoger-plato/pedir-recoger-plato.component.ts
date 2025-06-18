@@ -113,15 +113,9 @@ confirmarPago(metodo: 'tarjeta' | 'efectivo') {
 
   this.firestoreService.actualizarPedidoConPlatos(pedidoId, pedido, metodo)
     .then(async () => {
-      await this.firestoreService.agregarSeguimientoSiAutenticado(pedidoId);
-
       this.snackBar.open(`Pedido confirmado pagando con ${metodo}. ¡Gracias!`, 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
       this.pedirService.cancelarPedido();
-      if (await this.firestoreService.existeUsuario()) {
-        this.router.navigate(['/pedir/mipedido/seguimiento']);
-      } else {
-        this.router.navigate(['/pedir']);
-      }
+      this.router.navigate(['/pedir']);
     })
     .catch(() => {
       this.snackBar.open('Error al confirmar el pedido.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });

@@ -162,7 +162,7 @@ export class FirestoreService {
     await deleteDoc(pedidoRef);
   }
 
-  async borrarPedidosPasados(userEmail: string) {
+/*async borrarPedidosPasados(userEmail: string) {
   const hoy = new Date();
   const pedidosRef = collection(this.firestore, 'pedidos');
   const q = query(pedidosRef, where('cliente.email', '==', userEmail));
@@ -177,7 +177,7 @@ export class FirestoreService {
   await deleteDoc(doc(this.firestore, 'pedidos', pedidoDoc.id));
 }
   });
-}
+}*/
 
   getPedidosByEmail(email: string): Observable<any[]> {
     const pedidosRef = collection(this.firestore, 'pedidos');
@@ -196,26 +196,12 @@ export class FirestoreService {
     await deleteDoc(reservaRef);
   }
 
-async agregarSeguimientoSiAutenticado(pedidoId: string): Promise<void> {
-  const user = await this.auth.currentUser;
-  if (!user) return;
+  async cancelarPedido(pedidoId: string): Promise<void> {
+    const pedidoRef = doc(this.firestore, `pedidos/${pedidoId}`);
+    await deleteDoc(pedidoRef);
+  }
 
-  const seguimientoRef = doc(
-    collection(this.firestore, `pedidos/${pedidoId}/seguimiento`)
-  );
-
-  await setDoc(seguimientoRef, {
-    estado: 'en preparación',
-    timer: Date.now()
-  });
-}
-
-async existeUsuario(): Promise<boolean> {
-  const user = await this.auth.currentUser;
-  return !!user;
-}
-
-async borrarReservasPasadas(email: string) {
+/*async borrarReservasPasadas(email: string) {
   const reservasRef = collection(this.firestore, 'reservas');
   const snapshot = await getDocs(reservasRef);
   const ahora = new Date();
@@ -229,5 +215,5 @@ async borrarReservasPasadas(email: string) {
       }
     }
   }
-}
+}*/
 }
