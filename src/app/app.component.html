@@ -19,7 +19,7 @@
           <div class="nav-icon-group">
             <a class="nav-icon table-link" routerLink="/reserva" routerLinkActive="active">
               <span class="material-icons" style="font-size:40px;">table_restaurant</span>
-              <span class="icon-label">Reserva Mesa</span>
+              <span class="icon-label">Reservar Mesa</span>
             </a>
             <a class="nav-icon order-link" routerLink="/pedir" routerLinkActive="active">
               <span class="material-icons" style="font-size:40px;">dining</span>
@@ -45,7 +45,7 @@
 
   
 <div class="app-container">
-  <a *ngIf="!isInicio" class="btn-volver-inicio" routerLink="/inicio">
+  <a *ngIf="!isInicio()" class="btn-volver-inicio" routerLink="/inicio">
   <span class="material-icons">home</span>
 </a>
   <router-outlet></router-outlet>
@@ -81,7 +81,7 @@
     </a>
   </li>
   <li>
-    <a href="https://drive.google.com/drive/folders/1-0-1l-2-3..." target="_blank" aria-label="Google Drive">
+    <a href="https://drive.google.com/drive/folders/1fqppS13h1a0kaTFlOHft5MhzegVm-S0s?usp=sharing" target="_blank" aria-label="Google Drive">
       <i class="fab fa-google-drive" style="font-size: 1.7em;"></i>
       <span class="icon-label">Drive</span>
     </a>

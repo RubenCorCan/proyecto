@@ -59,6 +59,11 @@
   gap: 64px;
 }
 
+.inicio-section.carta-flex {
+  padding: 36px 0 36px 0;
+  gap: 24px;
+}
+
 .carta-flex {
   flex-direction: row;
   gap: 48px;
@@ -131,7 +136,7 @@
 
 .pedir-bg {
   position: relative;
-  min-height: 340px;
+  min-height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,22 +145,22 @@
     linear-gradient(
       to bottom,
       rgb(255, 255, 255) 0%,
-      rgba(255, 255, 255, 0.918) 30%,
-      rgba(255,255,255,0.7) 60%,
+      rgba(255,255,255,0.7) 40%,
       rgba(184,20,38,0.10) 100%
     ),
-    url('../../../../public/imagenes/home/fondo_imagen_pedido.webp') center/cover no-repeat;
+    url('../../../../public/imagenes/home/fondo-pedir.jpeg') center/cover no-repeat;
   overflow: hidden;
   box-shadow: 0 20px 24px var(--dark-gray);
   z-index: 1;
+  margin-top: 40px;
 }
 
 .pedir-bg::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 1;
   background: inherit;
-  filter: blur(4px) brightness(0.95);
+  filter: blur(8px) brightness(0.95);
   z-index: 1;
   pointer-events: none;
 }
@@ -163,7 +168,7 @@
 .pedir-bg .inicio-content {
   position: relative;
   z-index: 2;
-  background: rgba(255,255,255,0.92);
+  background: var(--white);
   border-radius: 18px;
   padding: 36px 44px;
   box-shadow: 0 4px 24px var(--shadow);
@@ -171,6 +176,20 @@
   margin: 0 auto;
   text-align: center;
   backdrop-filter: blur(1px);
+}
+
+.pedir-overlay {
+  background: rgba(30, 20, 20, 0.68); /* Fondo oscuro translúcido */
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #0002;
+  color: #ffffff44;
+  padding: 32px 28px;
+  backdrop-filter: blur(1.5px);
+  transition: background 0.3s;
+}
+.pedir-overlay h2,
+.pedir-overlay p,
+.pedir-overlay button {
 }
 
 .pedir-flex .inicio-content {
@@ -219,6 +238,90 @@
   font-weight: 400;
 }
 
+.libreta-menu-efecto {
+  position: relative;
+  width: 200px;
+  height: 240px;
+  margin: 24px 10px;
+  cursor: pointer;
+  perspective: 1400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  border-radius: 14px;
+}
+
+.libreta-portada {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 240px;
+  z-index: 2;
+  box-shadow: 0 12px 36px #b8142622, 0 2px 8px #d4af37;
+  transform-origin: left center;
+  transition:
+    transform 1s cubic-bezier(.68,-0.55,.27,1.55),
+    box-shadow 0.5s,
+    filter 0.4s;
+  will-change: transform;
+  pointer-events: none;
+  border-radius: 14px;
+  filter: drop-shadow(0 8px 32px #d4af3722) drop-shadow(0 2px 8px #bfa23a);
+}
+
+.libreta-cuerpo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 240px;
+  z-index: 1;
+  box-shadow: 0 8px 32px #d4af3722;
+  border-radius: 14px;
+}
+
+.libreta-menu-texto-svg {
+  font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
+  font-size: 2.3rem;
+  font-weight: 900;
+  fill: var(--white, #fff);
+  letter-spacing: 0.18em;
+  text-shadow: 0 2px 8px #b81426, 0 1px 0 #d4af37;
+  user-select: none;
+  pointer-events: none;
+  paint-order: stroke fill;
+  stroke: #b81426;
+  stroke-width: 1.2px;
+  opacity: 0.98;
+  transition: opacity 0.1s 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.libreta-costura {
+  transition: opacity 0.1s 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.libreta-menu-efecto:hover .libreta-portada,
+.libreta-menu-efecto:focus .libreta-portada {
+  transform: rotateY(-120deg) scaleX(0.96) translateX(-12px);
+  
+}
+
+.libreta-menu-efecto:hover .libreta-menu-texto-svg,
+.libreta-menu-efecto:focus .libreta-menu-texto-svg {
+  opacity: 0;
+}
+.libreta-menu-efecto:hover .libreta-costura,
+.libreta-menu-efecto:focus .libreta-costura {
+  opacity: 0;
+}
+
+.libreta-menu-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
 .inicio-btn {
   background: linear-gradient(90deg, var(--gold) 20%, var(--primary-red) 50%, var(--primary-red) 80%, var(--gold) 100%);
   color: var(--white);
@@ -253,7 +356,7 @@
 
 .pizza-flotante.pizza-derecha {
   position: absolute;
-  top: 40px;
+  top: 80px;
   right: 0%;
   width: 500px;
   transform: rotate(-16deg);
@@ -374,60 +477,118 @@ iframe:hover {
 }
 
 /* Responsive */
-@media (max-width: 1000px) {
-  .inicio-section,
-  .carta-flex {
-    gap: 36px;
-    flex-direction: column !important;
-    padding: 48px 0 48px 0;
-  }
 
-  .carta-img {
-    width: 100%;
-    max-width: 400px;
-    height: 180px;
-  }
-  .inicio-content,
-  .no-bg {
-    align-items: center;
-    text-align: center;
-    margin-left: 0 !important;
-  }
-  .pedir-bg {
-    padding: 48px 0;
-    min-height: 260px;
-  }
-  .pedir-bg .inicio-content {
-    padding: 18px 6vw;
-    max-width: 98vw;
-  }
-  iframe {
-    max-width: 100%;
-  }
+/* --- Secciones y contenido centrado --- */
+.inicio-content,
+.no-bg {
+  padding: 0 2vw;
+  box-sizing: border-box;
+}
 
-  .pedir-flex {
-    flex-direction: column !important;
-    gap: 24px;
-    min-height: unset;
-  }
-  .pedir-img {
-    width: 100%;
-    max-width: 400px;
-    height: 180px;
-    left: 0;
-    margin-bottom: 12px;
-  }
+/* --- Marquee y efectos visuales --- */
+.essenza-marquee {
+  font-size: 2rem;
+  text-align: center;
+}
 
-  .pedir-flex .inicio-content {
-    margin-left: 0;
-    align-items: center;
-    text-align: center;
-    padding: 24px 8vw;
+/* --- Oculta decoraciones en móvil/tablet --- */
+@media (max-width: 1300px) {
+  .pizza-flotante,
+  .albahaca-flotante {
+    display: none !important;
   }
 }
 
-@media (max-width: 700px) {
-  .pizza-flotante {
-    display: none;
+/* --- Tablets y Surface Duo/Fold --- */
+@media (max-width: 1100px) {
+  .inicio-section,
+  .carta-flex,
+  .pedir-flex {
+    gap: 32px;
+    padding: 40px 0;
   }
+  .libreta-menu-efecto,
+  .libreta-portada,
+  .libreta-cuerpo {
+    width: 170px;
+    height: 200px;
+  }
+}
+
+/* --- iPad, Galaxy Fold, Surface Pro 7, iPhone 14 Pro Max, etc. --- */
+@media (max-width: 900px) {
+  .inicio-section,
+  .carta-flex,
+  .pedir-flex {
+    flex-direction: column !important;
+    gap: 24px;
+    padding: 28px 0;
+  }
+  .libreta-menu-efecto,
+  .libreta-portada,
+  .libreta-cuerpo {
+    width: 150px;
+    height: 180px;
+  }
+  .inicio-title { font-size: 2.4rem; }
+  .inicio-subtitle { font-size: 2rem; }
+  .inicio-btn { font-size: 1rem; padding: 14px 28px; }
+  .essenza-marquee { font-size: 1.2rem; }
+}
+
+/* --- iPad Mini, iPhone XR/12 Pro, Pixel 7, Galaxy S8+, Galaxy A51/71, etc. --- */
+@media (max-width: 700px) {
+  .inicio-section,
+  .carta-flex,
+  .pedir-flex {
+    gap: 14px;
+    padding: 16px 0;
+  }
+  .libreta-menu-efecto,
+  .libreta-portada,
+  .libreta-cuerpo {
+    width: 120px;
+    height: 140px;
+  }
+  .inicio-title { font-size: 2rem; }
+  .inicio-subtitle { font-size: 1.7rem; }
+  .inicio-btn { font-size: 0.85rem; padding: 14px 28px; }
+  .essenza-marquee { font-size: 1rem; }
+  .inicio-content,
+  .no-bg {
+    padding: 0 1vw;
+    font-size: 0.98rem;
+  }
+  .contacto-info { font-size: 0.95rem; gap: 6px; }
+  .inicio-img,
+  .carta-img,
+  .pedir-img {
+    width: 100%;
+    max-width: 160px;
+    height: 70px;
+  }
+}
+
+/* --- iPhone SE, Galaxy Z Fold, móviles pequeños --- */
+@media (max-width: 400px) {
+  .inicio-title { font-size: 1rem; }
+  .inicio-btn { font-size: 0.85rem; padding: 8px 6px; }
+  .libreta-menu-efecto,
+  .libreta-portada,
+  .libreta-cuerpo {
+    width: 60px;
+    height: 70px;
+  }
+  .essenza-marquee { font-size: 0.8rem; }
+}
+
+/* --- Otros detalles para máxima usabilidad --- */
+.inicio-btn,
+button,
+a.button,
+input[type="button"],
+input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+  /* Accesibilidad táctil */
 }

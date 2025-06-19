@@ -198,8 +198,10 @@ export class PedirComponent implements OnInit {
 
     this.firestoreService.crearPedidoCliente(datosCliente).then(async id => {
       this.pedirService.setPedidoId(id);
-      this.isLoading = false;
-      this.router.navigate(['/pedir/mipedido']);
+      setTimeout(() => {
+        this.isLoading = false;
+        this.router.navigate(['/pedir/mipedido']);
+      }, 1000);
     }).catch(() => {
       this.isLoading = false;
       this.snackBar.open('Error al guardar datos. Intenta nuevamente.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error']});

@@ -18,7 +18,74 @@
 
   <!-- NUEVA CARTA (imagen al lado) s-->
   <section class="inicio-section carta-flex">
-    <img class="inicio-img" src="imagenes/home/plato_carta.jpg" alt="Imagen de carta">
+    <a [routerLink]="['/carta']" class="libreta-menu-link" tabindex="0">
+  <div class="libreta-menu-efecto">
+    <!-- Portada de la libreta -->
+    <svg class="libreta-portada" viewBox="0 0 200 240" width="200" height="240">
+      <defs>
+        <!-- Degradado cuero rojizo -->
+        <linearGradient id="cueroRed" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#b81426"/>
+          <stop offset="60%" stop-color="#7a1a1a"/>
+          <stop offset="100%" stop-color="#d4af37"/>
+        </linearGradient>
+        <!-- Brillo dorado -->
+        <radialGradient id="shineGold" cx="0.3" cy="0.2" r="0.8">
+          <stop offset="0%" stop-color="#ffe066" stop-opacity="0.7"/>
+          <stop offset="80%" stop-color="#d4af37" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- Portada principal -->
+      <rect x="0" y="0" width="200" height="240" rx="22" fill="url(#cueroRed)" stroke="#d4af37" stroke-width="6"/>
+      <!-- Brillo -->
+      <ellipse cx="60" cy="50" rx="48" ry="20" fill="url(#shineGold)" />
+      <!-- Borde dorado grueso para dar volumen -->
+      <rect x="6" y="6" width="188" height="228" rx="16" fill="none" stroke="#ffe066" stroke-width="3"/>
+      <!-- Detalles de costura -->
+      <circle cx="20" cy="30" r="3" fill="#ffe066" class="libreta-costura"/>
+      <circle cx="180" cy="30" r="3" fill="#ffe066" class="libreta-costura"/>
+      <circle cx="20" cy="210" r="3" fill="#ffe066" class="libreta-costura"/>
+      <circle cx="180" cy="210" r="3" fill="#ffe066" class="libreta-costura"/>
+      <!-- Texto MENÚ -->
+      <text x="51%" y="50%" text-anchor="middle" dominant-baseline="middle"
+            class="libreta-menu-texto-svg">MENÚ</text>
+    </svg>
+    <!-- Cuerpo de la libreta -->
+    <svg class="libreta-cuerpo" viewBox="0 0 200 240" width="200" height="240">
+  <defs>
+    <!-- Fondo de página antigua -->
+    <linearGradient id="pagePaper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fffbe9"/>
+      <stop offset="100%" stop-color="#f3e7b7"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="200" height="240" rx="22" fill="url(#pagePaper)" stroke="#d4af37" stroke-width="4"/>
+  <!-- Sombra interior para dar profundidad -->
+  <ellipse cx="100" cy="230" rx="80" ry="12" fill="#bfa23a" opacity="0.13"/>
+  <!-- Líneas de página -->
+  <line x1="36" y1="50" x2="164" y2="50" stroke="#b81426" stroke-width="2.5" opacity="0.25"/>
+  <line x1="36" y1="80" x2="164" y2="80" stroke="#b81426" stroke-width="2.5" opacity="0.18"/>
+  <line x1="36" y1="110" x2="164" y2="110" stroke="#b81426" stroke-width="2.5" opacity="0.13"/>
+  <line x1="36" y1="140" x2="164" y2="140" stroke="#b81426" stroke-width="2.5" opacity="0.10"/>
+  <line x1="36" y1="170" x2="164" y2="170" stroke="#b81426" stroke-width="2.5" opacity="0.07"/>
+  <!-- TEXTO VER LA CARTA -->
+  <text
+    x="50%"
+    y="90%"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="'Montserrat', 'Quicksand', Arial, sans-serif"
+    font-size="1.1rem"
+    font-weight="bold"
+    fill="#b81426"
+    letter-spacing="0.12em"
+    style="text-shadow: 0 2px 8px #fffbe9, 0 1px 0 #d4af37;"
+  >
+    VER LA CARTA
+  </text>
+</svg>
+  </div>
+</a>
     <div class="inicio-content no-bg">
       <h2 class="inicio-subtitle">¡Descubre nuestra nueva carta!</h2>
       <p>Platos elaborados con ingredientes frescos y el mejor sabor. ¡Te sorprenderán!</p>
@@ -28,7 +95,7 @@
 
   <!-- PEDIR ONLINE (fondo con transición suave) -->
 <section class="inicio-section pedir-bg">
-  <div class="inicio-content no-bg">
+  <div class="inicio-content pedir-overlay">
     <h2 class="inicio-subtitle">¡Ordena fácil y rápido!</h2>
     <p>Haz tu pedido en línea y recíbelo en tu puerta o listo para llevar.</p>
     <button class="inicio-btn" routerLink="/pedir">¡PIDE AHORA!</button>
@@ -37,7 +104,7 @@
 
   <!-- VISÍTANOS -->
   <section class="inicio-section visita-section">
-    <img src="imagenes/home/pizza2.png" alt="Pizza flotante" class="pizza-flotante pizza-derecha">
+    <img src="imagenes/home/pizzaFlotante.png" alt="Pizza flotante" class="pizza-flotante pizza-derecha">
     <img src="imagenes/home/albahaca.png" alt="Albahaca flotante" class="pizza-flotante pizza-izquierda">
     <div class="inicio-content no-bg">
       

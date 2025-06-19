@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url('/imagenes/home/restaurante-reservas.webp') center/cover no-repeat;
+  background: url('/imagenes/home/fondo-reservas.jpeg') center/cover no-repeat;
   overflow: hidden;
 }
 

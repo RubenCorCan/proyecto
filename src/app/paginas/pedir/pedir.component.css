@@ -8,8 +8,8 @@
   z-index: 2000;
 }
 .pizza-loader img {
-  width: 10%;
-  height: 20%;
+  width: 150px;
+  height: 150px;
   animation: pizza-spin 1s linear infinite;
 }
 @keyframes pizza-spin {
@@ -23,7 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url('/imagenes/home/fondo-pedir.jpg') center/cover no-repeat;
+  background: url('/imagenes/home/fondo-pedir2.jpeg') center/cover no-repeat;
   overflow: hidden;
 }
 
