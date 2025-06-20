@@ -47,7 +47,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       justify-content: flex-start;
     }
     .reserva-card {
-  background: var(--white, #fffbe9);
+  background: white;
   border-radius: 18px;
   box-shadow: 0 4px 24px #0001;
   border: 2px solid var(--gold, #d4af37);
@@ -58,11 +58,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   color: var(--dark-gray, #333);
   position: relative;
   margin-bottom: 12px;
-  transition: box-shadow 0.18s, border-color 0.18s;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;  
 }
 .reserva-card:hover {
-  box-shadow: 0 8px 32px #d4af3722;
-  border-color: var(--primary-red, #b81426);
+  box-shadow: 0 6px 30px var(--gold);
+      transform: translateY(-4px);
 }
 .reserva-header {
   display: flex;
@@ -105,7 +105,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   padding: 12px 16px;
   font-size: 1.07rem;
   color: #3a2b1c;
-  align-items: flex-start;
+  align-items: center;
   border-radius: 10px;
   border: 1px solid var(--light-gold, #f9e4b7);
 }

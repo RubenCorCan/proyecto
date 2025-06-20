@@ -132,7 +132,6 @@ export class ReservaComponent implements OnInit {
     }
     return false;
   }
-  // --- FIN CALENDARIO PERSONALIZADO ---
 
   constructor(
     private fb: FormBuilder,
@@ -141,13 +140,25 @@ export class ReservaComponent implements OnInit {
     private authService: AuthService
   ) {
     this.reservaForm = this.fb.group({
-      nombre: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      telefono: ['', Validators.required],
-      fecha: ['', Validators.required],
-      hora: ['', Validators.required],
-      personas: ['', [Validators.required, Validators.min(1)]],
-    });
+  nombre: ['', Validators.required],
+  email: ['', [Validators.required, Validators.email]],
+  telefono: [
+    '',
+    [
+      Validators.required,
+      Validators.pattern(/^[0-9]{9}$/) 
+    ]
+  ],
+  fecha: ['', Validators.required],
+  hora: ['', Validators.required],
+  personas: [
+    '',
+    [
+      Validators.required,
+      Validators.pattern(/^[1-9][0-9]*$/)
+    ]
+  ]
+});
 
     this.authService.authState$.subscribe(user => {
       this.usuario = user;
@@ -271,5 +282,17 @@ export class ReservaComponent implements OnInit {
     const minutos = h * 60 + m;
     return minutos > horaActual;
   });
+}
+
+blockDecimal(event: KeyboardEvent) {
+  if (event.key === '.' || event.key === ',' || event.key === 'e') {
+    event.preventDefault();
+  }
+}
+
+onTelefonoInput(event: any) {
+  let value = event.target.value.replace(/\D/g, '');
+  if (value.length > 9) value = value.slice(0, 9);
+  this.reservaForm.get('telefono')?.setValue(value, { emitEvent: false });
 }
 }

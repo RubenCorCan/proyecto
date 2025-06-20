@@ -100,12 +100,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       flex-direction: column;
       gap: 18px;
       border: 2px solid var(--gold);
-      transition: box-shadow 0.18s, border-color 0.18s;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
       position: relative;
     }
     .pedido-card:hover {
-      box-shadow: 0 8px 32px #d4af3722;
-      border-color: var(--primary-red, #b81426);
+      box-shadow: 0 6px 30px var(--gold);
+      transform: translateY(-4px);
     }
     .pedido-header {
       display: flex;
@@ -193,7 +193,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       gap: 14px;
     }
     .pedido-section {
-      background: #fffbe9;
+      background: white;
       border-radius: 10px;
       padding: 10px 14px;
       margin-bottom: 0;

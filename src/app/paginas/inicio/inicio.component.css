@@ -123,34 +123,17 @@
   text-shadow: 0 2px 8px #000;
 }
 
-.pedir-flex {
-  position: relative;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(120deg, var(--white) 60%, #fbeee6 100%);
-  gap: 48px;
-  overflow: visible;
-  min-height: 320px;
-}
-
 .pedir-bg {
   position: relative;
-  min-height: 400px;
+  min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 80px 0;
   background: 
-    linear-gradient(
-      to bottom,
-      rgb(255, 255, 255) 0%,
-      rgba(255,255,255,0.7) 40%,
-      rgba(184,20,38,0.10) 100%
-    ),
-    url('../../../../public/imagenes/home/fondo-pedir.jpeg') center/cover no-repeat;
+    
+    url('../../../../public/imagenes/home/fondo-pedir.png') center/cover no-repeat;
   overflow: hidden;
-  box-shadow: 0 20px 24px var(--dark-gray);
   z-index: 1;
   margin-top: 40px;
 }
@@ -173,7 +156,7 @@
   padding: 36px 44px;
   box-shadow: 0 4px 24px var(--shadow);
   max-width: 420px;
-  margin: 0 auto;
+  margin-top: 50px;
   text-align: center;
   backdrop-filter: blur(1px);
 }
@@ -186,22 +169,6 @@
   padding: 32px 28px;
   backdrop-filter: blur(1.5px);
   transition: background 0.3s;
-}
-.pedir-overlay h2,
-.pedir-overlay p,
-.pedir-overlay button {
-}
-
-.pedir-flex .inicio-content {
-  z-index: 3;
-  background: rgba(255,255,255,0.92);
-  border-radius: 18px;
-  padding: 36px 44px;
-  box-shadow: 0 4px 24px var(--shadow);
-  margin-left: -30px;
-  max-width: 420px;
-  align-items: flex-start;
-  text-align: left;
 }
 
 .inicio-content {
@@ -550,7 +517,7 @@ iframe:hover {
     width: 120px;
     height: 140px;
   }
-  .inicio-title { font-size: 2rem; }
+  .inicio-title { font-size: 2.5rem; }
   .inicio-subtitle { font-size: 1.7rem; }
   .inicio-btn { font-size: 0.85rem; padding: 14px 28px; }
   .essenza-marquee { font-size: 1rem; }
@@ -571,7 +538,7 @@ iframe:hover {
 
 /* --- iPhone SE, Galaxy Z Fold, móviles pequeños --- */
 @media (max-width: 400px) {
-  .inicio-title { font-size: 1rem; }
+  .inicio-title { font-size: 2.5rem; }
   .inicio-btn { font-size: 0.85rem; padding: 8px 6px; }
   .libreta-menu-efecto,
   .libreta-portada,

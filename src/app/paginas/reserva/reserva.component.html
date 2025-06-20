@@ -33,14 +33,20 @@
       </label>
 
       <label class="form-label-stack">
-        <div class="label-row">
-          <span>Teléfono*</span>
-          <span class="error-inline" *ngIf="reservaForm.get('telefono')?.invalid && reservaForm.get('telefono')?.touched">
-            <span class="error-icon material-icons">error</span> El teléfono es obligatorio.
-          </span>
-        </div>
-        <input type="text" formControlName="telefono" required />
-      </label>
+  <div class="label-row">
+    <span>Teléfono*</span>
+    <span class="error-inline" *ngIf="reservaForm.get('telefono')?.invalid && reservaForm.get('telefono')?.touched">
+      <ng-container *ngIf="reservaForm.get('telefono')?.hasError('required')">
+        <span class="error-icon material-icons">error</span> El teléfono es obligatorio.
+      </ng-container>
+      <ng-container *ngIf="reservaForm.get('telefono')?.hasError('pattern')">
+        <span class="error-icon material-icons">error</span> Introduce un teléfono válido (9 dígitos).
+      </ng-container>
+    </span>
+  </div>
+  <input type="tel" formControlName="telefono" maxlength="9"
+    (input)="onTelefonoInput($event)" required />
+</label>
       </ng-container>
       <label class="form-label-stack">
   <div class="label-row">
@@ -101,14 +107,20 @@
       </label>
 
       <label class="form-label-stack">
-        <div class="label-row">
-          <span>Número de personas*</span>
-          <span class="error-inline" *ngIf="reservaForm.get('personas')?.invalid && reservaForm.get('personas')?.touched">
-            <span class="error-icon material-icons">error</span> Debe ser al menos 1 persona.
-          </span>
-        </div>
-        <input type="number" min="1" formControlName="personas" required />
-      </label>
+  <div class="label-row">
+    <span>Número de personas*</span>
+    <span class="error-inline" *ngIf="reservaForm.get('personas')?.invalid && reservaForm.get('personas')?.touched">
+      <ng-container *ngIf="reservaForm.get('personas')?.hasError('required')">
+        <span class="error-icon material-icons">error</span> Debe ser al menos 1 persona.
+      </ng-container>
+      <ng-container *ngIf="reservaForm.get('personas')?.hasError('pattern')">
+        <span class="error-icon material-icons">error</span> Solo números enteros positivos.
+      </ng-container>
+    </span>
+  </div>
+  <input type="number" min="1" step="1" formControlName="personas"
+    (keydown)="blockDecimal($event)" required />
+</label>
 
       <button type="submit" [disabled]="reservaForm.invalid">
         <span class="btn-reserva-anim material-icons">schedule</span>

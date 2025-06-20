@@ -18,7 +18,7 @@ html, body {
     --primary-red: #B81426; /* Rojo dominante */
     --gold: #D4AF37; /* Dorado */
     --light-gold: #F9E4B7; /* Dorado claro */
-    --white: #fffbe9; /* Blanco cálido */
+    --white: white; /* Blanco */
     --dark-gray: #333; /* Gris oscuro */
     --shadow: rgba(0, 0, 0, 0.2);
     --glass-bg: rgba(32, 18, 18, 0.93);
