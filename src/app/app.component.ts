@@ -173,4 +173,10 @@ export class AppComponent implements OnInit {
   private actualizarVideoHero(url: string) {
     this.mostrarVideoHero = (url === '/inicio' || url === '/');
   }
+
+  menuOpen = false;
+toggleMenu() { this.menuOpen = !this.menuOpen; }
+closeMenu() {
+  this.menuOpen = false;
+}
 }

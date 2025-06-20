@@ -1,7 +1,13 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { environment } from '../environments/environment';
+import { CurrencyPipe } from '@angular/common';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireModule } from '@angular/fire/compat';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { environment } from '../environments/environment';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
 
 // Importa los módulos de Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,10 +21,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideFirestore(() => getFirestore()),
-    // Añade los módulos necesarios
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()), 
     importProvidersFrom(
+      AngularFireModule.initializeApp(environment.firebaseConfig),
+      AngularFireAuthModule,
       MatFormFieldModule,
       MatInputModule,
       MatSelectModule,
@@ -28,6 +37,7 @@ export const appConfig: ApplicationConfig = {
       BrowserAnimationsModule,
       ReactiveFormsModule,
       FormsModule
-    )
+    ),
+    CurrencyPipe
   ]
 };

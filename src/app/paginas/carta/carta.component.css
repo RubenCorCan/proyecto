@@ -189,8 +189,8 @@
     padding: 12px 8px;
   }
   .plato-img {
-    width: 54px;
-    height: 54px;
+    width: 90px;
+    height: 90px;
   }
 }
 
@@ -206,11 +206,31 @@
   .plato-card {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 8px 4px;
   }
   .plato-img {
-    width: 44px;
-    height: 44px;
+    width: 100px;
+    height: 100px;
+  }
+  .plato-precio {
+    font-size: 1.1rem;
+    margin: 0 0 2px 0;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+  .plato-info {
+    gap: 4px;
+  }
+  .plato-info h4 {
+    font-size: 1.1rem;
+    margin: 0 0 4px 0;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+  .plato-info p {
+    font-size: 0.95rem;
+    text-align: center;
   }
 }

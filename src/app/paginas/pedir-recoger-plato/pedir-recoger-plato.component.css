@@ -597,15 +597,67 @@ h2 {
 
 
 /* Responsive */
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   .plato-banner {
-    max-width: 98vw;
+    max-width: 85vw;
     gap: 24px;
   }
   .pedido-container-modern {
-    width: 98vw;
-    padding: 18px 4vw 18px 4vw;
-  }
+  width: 50vw;
+  max-width: 100vw;
+  gap: 1rem; 
+  right:-100vw; 
+}
+.cart-list {
+  min-height: 200px;
+}
+.cart-item {
+  gap: 4px;
+}
+.cart-img {
+  width: 130px;
+  height: 130px;
+}
+.cart-info {
+  gap: 2px;
+}
+.cart-title,
+.cart-price {
+  font-size: 1.4rem;
+}
+.cart-qty button {
+  width: 40px;
+  height: 40px;
+  font-size: 1.7rem;
+}
+.cart-qty span {
+  min-width: 0.8em;
+  font-size: 1.5rem;
+}
+.cart-remove {
+  font-size: 1.5rem;
+}
+.cart-summary {
+  padding-top: 0.2rem;
+  gap: 0.2rem;
+  margin: 0;
+}
+.cart-summary-row {
+  font-size: 1.5rem;
+}
+.acciones-pedido {
+  gap: 4px;
+}
+.cancelar-btn {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+.finalizar-btn {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  width: 100%;
+}
 }
 @media (max-width: 900px) {
   .plato-banner {
@@ -615,8 +667,8 @@ h2 {
     margin: 32px auto 32px auto;
   }
   .plato-img-grande {
-    width: 120px;
-    height: 120px;
+    width: 180px;
+    height: 180px;
   }
   .plato-info-grande {
     align-items: center;
@@ -624,14 +676,129 @@ h2 {
     max-width: 98vw;
   }
   .pedido-container-modern {
-    padding: 12px 2vw 18px 2vw;
+  width: 60vw;
+  max-width: 100vw;
+  gap: 1rem; 
+  right:-100vw; 
+}
+.cart-list {
+  min-height: 300px;
+}
+.cart-item {
+  gap: 4px;
+}
+.cart-img {
+  width: 140px;
+  height: 140px;
+}
+.cart-info {
+  gap: 2px;
+}
+.cart-title,
+.cart-price {
+  font-size: 1.3rem;
+}
+.cart-qty button {
+  width: 35px;
+  height: 35px;
+  font-size: 1.5rem;
+}
+.cart-qty span {
+  min-width: 0.8em;
+  font-size: 1.3rem;
+}
+.cart-remove {
+  font-size: 1.3rem;
+}
+.cart-summary {
+  padding-top: 0.2rem;
+  gap: 0.2rem;
+  margin: 0;
+}
+.cart-summary-row {
+  font-size: 1.3rem;
+}
+.acciones-pedido {
+  gap: 2px;
+}
+.cancelar-btn {
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+.finalizar-btn {
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+}
+
+
+@media (max-width: 700px) {
+  .container {
+    height: 85vh;
   }
-  .cart-item {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 4px;
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
   }
+  
+.pedido-container-modern {
+  width: 70vw;
+  max-width: 100vw;
+  gap: 1rem; 
+  right:-100vw; 
+}
+.cart-list {
+  min-height: 300px;
+}
+.cart-item {
+  gap: 4px;
+}
+.cart-img {
+  width: 150px;
+  height: 150px;
+}
+.cart-info {
+  gap: 2px;
+}
+.cart-title,
+.cart-price {
+  font-size: 1.2rem;
+}
+.cart-qty button {
+  width: 30px;
+  height: 30px;
+  font-size: 1.35rem;
+}
+.cart-qty span {
+  min-width: 0.8em;
+  font-size: 1.2rem;
+}
+.cart-remove {
+  font-size: 1.2rem;
+}
+.cart-summary {
+  padding-top: 0.2rem;
+  gap: 0.2rem;
+  margin: 0;
+}
+.cart-summary-row {
+  font-size: 1.2rem;
+}
+.acciones-pedido {
+  gap: 2px;
+}
+.cancelar-btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+.finalizar-btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  width: 100%;
+}
 }
 @media (max-width: 600px) {
   .plato-title {
@@ -639,8 +806,8 @@ h2 {
     gap: 6px;
   }
   .plato-img-grande {
-    width: 70px;
-    height: 70px;
+    width: 130px;
+    height: 130px;
   }
   .plato-desc-grande {
     font-size: 0.95rem;
@@ -649,7 +816,128 @@ h2 {
     max-width: 98vw;
   }
   .pedido-container-modern {
-    padding: 8px 1vw 12px 1vw;
-    border-radius: 12px;
+  width: 90vw;
+  max-width: 100vw;
+  gap: 1rem; 
+  right:-120vw; 
+  height: 100vh;
+}
+.cart-list {
+  min-height: 300px;
+}
+.cart-item {
+  gap: 4px;
+}
+.cart-img {
+  width: 130px;
+  height: 130px;
+}
+.cart-info {
+  gap: 2px;
+}
+.cart-title,
+.cart-price {
+  font-size: 1.2rem;
+}
+.cart-qty button {
+  width: 25px;
+  height: 25px;
+  font-size: 1.2rem;
+}
+.cart-qty span {
+  min-width: 0.8em;
+  font-size: 1.2rem;
+}
+.cart-remove {
+  font-size: 1.2rem;
+}
+.cart-summary {
+  padding-top: 0.2rem;
+  gap: 0.2rem;
+  margin: 0;
+}
+.cart-summary-row {
+  font-size: 1.2rem;
+}
+.acciones-pedido {
+  gap: 2px;
+}
+.cancelar-btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+.finalizar-btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+}
+
+
+@media (max-width: 400px) {
+  .plato-title {
+    font-size: 1.1rem;
+    gap: 4px;
   }
+  .plato-img-grande {
+    width: 100px;
+    height: 100px;
+  }
+.pedido-container-modern {
+  width: 85vw;
+  max-width: 100vw;
+  gap: 1rem;  
+}
+.cart-list {
+  min-height: 300px;
+}
+.cart-item {
+  gap: 4px;
+}
+.cart-img {
+  width: 100px;
+  height: 100px;
+}
+.cart-info {
+  gap: 2px;
+}
+.cart-title,
+.cart-price {
+  font-size: 1rem;
+}
+.cart-qty button {
+  width: 25px;
+  height: 25px;
+  font-size: 1.2rem;
+}
+.cart-qty span {
+  min-width: 0.8em;
+  font-size: 1rem;
+}
+.cart-remove {
+  font-size: 1rem;
+}
+.cart-summary {
+  padding-top: 0.2rem;
+  gap: 0.2rem;
+  margin: 0;
+}
+.cart-summary-row {
+  font-size: 1rem;
+}
+.acciones-pedido {
+  gap: 2px;
+}
+
+.cancelar-btn {
+  font-size: 1rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+.finalizar-btn {
+  font-size: 1rem;
+  padding: 10px 20px;
+  width: 100%;
+}
 }

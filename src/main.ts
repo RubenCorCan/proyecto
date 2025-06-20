@@ -1,22 +1,16 @@
-import { LOCALE_ID } from '@angular/core';import { registerLocaleData } from '@angular/common';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
-registerLocaleData(localeEs, 'es'); // <-- Esto primero
+registerLocaleData(localeEs, 'es');
 
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideRouter } from '@angular/router';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AppComponent } from './app/app.component';
-import { routes } from './app/app.routes';
-import { environment } from './environments/environment';
+import { appConfig } from './app/app.config';
 
 bootstrapApplication(AppComponent, {
+  ...appConfig,
   providers: [
-    provideRouter(routes),
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    ...appConfig.providers,
     { provide: LOCALE_ID, useValue: 'es' }
   ]
 }).catch((err) => console.error(err));

@@ -1,0 +1,209 @@
+.pedidos-bg {
+  background: var(--white) !important;
+  min-height: 100vh;
+  min-width: 100vw;
+  width: 100vw;
+  padding: 0 0 60px 0;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.pedidos-title {
+  font-family: 'Italiana', 'Playfair Display', 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  color: var(--primary-red);
+  text-align: center;
+  margin-bottom: 60px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  position: relative;
+  transition: color 0.2s;
+  cursor: pointer;
+  top: 20px;
+  right: 17px;
+}
+
+.pedidos-title::after {
+  content: "";
+  display: block;
+  margin: 18px auto 0 auto;
+  width: 80px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--primary-red) 100%);
+  box-shadow: 0 2px 12px var(--shadow);
+  right: 20px;
+}
+
+.pedidos-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.pedido-card {
+  background: var(--white, #fffbe9);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #0001;
+  border: 2px solid var(--gold, #d4af37);
+  padding: 28px 28px 20px 28px;
+  min-width: 320px;
+  max-width: 400px;
+  font-family: 'Montserrat', 'Lato', sans-serif;
+  color: var(--dark-gray, #333);
+  position: relative;
+  margin-bottom: 12px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.pedido-card:hover {
+  box-shadow: 0 6px 30px var(--gold);
+  transform: translateY(-4px);
+}
+
+.pedido-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.pedido-fecha {
+  font-size: 1.05rem;
+  color: var(--primary-red, #b81426);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid var(--light-gold, #f9e4b7);
+  margin: 10px 0 16px 0;
+}
+
+.pedido-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pedido-label {
+  font-weight: 700;
+  color: var(--primary-red, #b81426);
+  min-width: 70px;
+  font-size: 1.01rem;
+}
+
+.pedido-value {
+  font-weight: 500;
+  color: var(--dark-gray, #333);
+  font-size: 1.01rem;
+  margin-right: 16px;
+}
+
+.pedido-section-title {
+  background: var(--light-gold, #f9e4b7);
+  color: var(--primary-red, #b81426);
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  padding: 7px 18px;
+  margin: 18px 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 1px;
+}
+
+.pedido-platos {
+  margin-bottom: 12px;
+}
+
+.pedido-plato {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--light-gold, #f9e4b7);
+  padding: 6px 0;
+  font-size: 1.05rem;
+}
+.plato-nombre {
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+  color: var(--dark-gray, #333);
+  flex: 1;
+}
+.plato-cantidad {
+  background: var(--light-gold, #f9e4b7);
+  color: var(--primary-red, #b81426);
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 2px 12px;
+  margin: 0 10px;
+  font-size: 1rem;
+}
+.plato-precio {
+  color: var(--gold, #d4af37);
+  font-weight: bold;
+  font-size: 1.08rem;
+  min-width: 60px;
+  text-align: right;
+}
+
+.pedido-total-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 18px;
+  background: var(--light-gold, #f9e4b7);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 1.15rem;
+  font-weight: bold;
+  gap: 12px;
+}
+.pedido-total-label {
+  color: var(--primary-red, #b81426);
+}
+.pedido-total {
+  color: var(--dark-gray, #333);
+  font-weight: 900;
+  font-size: 1.18rem;
+}
+
+.pedido-cancelar {
+  display: block;
+  width: 100%;
+  margin: 18px auto 0 auto;
+  background: transparent;
+  color: var(--primary-red, #b81426);
+  border: 2px solid var(--primary-red, #b81426);
+  border-radius: 8px;
+  padding: 10px 0;
+  font-size: 1.08rem;
+  font-family: 'Montserrat', 'Lato', sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.pedido-cancelar:hover {
+  background: var(--primary-red, #b81426);
+  color: var(--gold, #d4af37);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .pedido-card {
+    min-width: 90vw;
+    max-width: 98vw;
+    padding: 16px 8px 14px 8px;
+  }
+}

@@ -819,44 +819,340 @@ h2 {
 
 
 /* Responsive */
-@media (max-width: 900px) {
-  .categoria-banner {
-    flex-direction: column;
-    gap: 16px;
+@media (max-width: 1200px) { 
+  .container {
+    height: 85vh;
   }
-  .categoria-banner img {
-    width: 90px;
-    height: 90px;
+  .title {
+    font-size: 3rem;
+    margin-bottom: 20px;
   }
-  .platos-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
+
+.pedido-container-modern {
+  width: 50vw;
+  max-width: 100vw;
+  gap: 1rem; 
+  right:-100vw; 
 }
+.cart-list {
+  min-height: 200px;
+}
+.cart-item {
+  gap: 4px;
+}
+.cart-img {
+  width: 130px;
+  height: 130px;
+}
+.cart-info {
+  gap: 2px;
+}
+.cart-title,
+.cart-price {
+  font-size: 1.4rem;
+}
+.cart-qty button {
+  width: 40px;
+  height: 40px;
+  font-size: 1.7rem;
+}
+.cart-qty span {
+  min-width: 0.8em;
+  font-size: 1.5rem;
+}
+.cart-remove {
+  font-size: 1.5rem;
+}
+.cart-summary {
+  padding-top: 0.2rem;
+  gap: 0.2rem;
+  margin: 0;
+}
+.cart-summary-row {
+  font-size: 1.5rem;
+}
+.acciones-pedido {
+  gap: 4px;
+}
+.cancelar-btn {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+.finalizar-btn {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+}
+
+/* iPad Mini y tablets medianas */
+@media (max-width: 900px) {
+  .container {
+    height: 85vh;
+  }
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+.pedido-container-modern {
+  width: 60vw;
+  max-width: 100vw;
+  gap: 1rem; 
+  right:-100vw; 
+}
+.cart-list {
+  min-height: 300px;
+}
+.cart-item {
+  gap: 4px;
+}
+.cart-img {
+  width: 140px;
+  height: 140px;
+}
+.cart-info {
+  gap: 2px;
+}
+.cart-title,
+.cart-price {
+  font-size: 1.3rem;
+}
+.cart-qty button {
+  width: 35px;
+  height: 35px;
+  font-size: 1.5rem;
+}
+.cart-qty span {
+  min-width: 0.8em;
+  font-size: 1.3rem;
+}
+.cart-remove {
+  font-size: 1.3rem;
+}
+.cart-summary {
+  padding-top: 0.2rem;
+  gap: 0.2rem;
+  margin: 0;
+}
+.cart-summary-row {
+  font-size: 1.3rem;
+}
+.acciones-pedido {
+  gap: 2px;
+}
+.cancelar-btn {
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+.finalizar-btn {
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+}
+
+@media (max-width: 700px) {
+  .container {
+    height: 85vh;
+  }
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+.pedido-container-modern {
+  width: 70vw;
+  max-width: 100vw;
+  gap: 1rem; 
+  right:-100vw; 
+}
+.cart-list {
+  min-height: 300px;
+}
+.cart-item {
+  gap: 4px;
+}
+.cart-img {
+  width: 150px;
+  height: 150px;
+}
+.cart-info {
+  gap: 2px;
+}
+.cart-title,
+.cart-price {
+  font-size: 1.2rem;
+}
+.cart-qty button {
+  width: 30px;
+  height: 30px;
+  font-size: 1.35rem;
+}
+.cart-qty span {
+  min-width: 0.8em;
+  font-size: 1.2rem;
+}
+.cart-remove {
+  font-size: 1.2rem;
+}
+.cart-summary {
+  padding-top: 0.2rem;
+  gap: 0.2rem;
+  margin: 0;
+}
+.cart-summary-row {
+  font-size: 1.2rem;
+}
+.acciones-pedido {
+  gap: 2px;
+}
+.cancelar-btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+.finalizar-btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+}
+
+/* Móviles */
 @media (max-width: 600px) {
-  .platos-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  .container {
+    height: 95vh;
   }
-  .plato-card {
-    padding: 14px 6px 14px 6px;
+  .title {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
   }
-  .categoria-banner img {
-    width: 70px;
-    height: 70px;
+  
+.pedido-container-modern {
+  width: 90vw;
+  max-width: 100vw;
+  gap: 1rem; 
+  right:-120vw; 
+  height: 100vh;
+}
+.cart-list {
+  min-height: 300px;
+}
+.cart-item {
+  gap: 4px;
+}
+.cart-img {
+  width: 130px;
+  height: 130px;
+}
+.cart-info {
+  gap: 2px;
+}
+.cart-title,
+.cart-price {
+  font-size: 1.2rem;
+}
+.cart-qty button {
+  width: 25px;
+  height: 25px;
+  font-size: 1.2rem;
+}
+.cart-qty span {
+  min-width: 0.8em;
+  font-size: 1.2rem;
+}
+.cart-remove {
+  font-size: 1.2rem;
+}
+.cart-summary {
+  padding-top: 0.2rem;
+  gap: 0.2rem;
+  margin: 0;
+}
+.cart-summary-row {
+  font-size: 1.2rem;
+}
+.acciones-pedido {
+  gap: 2px;
+}
+.cancelar-btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+.finalizar-btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+}
+
+@media (max-width: 400px) {
+  .container {
+    height: 95vh;
   }
-  .toggle-pedido-btn {
-    bottom: 18px;
-    right: 18px;
-    width: 44px;
-    height: 44px;
-    font-size: 1.5rem;
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
   }
-  .carrito-badge {
-    width: 18px;
-    height: 18px;
-    font-size: 0.91rem;
-    top: 4px;
-    right: 4px;
-  }
+  
+.pedido-container-modern {
+  width: 85vw;
+  max-width: 100vw;
+  gap: 1rem;  
+}
+.cart-list {
+  min-height: 300px;
+}
+.cart-item {
+  gap: 4px;
+}
+.cart-img {
+  width: 100px;
+  height: 100px;
+}
+.cart-info {
+  gap: 2px;
+}
+.cart-title,
+.cart-price {
+  font-size: 1rem;
+}
+.cart-qty button {
+  width: 25px;
+  height: 25px;
+  font-size: 1.2rem;
+}
+.cart-qty span {
+  min-width: 0.8em;
+  font-size: 1rem;
+}
+.cart-remove {
+  font-size: 1rem;
+}
+.cart-summary {
+  padding-top: 0.2rem;
+  gap: 0.2rem;
+  margin: 0;
+}
+.cart-summary-row {
+  font-size: 1rem;
+}
+.acciones-pedido {
+  gap: 2px;
+}
+
+.cancelar-btn {
+  font-size: 1rem;
+  padding: 10px 20px;
+  width: 100%;
+}
+.finalizar-btn {
+  font-size: 1rem;
+  padding: 10px 20px;
+  width: 100%;
+}
 }

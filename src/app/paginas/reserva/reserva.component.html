@@ -95,9 +95,9 @@
           </span>
         </div>
         <select formControlName="hora" required>
-          <option value="" disabled selected>Selecciona una hora</option>
-          <option *ngFor="let h of horariosDisponibles" [value]="h">{{ h }}</option>
-        </select>
+        <option value="" disabled selected>Selecciona una hora</option>
+        <option *ngFor="let h of getHorasDisponiblesFiltradas()" [value]="h">{{ h }}</option>
+      </select>
       </label>
 
       <label class="form-label-stack">

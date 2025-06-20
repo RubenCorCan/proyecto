@@ -576,8 +576,8 @@ iframe:hover {
   .libreta-menu-efecto,
   .libreta-portada,
   .libreta-cuerpo {
-    width: 60px;
-    height: 70px;
+    width: 100px;
+    height: 120px;
   }
   .essenza-marquee { font-size: 0.8rem; }
 }

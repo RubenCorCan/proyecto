@@ -253,4 +253,23 @@ export class ReservaComponent implements OnInit {
   mesasDisponibles() {
     return this.aforo.mesas || [];
   }
+  
+  getHorasDisponiblesFiltradas(): string[] {
+  if (!this.fechaSeleccionada) return this.horariosDisponibles;
+  const hoy = new Date();
+  const esHoy =
+    this.fechaSeleccionada.getFullYear() === hoy.getFullYear() &&
+    this.fechaSeleccionada.getMonth() === hoy.getMonth() &&
+    this.fechaSeleccionada.getDate() === hoy.getDate();
+
+  if (!esHoy) return this.horariosDisponibles;
+
+  const horaActual = hoy.getHours() * 60 + hoy.getMinutes();
+  // Devuelve solo las horas posteriores a la actual
+  return this.horariosDisponibles.filter(horaStr => {
+    const [h, m] = horaStr.split(':').map(Number);
+    const minutos = h * 60 + m;
+    return minutos > horaActual;
+  });
+}
 }

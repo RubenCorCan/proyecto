@@ -1,0 +1,21 @@
+<div class="panel-admin-bg">
+  <div class="panel-admin-nav">
+    <button [class.active]="tab==='productos'" (click)="tab='productos'">
+      <i class="fa-solid fa-pizza-slice"></i>
+      <span>Productos</span>
+    </button>
+    <button [class.active]="tab==='pedidos'" (click)="tab='pedidos'">
+      <i class="fa-solid fa-receipt"></i>
+      <span>Pedidos</span>
+    </button>
+    <button [class.active]="tab==='reservas'" (click)="tab='reservas'">
+      <i class="fa-regular fa-calendar-check"></i>
+      <span>Reservas</span>
+    </button>
+  </div>
+  <div class="panel-admin-content">
+    <app-productos *ngIf="tab==='productos'"></app-productos>
+    <app-pedidos *ngIf="tab==='pedidos'"></app-pedidos>
+    <app-reservas *ngIf="tab==='reservas'"></app-reservas>
+  </div>
+</div>

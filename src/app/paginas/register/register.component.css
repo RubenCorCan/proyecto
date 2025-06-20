@@ -288,17 +288,167 @@ input:invalid:focus {
 }
 
 /* Responsive */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .register-container {
-    max-width: 98vw;
-    padding: 18px 4vw 18px 4vw;
-    margin-top: 60px;
+    max-width: 420px;
+    padding: 22px 6vw 18px 6vw;
+    margin-top: 40px;
+    gap: 16px;
   }
   h2 {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
   }
-  .step-buttons {
-    flex-direction: column;
-    gap: 8px;
+  .register-stepper {
+    margin-top: 18px;
+    gap: 0;
+  }
+  .circle {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+  }
+  .label {
+    font-size: 0.93rem;
+  }
+  .step-connector {
+    width: 32px;
+    margin: 0 2px 12px 2px;
+  }
+  .form-group {
+    gap: 4px;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"] {
+    font-size: 0.98rem;
+    padding: 0.6em 0.8em;
+    border-radius: 10px;
+  }
+  .btn {
+    font-size: 0.98rem;
+    padding: 0.6em 1.2em;
+    border-radius: 14px;
+  }
+  .btn-accent {
+    font-size: 0.98rem;
+  }
+  .auth-button-group p {
+    font-size: 0.93rem;
+  }
+}
+
+/* Tablets y móviles grandes */
+@media (max-width: 700px) {
+  .register-container {
+    max-width: 98vw;
+    padding: 12px 3vw 12px 3vw;
+    margin-top: 24px;
+    gap: 10px;
+  }
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+  }
+  .register-stepper {
+    margin-top: 10px;
+  }
+  .circle {
+    width: 22px;
+    height: 22px;
+    font-size: 0.93rem;
+  }
+  .label {
+    font-size: 0.88rem;
+  }
+  .step-connector {
+    width: 18px;
+    margin: 0 1px 8px 1px;
+  }
+  .form-group {
+    gap: 2px;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"] {
+    font-size: 0.93rem;
+    padding: 0.45em 0.6em;
+    border-radius: 8px;
+  }
+  .btn {
+    font-size: 0.93rem;
+    padding: 0.5em 0.7em;
+    border-radius: 10px;
+  }
+  .btn-accent {
+    font-size: 0.93rem;
+  }
+  .auth-button-group p {
+    font-size: 0.88rem;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .register-container {
+    max-width: 100vw;
+    padding: 6px 1vw 6px 1vw;
+    margin-top: 8px;
+    border-radius: 10px;
+    gap: 6px;
+  }
+  h2 {
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+  }
+  .register-stepper {
+    margin-top: 4px;
+    gap: 5px;
+  }
+  .step {
+    min-width: 0;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+  .circle {
+    width: 18px;
+    height: 18px;
+    font-size: 0.8rem;
+    margin-bottom: 0;
+    margin-right: 4px;
+  }
+  .label {
+    font-size: 0.8rem;
+    margin-right: 4px;
+  }
+  .step-connector {
+    width: 10px;
+    height: 2px;
+    margin: 0 0 0 0;
+  }
+  .form-group {
+    gap: 1px;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"] {
+    font-size: 0.85rem;
+    padding: 0.3em 0.4em;
+    border-radius: 7px;
+  }
+  .btn {
+    font-size: 0.85rem;
+    padding: 0.4em 0.5em;
+    border-radius: 8px;
+  }
+  .btn-accent {
+    font-size: 0.85rem;
+  }
+  .auth-button-group p {
+    font-size: 0.8rem;
   }
 }

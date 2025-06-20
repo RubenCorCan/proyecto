@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 .pizza-loader {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -14,6 +17,31 @@
 }
 @keyframes pizza-spin {
   100% { transform: rotate(360deg); }
+}
+
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2001;
+  margin-left: -120px;
+  flex-shrink: 0;
+}
+.hamburger-btn span {
+  display: block;
+  width: 28px;
+  height: 4px;
+  margin: 3px 0;
+  background: var(--white);
+  gap: 50px;
+  border-radius: 2px;
+  transition: all 0.3s;
 }
 
 /* Botón Volver al Inicio */
@@ -98,12 +126,17 @@
 /* Video Hero Section */
 .video-hero-container {
   position: relative;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
   z-index: 1000;
   opacity: 0;
   animation: fade 1.5s forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes fade {
@@ -115,7 +148,7 @@
   position: absolute;
   top: 0; left: 0;
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   object-fit: cover;
   z-index: 1;
   filter: brightness(0.50)  saturate(1.08);
@@ -126,7 +159,7 @@
   position: absolute;
   top: 0; left: 0;
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   background: linear-gradient(180deg, rgba(0,0,0,0.32) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.585) 98%, #6a540e 100%);
   z-index: 2;
   pointer-events: none;
@@ -134,30 +167,32 @@
 
 .video-title {
   position: absolute;
+  z-index: 3;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   color: #fff;
-  font-size: 3vw;
-  z-index: 3;
+  font-size: clamp(1.5rem, 5vw, 2.8rem);
   text-shadow:
-  0 4px 24px var(--shadow),        
-  0 2px 0 var(--primary-red),      
-  0 0px 8px var(--gold),           
-  0 1px 0 var(--dark-gray);         
+    0 4px 24px var(--shadow),
+    0 2px 0 var(--primary-red),
+    0 0px 8px var(--gold),
+    0 1px 0 var(--dark-gray);
   letter-spacing: 2px;
   margin: 0;
-  padding: 0.2em 1.2em;
-  white-space: nowrap;
+  padding: 0.3em 1.2em;
+  white-space: normal;
   font-family: 'Great Vibes', cursive;
-  pointer-events: none;
   font-weight: 400;
   font-style: normal;
+  text-align: center;
+  max-width: 90vw;
+  line-height: 1.2;
   animation: fadeInUp 1.5s 0.2s forwards;
   opacity: 0;
   animation-delay: 1s;
+  box-sizing: border-box;
+  border-radius: 1em;
 }
-
 
 @keyframes fadeInUp {
   from {
@@ -182,10 +217,13 @@
   
 }
 
-
-@media (max-width: 600px) {
-  .video-title { font-size: 7vw !important; }
-  .video-hero-container { min-height: 220px; }
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* HEADER */
@@ -228,36 +266,19 @@
 
 .navbar-header {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  max-width: 1300px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 50px;
   padding: 0 3vw;
 }
 
 .navbar-logo {
   display: flex;
-  align-items: center;
-  font-size: 2.7rem;
-  font-weight: 800;
-  color: var(--gold);
-  text-decoration: none;
-  letter-spacing: 2.5px;
-  gap: 0.8em;
   transition: color 0.2s;
-  text-shadow: 0 2px 12px var(--primary-red);
-}
-.logo-img {
-  font-size: 54px !important;
-  border-radius: 50%;
-  background: var(--white);
-  box-shadow: 0 2px 12px var(--shadow);
-  border: 2px solid var(--gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 54px;
-  height: 54px;
+  flex-shrink: 0;
 }
 .brand-title {
   font-family: 'Great Vibes', cursive;
@@ -278,6 +299,12 @@
 .navbar-header-links {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  gap: 0.5em;
+  margin: auto 100px;
+}
+.navbar-spacer {
+  flex: 1 1 auto;
 }
 
 .nav-icon-group {
@@ -430,8 +457,11 @@
 }
 
 .footer-right {
+  margin-left: auto !important;
   display: flex;
   align-items: center;
+  justify-content: flex-end !important;
+  flex: 1 1 auto;
 }
 
 .social-icons {
@@ -504,27 +534,202 @@
 }
 
 /* Responsive */
+/* Tablets y Surface */
+@media (max-width: 1100px) {
+  
+  .navbar-logo { font-size: 3.3rem; }
+  .brand-title { font-size: 3.3rem; }
+  .nav-icon-group { gap: 1.2em; }
+  .navbar-header-links { margin-right: 50px; }
+  .footer-title { font-size: 1.1rem; }
+  .libreta-menu-efecto,
+  .libreta-portada,
+  .libreta-cuerpo {
+    width: 170px;
+    height: 200px;
+  }
+}
+
+/* iPad, Surface Duo/Fold, Galaxy Fold, iPhone 14 Pro Max, etc. (≤900px) */
 @media (max-width: 900px) {
-  .footer-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2em;
+  /* Navbar y Footer */
+  
+  .navbar-logo { font-size: 3rem; }
+  .brand-title { font-size: 3rem; }
+  .nav-icon-group { gap: 0.7em; }
+  .navbar-header-links { margin: auto 0; }
+  .footer-title { font-size: 1rem; }
+  .footer-links { gap: 0.7em; font-size: 0.95rem; }
+  .footer-logo { font-size: 1.1rem; }
+  .footer-logo-img { font-size: 28px !important; width: 28px; height: 28px; }
+  .social-icons { gap: 0.7em; }
+  .social-icons i { font-size: 1.2em; }
+  /* Botón volver inicio */
+  .btn-volver-inicio {
+    width: 44px; height: 44px; font-size: 1.5rem; left: 12px; bottom: 12px;
   }
-  .navbar-header {
-    flex-direction: column;
-    gap: 1em;
-    align-items: flex-start;
+  .btn-volver-inicio .material-icons { font-size: 1.5rem; }
+  /* Video hero */
+  .video-title {
+    font-size: clamp(1.1rem, 7vw, 2.2rem);
+    padding: 0.2em 0.7em;
+    max-width: 96vw;
   }
+  /* Menú hamburguesa */
+  .hamburger-btn { display: flex; }
   .nav-icon-group {
-    gap: 1em;
+    position: fixed;
+    top: 0;
+    right: -100vw;
+    width: 40vw;           /* Más estrecho */
+    max-width: 100vw;
+    height: auto;          /* Solo lo necesario */
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--primary-red) 70%, var(--gold) 100%);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.7em;
+    padding: 24px 8px 24px 8px;
+    box-shadow: -8px 0 32px #0003;
+    z-index: 2000;
+    transition: right 0.35s cubic-bezier(.68,-0.55,.27,1.55);
+    overflow-y: auto;
+  }
+  .nav-icon-group.open { right: 0; }
+  .navbar-header-links { flex-direction: row-reverse; align-items: center;}
+  .nav-icon {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1.1rem;
+    padding: 0.7em 0;
+    background: none;
+    border: 1px solid var(--shadow);
+    box-shadow: 0px 4px var(--shadow);
+  }
+  .nav-icon .material-icons {
+    font-size: 2rem !important;
+    margin-right: 80px;
+    margin-left: 20px;
+    color: var(--white);
+  }
+  .icon-label {
+    position: static;
+    opacity: 1;
+    background: none;
+    color: var(--gold);
+    font-size: 1.1rem;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    transition: none;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .nav-icon-group::before {
+    content: "L'Essenza";
+    display: block;
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.1rem;
+    color: var(--white);
+    margin-bottom: 1.2em;
+    margin-left: 2px;
+    letter-spacing: 2px;
+    text-shadow: 0 0px 12px var(--dark-gray);
+  }
+  .footer-content {
+    flex-wrap: nowrap !important;
+  }
+  .footer-right {
+    margin-left: auto !important;
+    justify-content: flex-end !important;
+    width: auto !important;
+  }
+  
+}
+
+/* Móviles grandes (≤700px) */
+@media (max-width: 700px) {
+  
+  .navbar-logo { font-size: 3rem; }
+  .brand-title { font-size: 3rem; }
+  .nav-icon-group { gap: 0.5em; width: 55vw;}
+  .nav-icon .material-icons { font-size: 28px !important; }
+  .footer-title { font-size: 0.95rem; }
+  .footer-links { gap: 0.5em; font-size: 0.9rem; }
+  .footer-logo { font-size: 0.95rem; }
+  .footer-logo-img { font-size: 22px !important; width: 22px; height: 22px; }
+  .social-icons { gap: 0.5em; }
+  .social-icons i { font-size: 1em; }
+  .btn-volver-inicio {
+    width: 38px; height: 38px; font-size: 1.1rem; left: 6px; bottom: 6px;
+  }
+  .btn-volver-inicio .material-icons { font-size: 1.1rem; }
+  .video-title {
+    font-size: clamp(1.1rem, 7vw, 2.2rem);
+    padding: 0.2em 0.7em;
+    max-width: 96vw;
+  }
+  .enhanced-navbar,
+  .enhanced-navbar.sticky,
+  .enhanced-navbar.solid,
+  .enhanced-navbar.static {
+    padding: 0.7em 0;
+  }
+  .icon-label,
+  .social-icons .icon-label {
+    padding: 0.18em 0.5em;
+  }
+  .footer-content {
+    flex-wrap: nowrap !important;
+  }
+  .footer-right {
+    margin-left: auto !important;
+    justify-content: flex-end !important;
+    width: auto !important;
   }
 
+}
+
+/* iPhone SE, Galaxy Z Fold, móviles pequeños (≤400px) */
+@media (max-width: 400px) {
+  .nav-icon-group { gap: 0.5em; width: 100vw;}
+  .footer-content {
+    max-width: 100vw;
+    padding: 0 0.5vw;
+    gap: 0.4em;
+  }
+  .footer-title { font-size: 0.7rem; }
+  .footer-links { gap: 0.2em; font-size: 0.7rem; }
+  .footer-logo { font-size: 0.7rem; }
+  .footer-logo-img { font-size: 14px !important; width: 14px; height: 14px; }
+  .social-icons { gap: 0.2em; }
+  .social-icons i { font-size: 0.7em; }
   .btn-volver-inicio {
-    width: 44px;
-    height: 44px;
-    font-size: 1.5rem;
+    width: 28px; height: 28px; font-size: 0.7rem; left: 2px; bottom: 2px;
   }
-  .btn-volver-inicio .material-icons {
-    font-size: 1.5rem;
+  .btn-volver-inicio .material-icons { font-size: 0.7rem; }
+  .video-title {
+    font-size: 9vw !important;
+    padding: 0.05em 0.2em;
   }
+  .footer-content {
+    flex-wrap: nowrap !important;
+  }
+  .footer-right {
+    margin-left: auto !important;
+    justify-content: flex-end !important;
+    width: auto !important;
+  }
+}
+
+.video-hero-container,
+header,
+footer,
+.app-container {
+  max-width: 100vw;
+  box-sizing: border-box;
 }
