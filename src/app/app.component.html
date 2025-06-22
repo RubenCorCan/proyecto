@@ -1,0 +1,102 @@
+<div class="video-hero-container" *ngIf="mostrarVideoHero">
+  <video #videoHero autoplay muted loop class="video-bg">
+    <source src="imagenes/home/Video-Fondo.mp4" type="video/mp4" />
+    Tu navegador no soporta el video.
+  </video>
+  <div class="video-overlay"></div>
+  <h1 class="video-title">
+    Tu experiencia gastronómica comienza aquí.
+  </h1>
+</div>
+
+<header>
+  <nav class="navbar enhanced-navbar"
+       [ngClass]="isInicio() ? navbarScrollState : 'static'">
+    <div class="navbar-header">
+  <a class="navbar-logo" routerLink="/inicio">
+    <span class="brand-title">L'Essenza</span>
+  </a>
+  <div class="navbar-spacer"></div>
+  <div class="navbar-header-links">
+    <button class="hamburger-btn"
+            type="button"
+            (click)="toggleMenu()"
+            aria-label="Abrir menú"
+            [attr.aria-expanded]="menuOpen">
+      <span></span><span></span><span></span>
+    </button>
+        <!-- Menú colapsable -->
+        <div class="nav-icon-group" [class.open]="menuOpen">
+  <a class="nav-icon table-link" routerLink="/reserva" routerLinkActive="active" (click)="closeMenu()">
+    <span class="material-icons" style="font-size:40px;">table_restaurant</span>
+    <span class="icon-label">Reservar Mesa</span>
+  </a>
+  <a class="nav-icon order-link" routerLink="/pedir" routerLinkActive="active" (click)="closeMenu()">
+    <span class="material-icons" style="font-size:40px;">dining</span>
+    <span class="icon-label">Pedir Ahora</span>
+  </a>
+  <a class="nav-icon card-link" routerLink="/carta" routerLinkActive="active" (click)="closeMenu()">
+    <span class="material-icons" style="font-size:40px;">menu_book</span>
+    <span class="icon-label">Nuestra Carta</span>
+  </a>
+  <a *ngIf="!isAuthenticated" class="nav-icon login-link" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">
+    <span class="material-icons" style="font-size:40px;">login</span>
+    <span class="icon-label">Inicia Sesión</span>
+  </a>
+  <a *ngIf="isAuthenticated" class="nav-icon login-link" routerLink="/account" routerLinkActive="active" (click)="closeMenu()">
+    <span class="material-icons" style="font-size:40px;">account_circle</span>
+    <span class="icon-label">Tu Cuenta</span>
+  </a>
+</div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="app-container">
+  <a *ngIf="!isInicio()" class="btn-volver-inicio" routerLink="/inicio">
+    <span class="material-icons">home</span>
+  </a>
+  <router-outlet></router-outlet>
+  <footer class="footer-custom enhanced-footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <a routerLink="/inicio" class="footer-logo">
+          <span class="footer-title">L'Essenza</span>
+        </a>
+        <ul class="footer-links">
+          <li><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">Licencia: CC BY-SA, excepto multimedia externa.</a></li>
+          <li><a routerLink="/atribuciones">Atribuciones</a></li>
+        </ul>
+      </div>
+      <div class="footer-right">
+        <ul class="social-icons">
+          <li>
+            <a href="https://www.facebook.com/lessenza.app/" target="_blank" aria-label="Facebook">
+              <i class="bi bi-facebook" style="font-size: 1.7em;"></i>
+              <span class="icon-label">Facebook</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/l_essenza_oficial/" target="_blank" aria-label="Instagram">
+              <i class="bi bi-instagram" style="font-size: 1.7em;"></i>
+              <span class="icon-label">Instagram</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://x.com/lessenzaoficial" target="_blank" aria-label="Twitter">
+              <i class="bi bi-twitter-x" style="font-size: 1.7em;"></i>
+              <span class="icon-label">X(Twitter)</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://drive.google.com/drive/folders/1fqppS13h1a0kaTFlOHft5MhzegVm-S0s?usp=sharing" target="_blank" aria-label="Google Drive">
+              <i class="fab fa-google-drive" style="font-size: 1.7em;"></i>
+              <span class="icon-label">Drive</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,113 @@
+.admin-bg {
+  min-height: 100vh;
+  background: var(--white, #fffbe9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-login-card {
+  background: var(--white, #fffbe9);
+  border-radius: 22px;
+  box-shadow: 0 6px 32px var(--shadow, rgba(0,0,0,0.13));
+  border: 2px solid var(--gold, #d4af37);
+  max-width: 370px;
+  width: 100%;
+  padding: 38px 32px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin: -50px auto 0 auto;
+}
+
+.admin-login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.admin-login-header i {
+  font-size: 2.2rem;
+  color: var(--primary-red, #b81426);
+  margin-bottom: 2px;
+}
+
+.admin-login-header h2 {
+  font-family: 'Playfair Display', 'Italiana', serif;
+  color: var(--primary-red, #b81426);
+  font-size: 2rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.admin-login-card form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-login-card label {
+  font-family: 'Montserrat', 'Lato', sans-serif;
+  color: var(--primary-red, #b81426);
+  font-weight: 600;
+  margin-bottom: 2px;
+  margin-left: 2px;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.admin-login-card input[type="email"],
+.admin-login-card input[type="password"] {
+  width: 91%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--gold, #d4af37);
+  background: var(--input-bg, #fffbe9);
+  color: var(--input-text, #2d1a1a);
+  font-size: 1.08rem;
+  font-family: 'Montserrat', 'Lato', sans-serif;
+  transition: border 0.18s, box-shadow 0.18s;
+  outline: none;
+  box-shadow: 0 1px 4px #0001;
+}
+.admin-login-card input:focus {
+  border: 1.5px solid var(--primary-red, #b81426);
+  box-shadow: 0 2px 8px var(--shadow, rgba(0,0,0,0.13));
+}
+
+.admin-login-card button[type="submit"] {
+  background: var(--primary-red, #b81426);
+  color: var(--gold, #d4af37);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-size: 1.13rem;
+  font-family: 'Montserrat', 'Lato', sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+  box-shadow: 0 2px 12px #0001;
+}
+.admin-login-card button[type="submit"]:hover {
+  background: var(--gold, #d4af37);
+  color: var(--primary-red, #b81426);
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .admin-login-card {
+    max-width: 98vw;
+    padding: 18px 4vw 18px 4vw;
+  }
+  .admin-login-header h2 {
+    font-size: 1.3rem;
+  }
+}

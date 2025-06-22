@@ -1,0 +1,47 @@
+<body>
+<div class="login-container">
+  <h2>Iniciar Sesión</h2>
+  <form (ngSubmit)="loginWithEmail()" #loginForm="ngForm">
+    <div class="form-group">
+      <label for="email">Correo electrónico</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="email"
+        name="email"
+        required
+        class="full-width"
+        autocomplete="email"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="password"
+        name="password"
+        required
+        class="full-width"
+        autocomplete="current-password"
+      />
+    </div>
+
+    <div class="submit">
+      <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+    </div>
+  </form>
+
+  <div class="auth-button-group">
+  <button type="button" class="btn btn-accent" (click)="loginWithGoogle()">
+  <span class="btn-google-icon" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:0.5em;">
+    <img src="/iconos/login/icono_google.png" alt="Google" width="22" height="22" style="display:inline-block;vertical-align:middle;" />
+  </span>
+  Iniciar sesión con Google
+</button>
+  <p>No tienes una cuenta? <a routerLink="/register">Regístrate</a></p>
+  
+</div>
+</div>
+</body>

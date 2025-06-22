@@ -1,0 +1,26 @@
+<h3 style="padding-top: 80px; padding-left: 80px; padding-right: 80px;">Elija método de pago</h3>
+<div class="metodos-container">
+  <div
+    class="metodo-btn"
+    [class.selected]="metodoPagoSeleccionado === 'tarjeta'"
+    (click)="seleccionarMetodo('tarjeta')"
+  >
+    <span class="material-icons" style="vertical-align: middle; font-size: 1.5em; margin-right: 8px;">credit_card</span>
+    Pagar con Tarjeta
+  </div>
+  <div
+    class="metodo-btn"
+    [class.selected]="metodoPagoSeleccionado === 'efectivo'"
+    (click)="seleccionarMetodo('efectivo')"
+  >
+    <span class="material-icons" style="vertical-align: middle; font-size: 1.5em; margin-right: 8px;">payments</span>
+    Pagar en Efectivo
+  </div>
+</div>
+<div *ngIf="mostrarStripe" style="margin-bottom: 48px; margin-top: 32px;">
+  <app-stripe-payment (pagoAceptado)="registrarPedido()"></app-stripe-payment>
+</div>
+<div class="acciones-popup">
+  <button (click)="confirmar()" [disabled]="!metodoPagoSeleccionado || (metodoPagoSeleccionado === 'tarjeta' && !mostrarStripe)">Confirmar</button>
+  <button (click)="cancelar()">Cancelar</button>
+</div>

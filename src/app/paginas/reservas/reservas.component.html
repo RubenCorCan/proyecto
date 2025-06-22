@@ -1,0 +1,30 @@
+<div class="reservas-container">
+  <h1 *ngIf="!(reservas$ | async)?.length" class="reservas-title">No tienes reservas registradas</h1>
+  <h1 *ngIf="(reservas$ | async)?.length" class="reservas-title">Reservas de tus clientes</h1>
+<div class="reservas-list">
+  <div class="reserva-card" *ngFor="let r of reservas$ | async">
+    <div class="reserva-header">
+      <span class="reserva-fecha">
+        <i class="fa-regular fa-calendar"></i>
+        {{ getFechaFormateada(r.fecha) }} &nbsp; <i class="fa-regular fa-clock"></i> {{ r.hora }}
+      </span>
+    </div>
+    <hr>
+    <div class="reserva-info">
+      <div class="reserva-label">Nombre:</div>
+      <div class="reserva-value">{{ r.nombre }}</div>
+    </div>
+    <div class="reserva-info">
+      <div class="reserva-label">Mesa:</div>
+      <div class="reserva-value">{{ r.mesa }}</div>
+      <div class="reserva-label">Personas:</div>
+      <div class="reserva-value">{{ r.personas }}</div>
+    </div>
+    <div class="reserva-info">
+      <div class="reserva-label">Email:</div>
+      <div class="reserva-value">{{ r.email }}</div>
+    </div>
+    <button class="reserva-cancelar" (click)="borrarReserva(r.id)">Eliminar</button>
+  </div>
+</div>
+</div>

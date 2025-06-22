@@ -1,0 +1,126 @@
+<main class="inicio-landing" #scrollContainer>
+
+  <div class="essenza-marquee-section">
+  <div class="essenza-marquee" id="essenzaMarquee">
+    <span *ngFor="let _ of essenzaMarqueeArray" class="essenza-marquee-text">
+      L'Essenza
+    </span>
+    <span *ngFor="let _ of essenzaMarqueeArray" class="essenza-marquee-text">
+      L'Essenza
+    </span>
+  </div>
+</div>
+
+  <!-- NOVEDADES -->
+  <section class="inicio-novedades">
+    <h1 class="inicio-title">NOVEDADES</h1>
+  </section>
+
+  <!-- NUEVA CARTA (imagen al lado) s-->
+  <section class="inicio-section carta-flex">
+    <a [routerLink]="['/carta']" class="libreta-menu-link" tabindex="0">
+  <div class="libreta-menu-efecto">
+    <!-- Portada de la libreta -->
+    <svg class="libreta-portada" viewBox="0 0 200 240" width="200" height="240">
+      <defs>
+        <!-- Degradado cuero rojizo -->
+        <linearGradient id="cueroRed" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#b81426"/>
+          <stop offset="60%" stop-color="#7a1a1a"/>
+          <stop offset="100%" stop-color="#d4af37"/>
+        </linearGradient>
+        <!-- Brillo dorado -->
+        <radialGradient id="shineGold" cx="0.3" cy="0.2" r="0.8">
+          <stop offset="0%" stop-color="#ffe066" stop-opacity="0.7"/>
+          <stop offset="80%" stop-color="#d4af37" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- Portada principal -->
+      <rect x="0" y="0" width="200" height="240" rx="22" fill="url(#cueroRed)" stroke="#d4af37" stroke-width="6"/>
+      <!-- Brillo -->
+      <ellipse cx="60" cy="50" rx="48" ry="20" fill="url(#shineGold)" />
+      <!-- Borde dorado grueso para dar volumen -->
+      <rect x="6" y="6" width="188" height="228" rx="16" fill="none" stroke="#ffe066" stroke-width="3"/>
+      <!-- Detalles de costura -->
+      <circle cx="20" cy="30" r="3" fill="#ffe066" class="libreta-costura"/>
+      <circle cx="180" cy="30" r="3" fill="#ffe066" class="libreta-costura"/>
+      <circle cx="20" cy="210" r="3" fill="#ffe066" class="libreta-costura"/>
+      <circle cx="180" cy="210" r="3" fill="#ffe066" class="libreta-costura"/>
+      <!-- Texto MENÚ -->
+      <text x="51%" y="50%" text-anchor="middle" dominant-baseline="middle"
+            class="libreta-menu-texto-svg">MENÚ</text>
+    </svg>
+    <!-- Cuerpo de la libreta -->
+    <svg class="libreta-cuerpo" viewBox="0 0 200 240" width="200" height="240">
+  <defs>
+    <!-- Fondo de página antigua -->
+    <linearGradient id="pagePaper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fffbe9"/>
+      <stop offset="100%" stop-color="#f3e7b7"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="200" height="240" rx="22" fill="url(#pagePaper)" stroke="#d4af37" stroke-width="4"/>
+  <!-- Sombra interior para dar profundidad -->
+  <ellipse cx="100" cy="230" rx="80" ry="12" fill="#bfa23a" opacity="0.13"/>
+  <!-- Líneas de página -->
+  <line x1="36" y1="50" x2="164" y2="50" stroke="#b81426" stroke-width="2.5" opacity="0.25"/>
+  <line x1="36" y1="80" x2="164" y2="80" stroke="#b81426" stroke-width="2.5" opacity="0.18"/>
+  <line x1="36" y1="110" x2="164" y2="110" stroke="#b81426" stroke-width="2.5" opacity="0.13"/>
+  <line x1="36" y1="140" x2="164" y2="140" stroke="#b81426" stroke-width="2.5" opacity="0.10"/>
+  <line x1="36" y1="170" x2="164" y2="170" stroke="#b81426" stroke-width="2.5" opacity="0.07"/>
+  <!-- TEXTO VER LA CARTA -->
+  <text
+    x="50%"
+    y="90%"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="'Montserrat', 'Quicksand', Arial, sans-serif"
+    font-size="1.1rem"
+    font-weight="bold"
+    fill="#b81426"
+    letter-spacing="0.12em"
+    style="text-shadow: 0 2px 8px #fffbe9, 0 1px 0 #d4af37;"
+  >
+    VER LA CARTA
+  </text>
+</svg>
+  </div>
+</a>
+    <div class="inicio-content no-bg">
+      <h2 class="inicio-subtitle">¡Descubre nuestra nueva carta!</h2>
+      <p>Platos elaborados con ingredientes frescos y el mejor sabor. ¡Te sorprenderán!</p>
+      <button class="inicio-btn" routerLink="/carta">VER LA CARTA</button>
+    </div>
+  </section>
+
+  <!-- PEDIR ONLINE (fondo con transición suave) -->
+<section class="inicio-section pedir-bg">
+  <div class="inicio-content pedir-overlay">
+    <h2 class="inicio-subtitle">¡Ordena fácil y rápido!</h2>
+    <p>Haz tu pedido en línea y recíbelo en tu puerta o listo para llevar.</p>
+    <button class="inicio-btn" routerLink="/pedir">¡PIDE AHORA!</button>
+  </div>
+</section>
+
+  <!-- VISÍTANOS -->
+  <section class="inicio-section visita-section">
+    <img src="imagenes/home/pizzaFlotante.png" alt="Pizza flotante" class="pizza-flotante pizza-derecha">
+    <img src="imagenes/home/albahaca.png" alt="Albahaca flotante" class="pizza-flotante pizza-izquierda">
+    <div class="inicio-content no-bg">
+      
+      <h2 class="inicio-subtitle visita-title">
+  <span class="material-icons visita-icon">location_on</span>
+  ¡Ven a disfrutar con nosotros!
+</h2>
+      <p>Visítanos en L’Essenza y vive una experiencia única.</p>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317193.22496740746!2d12.372073943171212!3d41.90278349995716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f6194e887a8c9%3A0x7b5383dc2b6933f!2sRoma%2C%20Italia!5e0!3m2!1ses!2ses!4v1713191850431!5m2!1ses!2ses"
+        width="100%" height="180" style="border:0;" loading="lazy"></iframe>
+      <div class="contacto-info">
+        <div><span class="material-icons">call</span> <a href="tel:6666666">6666666</a></div>
+        <div><span class="material-icons">mail</span> <a href="mailto:lessenzaoficial2025@gmail.com">lessenzaoficial2025&#64;gmail.com</a></div>
+      </div>
+      <button class="inicio-btn" routerLink="/conocenos">¡CONÓCENOS!</button>
+    </div>
+  </section>
+</main>

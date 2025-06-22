@@ -1,0 +1,192 @@
+/* Estilos globales */
+html, body {
+  
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif; /* Fuente base */
+  color: var(--dark-gray);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  scrollbar-color: var(--dark-gray) transparent;
+  background-color: black;
+}
+  
+  :root {
+    --primary-red: #B81426; /* Rojo dominante */
+    --gold: #D4AF37; /* Dorado */
+    --light-gold: #F9E4B7; /* Dorado claro */
+    --white: white; /* Blanco */
+    --dark-gray: #333; /* Gris oscuro */
+    --shadow: rgba(0, 0, 0, 0.2);
+    --glass-bg: rgba(32, 18, 18, 0.93);
+    --input-bg: #fffbe9;
+    --input-text: #2d1a1a;
+    --italy-green: #009246;
+    --italy-white: #fff;
+    --italy-red: #ce2b37;
+
+  }
+  
+  /* Tipografía global */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-red);
+    margin: 0;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: var(--gold);
+  }
+  
+  button {
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px var(--shadow);
+  }
+
+  /* Imágenes globales */
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+  
+
+/* Snackbar éxito */
+.snackbar-success {
+  background: #388e3c !important;
+}
+.snackbar-success .mat-mdc-snack-bar-label {
+  color: var(--white) !important;
+}
+.snackbar-success .mat-mdc-snack-bar-action {
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+.snackbar-success .mat-mdc-snack-bar-action:hover,
+.snackbar-success .mat-mdc-snack-bar-action:focus {
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+
+/* Snackbar error */
+.snackbar-error {
+  background: var(--primary-red) !important;
+}
+.snackbar-error .mat-mdc-snack-bar-label {
+  color: #fff !important;
+}
+.snackbar-error .mat-mdc-snack-bar-action {
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+.snackbar-error .mat-mdc-snack-bar-action:hover,
+.snackbar-error .mat-mdc-snack-bar-action:focus {
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+
+/* Snackbar cancel */
+.snackbar-cancel {
+  background: var(--italy-red) !important;
+}
+.snackbar-cancel .mat-mdc-snack-bar-label {
+  color: #fff !important;
+}
+.snackbar-cancel .mat-mdc-snack-bar-action {
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+.snackbar-cancel .mat-mdc-snack-bar-action:hover,
+.snackbar-cancel .mat-mdc-snack-bar-action:focus {
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+/* Snackbar warning */
+.snackbar-warning {
+  background: #ffe066 !important;
+}
+.snackbar-warning .mat-mdc-snack-bar-label {
+  color: #b81426 !important;
+}
+.snackbar-warning .mat-mdc-snack-bar-action {
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+.snackbar-warning .mat-mdc-snack-bar-action:hover,
+.snackbar-warning .mat-mdc-snack-bar-action:focus {
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+
+/* Elimina cualquier overlay/fondo del botón "Cerrar" del snackbar */
+.mat-mdc-snack-bar-action,
+.mat-mdc-snack-bar-action:focus,
+.mat-mdc-snack-bar-action:hover {
+  background: transparent !important;
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+  outline: none !important;
+}
+
+.mat-mdc-snack-bar-action::after,
+.mat-mdc-snack-bar-action::before {
+  background: none !important;
+  background-color: transparent !important;
+  opacity: 0 !important;
+  box-shadow: none !important;
+  content: none !important;
+}
+
+.mat-mdc-snack-bar-action .mdc-button__ripple {
+  display: none !important;
+  background: none !important;
+  opacity: 0 !important;
+}
+  
+  /* Animaciones globales */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -200%;
+    }
+    100% {
+      background-position: 200%;
+    }
+  }

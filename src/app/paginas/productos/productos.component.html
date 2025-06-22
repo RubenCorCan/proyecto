@@ -1,0 +1,55 @@
+<div class="productos-bg">
+  <h1 class="productos-title">Tus Productos</h1>
+<div *ngFor="let categoria of categorias$ | async">
+  <h2>{{ categoria.nombre }}</h2>
+<div class="productos-grid">
+  <div class="producto-card" *ngFor="let p of (productosPorCategoria$ | async)?.[categoria.id]">
+    <img [src]="p.imagen" alt="img" *ngIf="p.imagen">
+    <div *ngIf="editandoId !== p.id">
+      <h4>{{p.nombre}}</h4>
+      <p>{{ getPrecio(p.precio) }}</p>
+      <h4>Descripción:</h4>
+      <p>{{ p.descripcion }}</p>
+      <h4>Ingredientes:</h4>
+      <p *ngIf="p.ingredientes"> {{ p.ingredientes.join(', ') }}</p>
+      <p *ngIf="p.categoria">{{ p.categoria.nombre }}</p>
+      <div class="botones-card">
+      <button (click)="empezarEdicion(p)">Editar</button>
+      <button (click)="borrarProducto(p)">Borrar</button>
+      </div>
+    </div>
+    <div *ngIf="editandoId === p.id">
+      <input [(ngModel)]="editandoProducto.nombre" placeholder="Nombre">
+      <input [(ngModel)]="editandoProducto.precio" type="number" placeholder="Precio">
+      <input [(ngModel)]="editandoProducto.imagen" placeholder="URL Imagen">
+      <input [(ngModel)]="editandoProducto.ingredientes" placeholder="Ingredientes (separados por coma)">
+      <input [(ngModel)]="editandoProducto.descripcion" placeholder="Descripción">
+      <select [(ngModel)]="editandoProducto.categoriaId" required>
+  <option value="" disabled>Selecciona categoría</option>
+  <option *ngFor="let cat of categorias$ | async" [value]="cat.id">{{cat.nombre}}</option>
+</select>
+      <button (click)="guardarEdicion(p.id)">Guardar</button>
+      <button (click)="cancelarEdicion()">Cancelar</button>
+    </div>
+  </div>
+</div>
+</div>
+<button (click)="mostrarFormNuevo = !mostrarFormNuevo" 
+        *ngIf="!mostrarFormNuevo" 
+        class="nuevo-producto-button">
+  Agregar Nuevo Producto
+</button>
+<div class="nuevo-producto-form" *ngIf="mostrarFormNuevo">
+  <input [(ngModel)]="nuevo.nombre" placeholder="Nombre">
+  <input [(ngModel)]="nuevo.precio" type="number" placeholder="Precio">
+  <input [(ngModel)]="nuevo.imagen" placeholder="URL Imagen">
+  <input [(ngModel)]="nuevo.ingredientes" placeholder="Ingredientes (separados por coma)">
+  <input [(ngModel)]="nuevo.descripcion" placeholder="Descripción">
+  <select [(ngModel)]="nuevo.categoria" required>
+  <option value="" disabled selected>Selecciona categoría</option>
+  <option *ngFor="let cat of categorias$ | async" [value]="cat.id">{{cat.nombre}}</option>
+</select>
+  <button (click)="agregarProducto()">Agregar</button>
+  <button (click)="mostrarFormNuevo = false">Cancelar</button>
+</div>
+</div>

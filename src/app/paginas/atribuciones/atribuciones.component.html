@@ -1,0 +1,41 @@
+<main class="atribuciones-full-bg">
+  <div class="atribuciones-section">
+    <h1>ATRIBUCIONES DE RECURSOS MULTIMEDIA</h1>
+
+    <div class="atribucion-card video-card">
+      <h2>Vídeo de portada</h2>
+      <video [src]="video.ruta" controls width="320"></video>
+      <p>
+        <strong>Archivo:</strong> <code>imagenes/home/Video-Fondo.mp4</code>
+      </p>
+      <p>
+        Este video proviene de <a href="https://www.pexels.com/es-es/video/comida-pizza-persona-manos-8627109/" target="_blank" rel="noopener">Pexels</a>, autor: <a href="https://www.pexels.com/es-es/@kampus/" target="_blank" rel="noopener">Kampus Production</a>, y está bajo la licencia de <a href="https://www.pexels.com/es-es/license/" target="_blank" rel="noopener">Pexels</a>.<br>
+        <span class="warning">No está cubierto por la licencia CC BY-SA de este sitio.</span>
+      </p>
+    </div>
+
+    <div class="atribucion-card ia-card">
+      <h2>Imágenes generadas con IA</h2>
+      <p>
+        Todas las imágenes (imagen degradada inicio, imagen para efecto "Cargando", fondos reservar mesa y pedir ahora, ilustraciones de platos del menú, imágenes utilizadas para efectos visuales y fotografías en apartado "Conócenos") utilizadas en este sitio, excepto el vídeo de portada, han sido generadas con la inteligencia artificial <a href="https://redpandaai.com/" target="_blank" rel="noopener">Red Panda AI</a>.
+      </p>
+      <div class="atribuciones-grid">
+        <div class="atribucion-img" *ngFor="let img of homeImgs">
+          <img [src]="img.ruta" [alt]="img.nombre" />
+          <div class="atribucion-img-info">
+            <code>{{ img.ruta }}</code>
+          </div>
+        </div>
+        <div class="atribucion-img" *ngFor="let img of platosImgs">
+          <img [src]="img.ruta" [alt]="img.nombre" />
+          <div class="atribucion-img-info">
+            <code>{{ img.ruta }}</code>
+          </div>
+        </div>
+      </div>
+      <p>
+        <strong>Nota:</strong> Red Panda AI no tiene una licencia específica; sus imágenes son completamente gratuitas. Se atribuyen aquí por cortesía y transparencia.
+      </p>
+    </div>
+  </div>
+</main>

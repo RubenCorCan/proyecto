@@ -1,0 +1,26 @@
+<main class="container">
+  <h1 class="title">NUESTRA CARTA</h1>
+
+  <section class="menu-accordion-section">
+    <div class="accordion">
+      <div *ngFor="let categoria of categorias; let i = index" class="accordion-item">
+        <button class="accordion-header" (click)="toggleCategoria(i)">
+          <span class="categoria-nombre">{{ categoria.nombre }}</span>
+          <span class="arrow" [class.open]="categoriaAbierta === i">&#9660;</span>
+        </button>
+        <div class="accordion-body" *ngIf="categoriaAbierta === i">
+          <div class="plato-list">
+            <div *ngFor="let plato of categoria.platos" class="plato-card">
+              <img [src]="plato.imagen" alt="Imagen de {{ plato.nombre }}" class="plato-img" />
+              <div class="plato-info">
+                <h4>{{ plato.nombre }}</h4>
+                <p class="plato-precio">{{ plato.precio | currency:'EUR':'symbol':'1.2-2' }}</p>
+                <p>{{ plato.descripcion }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

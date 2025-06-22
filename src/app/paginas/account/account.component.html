@@ -1,0 +1,78 @@
+<body>
+<div class="account-container">
+  <div class="sidenav-container">
+    <nav class="sidenav" *ngIf="isAuthenticated">
+  <ul>
+    <li [class.active]="activeTab === 0" (click)="setActiveTab(0)">Información Personal</li>
+    <li [class.active]="activeTab === 1" (click)="setActiveTab(1)">Cambiar Contraseña</li>
+    <li [class.active]="activeTab === 3" (click)="setActiveTab(3)">Mis Pedidos</li>
+    <li [class.active]="activeTab === 4" (click)="setActiveTab(4)">Mis Reservas</li>
+  </ul>
+</nav>
+
+    <div class="main-content">
+      <h2 *ngIf="activeTab === 0 || activeTab === 1 || activeTab === 2">Mi Cuenta</h2>
+
+      <div *ngIf="!isAuthenticated">
+        <button class="btn btn-primary" (click)="authenticateAccount()">Autenticar Cuenta</button>
+      </div>
+
+    
+      <!-- Información Personal -->
+      <form *ngIf="isAuthenticated && activeTab === 0" [formGroup]="accountForm" (ngSubmit)="saveChanges()">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" formControlName="nombre" type="text" required class="full-width" />
+        </div>
+        <div class="form-group">
+          <label for="email">Correo Electrónico</label>
+          <input id="email" formControlName="email" type="email" required class="full-width" />
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input id="telefono" formControlName="telefono" type="tel" class="full-width" />
+        </div>
+        <div class="form-group">
+          <label for="direccion">Dirección</label>
+          <input id="direccion" formControlName="direccion" type="text" class="full-width" />
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!accountForm.valid">Guardar Cambios</button>
+      </form>
+
+      <!-- Cambiar Contraseña -->
+      <div *ngIf="isAuthenticated && activeTab === 1">
+        <form *ngIf="isEmailProvider" [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input id="password" formControlName="password" type="password" required class="full-width" />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirmar Contraseña</label>
+            <input id="confirmPassword" formControlName="confirmPassword" type="password" required class="full-width" />
+          </div>
+          <div *ngIf="passwordForm.errors?.['passwordMismatch'] && passwordForm.touched" class="error">
+  Las contraseñas no coinciden.
+</div>
+          <button class="btn btn-accent" type="submit" [disabled]="!passwordForm.valid || passwordForm.errors?.['passwordMismatch']">
+            Actualizar Contraseña
+          </button>
+        </form>
+        <div *ngIf="!isEmailProvider">
+          <p>Tu cuenta está vinculada a Google. No puedes cambiar la contraseña desde aquí.</p>
+        </div>
+      </div>
+
+      <div *ngIf="isAuthenticated && activeTab === 3">
+  <app-mis-pedidos [userEmail]="accountForm.get('email')?.value"></app-mis-pedidos>
+</div>
+<div *ngIf="isAuthenticated && activeTab === 4">
+  <app-mis-reservas [userEmail]="accountForm.get('email')?.value"></app-mis-reservas>
+</div>
+
+
+      <button class="btn btn-secondary" (click)="logout()" style="margin-left: 28px;" *ngIf="isAuthenticated">Cerrar sesión</button>
+    </div>
+  </div>
+</div>
+  
+</body>

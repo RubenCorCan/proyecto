@@ -1,0 +1,142 @@
+  <main class="categoria-main">
+  <!-- Banner de la categoría -->
+  <section class="categoria-banner">
+    <div class="categoria-info">
+      <h1 class="categoria-title">
+        {{ categoria?.nombre }}
+      </h1>
+      <p class="categoria-desc">{{ categoria?.descripcion }}</p>
+    </div>
+  </section>
+
+  <!-- Platos de la categoría -->
+  <section class="platos-section">
+    <h2 class="platos-list-title">
+      <span class="material-icons icon-plate">restaurant</span>
+      Platos de esta categoría
+    </h2>
+    <div class="platos-grid">
+      <div class="plato-card" *ngFor="let plato of platos">
+        <div class="plato-img-wrap">
+          <img class="plato-img" [src]="plato.imagen" alt="Imagen de {{ plato.nombre }}" />
+          <span class="plato-precio">{{ plato.precio | number:'1.2-2' }} €</span>
+        </div>
+        <div class="plato-info">
+          <h3 class="plato-nombre">{{ plato.nombre }}</h3>
+          <p class="plato-desc">{{ plato.descripcion }}</p>
+          <div class="plato-actions">
+            <button class="ver-plato-btn" [routerLink]="['/pedir/mipedido', plato.categoriaId, plato.id]">
+              <span class="material-icons">visibility</span>
+              Ver plato
+            </button>
+            <button class="add-carrito-btn efecto-add-carrito" (click)="agregarAlPedido(plato)" aria-label="Añadir al carrito">
+              <span span class="material-icons icono-carrito">add_shopping_cart</span>
+              <span class="texto-carrito">Añadir al Carrito</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <button class="toggle-pedido-btn" (click)="togglePedido()" aria-label="Mostrar/Ocultar pedido">
+    <span *ngIf="pedidoVisible; else cartIcon">&#10006;</span>
+    <ng-template #cartIcon>
+      <span class="material-icons">shopping_cart</span>
+      <span class="carrito-badge" *ngIf="pedido.length > 0">{{ pedido.length }}</span>
+    </ng-template>
+  </button>
+
+<aside class="pedido-container-modern" [class.visible]="pedidoVisible">
+  <div class="cliente-info" *ngIf="cliente">
+    <div class="cliente-row">
+      <span class="material-icons">person</span>
+      <span>{{ cliente.nombre }}</span>
+    </div>
+  </div>
+  <div class="cart-header">
+    <h2>Tu Pedido</h2>
+    <span class="cart-items-count">{{ pedido.length }} {{ pedido.length === 1 ? 'plato' : 'platos' }}</span>
+  </div>
+  <div class="cart-list">
+    <section *ngIf="pedido.length === 0" class="pedido-vacio">
+      <p>No has añadido platos a tu pedido.</p>
+    </section>
+    <ng-container *ngFor="let plato of pedido">
+  <div class="cart-item" *ngIf="getPlatoCompleto(plato.id)?.nombre && getPlatoCompleto(plato.id)?.precio">
+    <img [src]="getPlatoCompleto(plato.id)?.imagen" alt="{{ getPlatoCompleto(plato.id)?.nombre }}" class="cart-img" />
+    <div class="cart-info">
+      <div class="cart-title">{{ getPlatoCompleto(plato.id)?.nombre }}</div>
+      <div class="cart-price">{{ getPlatoCompleto(plato.id)?.precio | number:'1.2-2' }} €</div>
+    </div>
+    <div class="cart-qty">
+      <button (click)="cambiarCantidad(plato.id, plato.cantidad - 1)">-</button>
+      <span>{{ plato.cantidad }}</span>
+      <button (click)="cambiarCantidad(plato.id, plato.cantidad + 1)">+</button>
+    </div>
+    <button class="cart-remove" (click)="quitarPlato(plato.id)" aria-label="Eliminar">
+      &times;
+    </button>
+  </div>
+</ng-container>
+  </div>
+  <div class="cart-summary">
+    <div class="cart-summary-row">
+      <span>Total</span>
+      <span>{{ getTotal() | number:'1.2-2' }} €</span>
+    </div>
+      <div class="acciones-pedido">
+        <button class="cancelar-btn anim-cancelar" (click)="cancelarPedido()">
+  <span class="icon-cancelar-svg">
+    <svg
+    class="bin-top"
+    viewBox="0 0 39 7"
+    fill="var(--primary-red)"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <line y1="5" x2="39" y2="5" stroke="var(--primary-red)" stroke-width="4"></line>
+    <line
+      x1="12"
+      y1="1.5"
+      x2="26.0357"
+      y2="1.5"
+      stroke="var(--primary-red)"
+      stroke-width="4"
+    ></line>
+  </svg>
+  <svg
+  class="bin-bottom"
+  viewBox="0 0 33 39"
+  fill="var(--primary-red)"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <mask id="path-1-inside-1_8_19" fill="white">
+    <path
+      d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+    ></path>
+  </mask>
+  <path
+    d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+    fill="var(--primary-red)"
+    mask="url(#path-1-inside-1_8_19)"
+  ></path>
+  <path d="M12 6L12 29" stroke="var(--primary-red)" stroke-width="4"></path>
+  <path d="M21 6V29" stroke="var(--primary-red)" stroke-width="4"></path>
+</svg>
+  </span>
+  <span class="cancelar-text">Cancelar pedido</span>
+</button>
+<button class="finalizar-btn anim-finalizar" (click)="finalizarPedido()" [disabled]="pedido.length === 0">
+    <span class="material-icons icon-finalizar">shopping_bag</span>
+    <span class="finalizar-text">Finalizar pedido</span>
+  </button>
+      </div>
+  </div>
+  </aside>
+  <div class="volver-atras-container">
+  <button class="btn-volver-atras" (click)="volverAtras()" aria-label="Volver atrás">
+  <span class="material-icons">arrow_back</span>
+  <span class="volver-text">Atrás</span>
+</button>
+</div>
+</main>

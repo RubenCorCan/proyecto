@@ -1,0 +1,130 @@
+
+  <div class="pizza-loader" *ngIf="isLoading">
+  <img src="imagenes/home/cargando.png" alt="Cargando..." />
+</div>
+<div class="pedir-bg">
+  <div class="pedir-bg-overlay"></div>
+  <div class="pedir-glass">
+    <h2>
+      <span class="h2-pedir-icon material-icons">shopping_bag</span>
+      Pedir para Recoger
+    </h2>
+    <form [formGroup]="pedidoForm" (ngSubmit)="hacerPedido()" class="pedido-form" >
+
+      <label class="form-label-stack" *ngIf="!usuario">
+        <div class="label-row">
+          <span>Nombre*</span>
+          <span class="error-inline" *ngIf="pedidoForm.get('nombre')?.invalid && pedidoForm.get('nombre')?.touched">
+            <span class="error-icon material-icons">error</span> El nombre es obligatorio.
+          </span>
+        </div>
+        <input type="text" formControlName="nombre" required />
+      </label>
+
+      <label class="form-label-stack" *ngIf="!usuario">
+        <div class="label-row">
+          <span>Teléfono*</span>
+          <span class="error-inline" *ngIf="pedidoForm.get('telefono')?.invalid && pedidoForm.get('telefono')?.touched">
+            <ng-container *ngIf="pedidoForm.get('telefono')?.hasError('required')">
+              <span class="error-icon material-icons">error</span> El teléfono es obligatorio.
+            </ng-container>
+            <ng-container *ngIf="pedidoForm.get('telefono')?.hasError('pattern')">
+              <span class="error-icon material-icons">error</span> Introduce un teléfono válido (9 dígitos).
+            </ng-container>
+          </span>
+        </div>
+        <input type="tel" formControlName="telefono" maxlength="9"
+          (input)="onTelefonoInput($event)" required />
+      </label>
+
+      <label class="form-label-stack" *ngIf="!usuario">
+        <div class="label-row">
+          <span>Correo Electrónico*</span>
+          <span class="error-inline" *ngIf="pedidoForm.get('email')?.invalid && pedidoForm.get('email')?.touched">
+            <ng-container *ngIf="pedidoForm.get('email')?.hasError('required')">
+              <span class="error-icon material-icons">error</span> El correo es obligatorio.
+            </ng-container>
+            <ng-container *ngIf="pedidoForm.get('email')?.hasError('email')">
+              <span class="error-icon material-icons">error</span> Correo no válido.
+            </ng-container>
+          </span>
+        </div>
+        <input type="email" formControlName="email" required />
+      </label>
+
+      <!-- Día de recogida label y error -->
+<label class="form-label-stack">
+  <div class="label-row">
+    <span style="margin-bottom: -50px;">Día de recogida*</span>
+    <span class="error-inline" *ngIf="pedidoForm.get('fechaRecogida')?.invalid && pedidoForm.get('fechaRecogida')?.touched">
+      <span class="error-icon material-icons">error</span> El día de recogida es obligatorio.
+    </span>
+  </div>
+</label>
+      <!-- Calendario personalizado para fecha de recogida -->
+      <div class="custom-calendar extravagante">
+        <div class="calendar-header">
+          <button
+            type="button"
+            (click)="prevMonthPedido()"
+            aria-label="Mes anterior"
+            [disabled]="mesActualPedido === hoy.getMonth() && anioActualPedido === hoy.getFullYear()"
+          >
+            <span class="material-icons">chevron_left</span>
+          </button>
+          <span class="calendar-title">
+            <span class="material-icons calendar-icon">event</span>
+            {{ meses[mesActualPedido] }} <b>{{ anioActualPedido }}</b>
+          </span>
+          <button type="button" (click)="nextMonthPedido()" aria-label="Mes siguiente">
+            <span class="material-icons">chevron_right</span>
+          </button>
+        </div>
+        <div class="calendar-days">
+          <span *ngFor="let d of diasSemana" class="calendar-day-name">{{ d }}</span>
+          <ng-container *ngFor="let d of getCalendarDaysPedido()">
+            <button
+              type="button"
+              class="calendar-day"
+              [class.today]="isTodayPedido(d)"
+              [class.selected]="isSelectedPedido(d)"
+              [disabled]="!d || isPastDayPedido(d)"
+              (click)="selectDatePedido(d)"
+            >
+              <span *ngIf="isTodayPedido(d)" class="calendar-today-dot"></span>
+              {{ d || '' }}
+            </button>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Input de hora de recogida -->
+      <label class="form-label-stack">
+  <div class="label-row">
+    <span>Hora de recogida*</span>
+    <span class="error-inline" *ngIf="pedidoForm.get('horaRecogida')?.invalid && pedidoForm.get('horaRecogida')?.touched">
+      <span class="error-icon material-icons">error</span> La hora es obligatoria.
+    </span>
+  </div>
+  <select formControlName="horaRecogida"
+        [disabled]="getHorasDisponibles().length === 0"
+        required>
+  <option value="" disabled selected>
+    {{ getHorasDisponibles().length === 0 ? 'No hay horas disponibles para este día' : 'Selecciona una hora' }}
+  </option>
+  <option *ngFor="let hora of getHorasDisponibles()" [value]="hora">{{ hora }}</option>
+</select>
+</label>
+
+      <button type="submit"
+  [disabled]="pedidoForm.invalid"
+  class="btn-pedir-anim-wrap"
+  (mouseleave)="onBtnLeave()"
+>
+  <span class="pizza-anim" [ngClass]="pizzaAnim" aria-hidden="true">🍕</span>
+  <span class="btn-pedir-anim material-icons" [ngClass]="carritoAnim">shopping_cart</span>
+  <span class="btn-pedir-text">CONTINUAR</span>
+</button>
+    </form>
+  </div>
+  </div>

@@ -1,0 +1,47 @@
+<div class="pedidos-bg">
+  <h1 *ngIf="!(pedidos$ | async)?.length" class="pedidos-title">No tienes pedidos registrados</h1>
+  <h1 *ngIf="(pedidos$ | async)?.length" class="pedidos-title">Pedidos de tus clientes</h1>
+<div class="pedidos-list">
+  <div class="pedido-card" *ngFor="let p of pedidos$ | async">
+    <div class="pedido-section-title"> FECHA Y HORA DE RECOGIDA
+    </div>
+    <div class="pedido-header">
+      <span class="pedido-fecha">
+        <i class="fa-regular fa-calendar"></i>
+        {{ getFechaFormateada(p.creado) }}
+        &nbsp; <i class="fa-regular fa-clock"></i>
+        {{ getHoraFormateada(p.creado) }}
+      </span>
+    </div>
+    <hr>
+    <div class="pedido-info">
+      <span class="pedido-label">Cliente:</span>
+      <span class="pedido-value">{{ p.cliente?.nombre || p.cliente?.email }}</span>
+    </div>
+    <div class="pedido-info" *ngIf="p.cliente?.telefono">
+      <span class="pedido-label">Teléfono:</span>
+      <span class="pedido-value">{{ p.cliente.telefono }}</span>
+    </div>
+    <div class="pedido-info" *ngIf="p.cliente?.email">
+      <span class="pedido-label">Email:</span>
+      <span class="pedido-value">{{ p.cliente.email }}</span>
+    </div>
+
+    <div class="pedido-section-title">
+      <i class="fa-solid fa-utensils"></i> PLATOS
+    </div>
+    <div class="pedido-platos">
+      <div class="pedido-plato" *ngFor="let plato of p.platos">
+        <span class="plato-nombre">{{ plato.nombre }}</span>
+        <span class="plato-cantidad">x{{ plato.cantidad }}</span>
+        <span class="plato-precio">{{ plato.precio | currency:'EUR' }}</span>
+      </div>
+    </div>
+    <div class="pedido-total-row">
+      <span class="pedido-total-label">Total:</span>
+      <span class="pedido-total">{{ p.total | currency:'EUR' }}</span>
+    </div>
+    <button class="pedido-cancelar" (click)="borrarPedido(p.id)">Eliminar</button>
+  </div>
+</div>
+</div>

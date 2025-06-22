@@ -1,0 +1,131 @@
+<div class="reserva-bg">
+  <div class="reserva-bg-overlay"></div>
+  <div class="reserva-glass">
+    <h2>
+      <span class="h2-mesa-icon material-icons">restaurant</span>
+      Reserve su Mesa
+    </h2>
+    <form [formGroup]="reservaForm" (ngSubmit)="reservar()" class="reserva-form">
+      <ng-container *ngIf="!usuario">
+      <label class="form-label-stack">
+        <div class="label-row">
+          <span>Nombre*</span>
+          <span class="error-inline" *ngIf="reservaForm.get('nombre')?.invalid && reservaForm.get('nombre')?.touched">
+            <span class="error-icon material-icons">error</span> El nombre es obligatorio.
+          </span>
+        </div>
+        <input type="text" formControlName="nombre" required />
+      </label>
+
+      <label class="form-label-stack">
+        <div class="label-row">
+          <span>Correo Electrónico*</span>
+          <span class="error-inline" *ngIf="reservaForm.get('email')?.invalid && reservaForm.get('email')?.touched">
+            <ng-container *ngIf="reservaForm.get('email')?.hasError('required')">
+              <span class="error-icon material-icons">error</span> El correo es obligatorio.
+            </ng-container>
+            <ng-container *ngIf="reservaForm.get('email')?.hasError('email')">
+              <span class="error-icon material-icons">error</span> Correo no válido.
+            </ng-container>
+          </span>
+        </div>
+        <input type="email" formControlName="email" required />
+      </label>
+
+      <label class="form-label-stack">
+  <div class="label-row">
+    <span>Teléfono*</span>
+    <span class="error-inline" *ngIf="reservaForm.get('telefono')?.invalid && reservaForm.get('telefono')?.touched">
+      <ng-container *ngIf="reservaForm.get('telefono')?.hasError('required')">
+        <span class="error-icon material-icons">error</span> El teléfono es obligatorio.
+      </ng-container>
+      <ng-container *ngIf="reservaForm.get('telefono')?.hasError('pattern')">
+        <span class="error-icon material-icons">error</span> Introduce un teléfono válido (9 dígitos).
+      </ng-container>
+    </span>
+  </div>
+  <input type="tel" formControlName="telefono" maxlength="9"
+    (input)="onTelefonoInput($event)" required />
+</label>
+      </ng-container>
+      <label class="form-label-stack">
+  <div class="label-row">
+    <span>Fecha*</span>
+    <span class="error-inline" *ngIf="reservaForm.get('fecha')?.invalid && reservaForm.get('fecha')?.touched">
+      <span class="error-icon material-icons">error</span> La fecha es obligatoria.
+    </span>
+  </div>
+  <div class="custom-calendar extravagante">
+    <div class="calendar-header">
+      <button
+        type="button"
+        (click)="prevMonth()"
+        aria-label="Mes anterior"
+        [disabled]="mesActual === hoy.getMonth() && anioActual === hoy.getFullYear()"
+      >
+        <span class="material-icons">chevron_left</span>
+      </button>
+      <span class="calendar-title">
+        <span class="material-icons calendar-icon">event</span>
+        {{ meses[mesActual] }} <b>{{ anioActual }}</b>
+      </span>
+      <button type="button" (click)="nextMonth()" aria-label="Mes siguiente">
+        <span class="material-icons">chevron_right</span>
+      </button>
+    </div>
+    <div class="calendar-days">
+      <span *ngFor="let d of diasSemana" class="calendar-day-name">{{ d }}</span>
+      <ng-container *ngFor="let d of getCalendarDays()">
+        <button
+          type="button"
+          class="calendar-day"
+          [class.today]="isToday(d)"
+          [class.selected]="isSelected(d)"
+          [disabled]="!d || isPastDay(d)"
+          (click)="selectDate(d)"
+        >
+          <span *ngIf="isToday(d)" class="calendar-today-dot"></span>
+          {{ d || '' }}
+        </button>
+      </ng-container>
+    </div>
+  </div>
+  <input type="hidden" formControlName="fecha" [value]="fechaSeleccionada | date:'yyyy-MM-dd'" />
+</label>
+
+      <label class="form-label-stack">
+        <div class="label-row">
+          <span>Hora*</span>
+          <span class="error-inline" *ngIf="reservaForm.get('hora')?.invalid && reservaForm.get('hora')?.touched">
+            <span class="error-icon material-icons">error</span> La hora es obligatoria.
+          </span>
+        </div>
+        <select formControlName="hora" required>
+        <option value="" disabled selected>Selecciona una hora</option>
+        <option *ngFor="let h of getHorasDisponiblesFiltradas()" [value]="h">{{ h }}</option>
+      </select>
+      </label>
+
+      <label class="form-label-stack">
+  <div class="label-row">
+    <span>Número de personas*</span>
+    <span class="error-inline" *ngIf="reservaForm.get('personas')?.invalid && reservaForm.get('personas')?.touched">
+      <ng-container *ngIf="reservaForm.get('personas')?.hasError('required')">
+        <span class="error-icon material-icons">error</span> Debe ser al menos 1 persona.
+      </ng-container>
+      <ng-container *ngIf="reservaForm.get('personas')?.hasError('pattern')">
+        <span class="error-icon material-icons">error</span> Solo números enteros positivos.
+      </ng-container>
+    </span>
+  </div>
+  <input type="number" min="1" step="1" formControlName="personas"
+    (keydown)="blockDecimal($event)" required />
+</label>
+
+      <button type="submit" [disabled]="reservaForm.invalid">
+        <span class="btn-reserva-anim material-icons">schedule</span>
+        BUSCAR MESA
+      </button>
+    </form>
+  </div>
+</div>

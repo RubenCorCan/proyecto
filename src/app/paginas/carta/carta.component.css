@@ -1,0 +1,236 @@
+/* Fondo y estructura principal */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.756) 0%, var(--white) 50%, var(--light-gold) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 0 64px 0;
+}
+
+.title {
+  font-family: 'Italiana', 'Playfair Display', serif;
+  color: var(--primary-red, #b81426);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  margin-bottom: 36px;
+  text-shadow: 0 2px 16px #d4af3722;
+  position: relative;
+  text-align: center;
+}
+
+.title::after {
+  content: "";
+  display: block;
+  margin: 18px auto 0 auto;
+  width: 90px;
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--primary-red, #b81426) 100%);
+  box-shadow: 0 2px 8px #d4af3722;
+}
+
+/* Accordion */
+.menu-accordion-section {
+  width: 100vw;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.accordion-item {
+  background: rgba(255,255,255,0.92);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #d4af3722, 0 1px 6px #d4af3710;
+  border: 1.5px solid var(--gold);
+  overflow: hidden;
+  transition: box-shadow 0.22s;
+}
+
+.accordion-header {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 1.2em 2em 1.2em 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Italiana', 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--primary-red, #b81426);
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  transition:
+    background 0.38s cubic-bezier(.68,-0.55,.27,1.55),
+    color 0.38s cubic-bezier(.68,-0.55,.27,1.55),
+    transform 0.28s cubic-bezier(.68,-0.55,.27,1.55);
+  position: relative;
+}
+
+.accordion-header:hover,
+.accordion-header:focus-visible {
+  background: rgba(212, 175, 55, 0.09);
+}
+
+.categoria-nombre {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.arrow {
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-left: 18px;
+}
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Cuerpo del acordeón */
+.accordion-body {
+  animation: fadeInDown 0.35s;
+  padding: 0 1.5em 1.5em 1.5em;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-18px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+
+/* Lista de platos */
+.plato-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 18px;
+}
+
+/* Tarjeta de plato */
+.plato-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  background: rgba(255,251,233,0.7);
+  border-radius: 14px;
+  box-shadow: 0 1px 8px #d4af3710;
+  border-left: 4px solid var(--gold);
+  padding: 18px 18px;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.plato-card:hover {
+  box-shadow: 0 6px 24px var(--gold), 0 2px 12px #d4af3710;
+  transform: scale(1.015);
+}
+
+.plato-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid var(--gold);
+  background: #fff;
+  box-shadow: 0 2px 8px #d4af3710;
+}
+
+.plato-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.plato-info h4 {
+  font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
+  font-size: 1.18rem;
+  color: var(--primary-red, #b81426);
+  font-weight: 800;
+  margin: 0 0 2px 0;
+  letter-spacing: 0.5px;
+}
+
+.plato-precio {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1.08rem;
+  color: var(--gold);
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.plato-info p {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1.01rem;
+  color: #3a2b1c;
+  margin: 0;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .menu-accordion-section {
+    max-width: 98vw;
+  }
+  .accordion-header {
+    font-size: 1.15rem;
+    padding: 1em 1.2em 1em 1em;
+  }
+  .plato-card {
+    gap: 12px;
+    padding: 12px 8px;
+  }
+  .plato-img {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 18px;
+  }
+  .accordion-header {
+    font-size: 1rem;
+    padding: 0.8em 0.7em 0.8em 0.7em;
+  }
+  .plato-card {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 4px;
+  }
+  .plato-img {
+    width: 100px;
+    height: 100px;
+  }
+  .plato-precio {
+    font-size: 1.1rem;
+    margin: 0 0 2px 0;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+  .plato-info {
+    gap: 4px;
+  }
+  .plato-info h4 {
+    font-size: 1.1rem;
+    margin: 0 0 4px 0;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+  .plato-info p {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+}
