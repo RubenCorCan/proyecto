@@ -90,7 +90,13 @@
           name="telefono"
           [(ngModel)]="user.telefono"
           class="full-width"
+          (input)="onTelefonoInput($event)"
+          (keypress)="onTelefonoKeyPress($event)"
+          pattern="^\d{9}$"
         />
+        <div *ngIf="user.telefono && user.telefono.length !== 9" class="error">
+          El teléfono debe tener 9 dígitos numéricos.
+        </div>
       </div>
       <div class="form-group">
         <label for="direccion">Dirección</label>
@@ -104,7 +110,7 @@
       </div>
       <div class="step-buttons">
         <button type="button" class="btn btn-secondary" (click)="prevStep()">Volver</button>
-        <button type="submit" class="btn btn-accent" [disabled]="!registerForm.form.valid">Registrar</button>
+        <button type="submit" class="btn btn-accent" [disabled]="!registerForm.form.valid || user.telefono.length !== 9">Registrar</button>
       </div>
     </div>
   </form>

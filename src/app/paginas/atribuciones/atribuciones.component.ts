@@ -17,7 +17,7 @@ export class AtribucionesComponent {
     { ruta: 'imagenes/home/cargando.png', nombre: 'Cargando' },
     { ruta: 'imagenes/home/chef.jpeg', nombre: 'Chef' },
     { ruta: 'imagenes/home/equipo.jpeg', nombre: 'Equipo' },
-    { ruta: 'imagenes/home/fondo-pedir.jpeg', nombre: 'Fondo pedir' },
+    { ruta: 'imagenes/home/fondo-pedir.png', nombre: 'Fondo pedir' },
     { ruta: 'imagenes/home/fondo-pedir2.jpeg', nombre: 'Fondo pedir 2' },
     { ruta: 'imagenes/home/fondo-reservas.jpeg', nombre: 'Fondo reservas' },
     { ruta: 'imagenes/home/Foto2Conocenos.jpeg', nombre: 'Foto Conócenos' },

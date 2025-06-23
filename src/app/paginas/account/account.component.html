@@ -7,11 +7,12 @@
     <li [class.active]="activeTab === 1" (click)="setActiveTab(1)">Cambiar Contraseña</li>
     <li [class.active]="activeTab === 3" (click)="setActiveTab(3)">Mis Pedidos</li>
     <li [class.active]="activeTab === 4" (click)="setActiveTab(4)">Mis Reservas</li>
+    <li [class.active]="activeTab === 5" (click)="setActiveTab(5)">Eliminar Cuenta</li>
   </ul>
 </nav>
 
     <div class="main-content">
-      <h2 *ngIf="activeTab === 0 || activeTab === 1 || activeTab === 2">Mi Cuenta</h2>
+      <h2 *ngIf="activeTab === 0">Información Personal</h2>
 
       <div *ngIf="!isAuthenticated">
         <button class="btn btn-primary" (click)="authenticateAccount()">Autenticar Cuenta</button>
@@ -36,10 +37,11 @@
           <label for="direccion">Dirección</label>
           <input id="direccion" formControlName="direccion" type="text" class="full-width" />
         </div>
-        <button class="btn btn-primary" type="submit" [disabled]="!accountForm.valid">Guardar Cambios</button>
+        <button class="btn btn-accent" type="submit" [disabled]="!accountForm.valid">Guardar Cambios</button>
       </form>
 
       <!-- Cambiar Contraseña -->
+       <h2 *ngIf="activeTab === 1">Cambiar Contraseña</h2>
       <div *ngIf="isAuthenticated && activeTab === 1">
         <form *ngIf="isEmailProvider" [formGroup]="passwordForm" (ngSubmit)="changePassword()">
           <div class="form-group">
@@ -62,15 +64,34 @@
         </div>
       </div>
 
-      <div *ngIf="isAuthenticated && activeTab === 3">
+<div *ngIf="isAuthenticated && activeTab === 3">
   <app-mis-pedidos [userEmail]="accountForm.get('email')?.value"></app-mis-pedidos>
 </div>
 <div *ngIf="isAuthenticated && activeTab === 4">
   <app-mis-reservas [userEmail]="accountForm.get('email')?.value"></app-mis-reservas>
 </div>
-
-
-      <button class="btn btn-secondary" (click)="logout()" style="margin-left: 28px;" *ngIf="isAuthenticated">Cerrar sesión</button>
+<div *ngIf="isAuthenticated && activeTab === 5">
+  <h2>Eliminar Cuenta</h2>
+  
+  <p>
+    Al eliminar tu cuenta, se perderán permanentemente todos tus datos, incluyendo:
+  </p>
+  <ul>
+    <li>Tu información personal y preferencias.</li>
+    <li>Tus pedidos y reservas registrados.</li>
+    <li>No podrás recuperar tu cuenta una vez eliminada.</li>
+    <li>Ya no recibirás notificaciones ni promociones del restaurante.</li>
+  </ul>
+  
+  <p>
+    Esta acción es <strong>irreversible</strong>. Por favor, asegúrate de que deseas continuar.
+  </p>
+  
+  <button class="btn btn-secondary" (click)="deleteAccount()">
+    Eliminar Cuenta
+  </button>
+</div>
+      <button class="btn btn-secondary" (click)="logout()" style="margin-left: 28px;" *ngIf="isAuthenticated && activeTab !== 5">Cerrar sesión</button>
     </div>
   </div>
 </div>

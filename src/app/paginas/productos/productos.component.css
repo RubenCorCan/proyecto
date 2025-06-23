@@ -206,22 +206,6 @@ h2 {
 
 /* Botón de agregar nuevo producto */
 
-/* Snackbar personalizado */
-.snackbar-success {
-  background: var(--gold) !important;
-  color: var(--primary-red) !important;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-family: var(--font-body);
-}
-.snackbar-error {
-  background: var(--primary-red) !important;
-  color: var(--white) !important;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-family: var(--font-body);
-}
-
 .nuevo-producto-button {
   display: block;
   margin: 38px auto 0 auto;

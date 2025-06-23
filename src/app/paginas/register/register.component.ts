@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
@@ -29,7 +30,8 @@ export class RegisterComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   get passwordMismatch(): boolean {
@@ -76,14 +78,30 @@ export class RegisterComponent {
           this.user.direccion,
         )
         .then(() => {
-          alert('Se ha enviado un correo de verificación. Revisa tu bandeja de entrada.');
+          this.snackBar.open('Se ha enviado un correo de verificación. Revisa tu bandeja de entrada.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-success'] });
           this.router.navigate(['/login']);
         })
         .catch(() => {
-          alert('Error al registrar el usuario. Inténtalo nuevamente.');
+          this.snackBar.open('Error al registrar el usuario. Inténtalo nuevamente.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
         });
     } else {
-      alert('Completa correctamente todos los campos del formulario.');
+      this.snackBar.open('Completa correctamente todos los campos del formulario.', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
+    }
+  }
+  onTelefonoInput(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+    if (value.length > 9) value = value.slice(0, 9);
+    this.user.telefono = value;
+  }
+  onTelefonoKeyPress(event: KeyboardEvent) {
+    const key = event.key;
+    if (!/^\d$/.test(key)) {
+      event.preventDefault();
+      return;
+    }
+
+    if (this.user.telefono.length >= 9) {
+      event.preventDefault();
     }
   }
 }

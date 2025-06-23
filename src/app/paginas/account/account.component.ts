@@ -18,6 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { sendEmailVerification } from 'firebase/auth';
 import { MisPedidosComponent } from './mis-pedidos.component';
 import { MisReservasComponent } from './mis-reservas.component';
+import { deleteDoc } from 'firebase/firestore';
 
 
 @Component({
@@ -159,4 +160,39 @@ export class AccountComponent implements OnInit {
   authenticateAccount() {
     this.router.navigate(['/login']);
   }
+
+  async deleteAccount() {
+  const user = this.auth.currentUser;
+  if (!user) {
+    this.snackBar.open('No se encontró el usuario autenticado.', 'Cerrar', { duration: 5000 });
+    return;
+  }
+
+  const confirmDelete = confirm(
+    '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.'
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    const clienteRef = doc(this.firestore, `clientes/${user.uid}`);
+    await deleteDoc(clienteRef);
+
+    await user.delete();
+
+    this.snackBar.open('Cuenta eliminada correctamente.', 'Cerrar', { duration: 5000 });
+    this.router.navigate(['/']);
+  } catch (error: any) {
+    if (error.code === 'auth/requires-recent-login') {
+      this.snackBar.open('Debes volver a iniciar sesión para eliminar tu cuenta.', 'Cerrar', {
+        duration: 5000,
+      });
+      this.router.navigate(['/login']);
+    } else {
+      console.error('Error al eliminar la cuenta:', error);
+      this.snackBar.open('Ocurrió un error al eliminar tu cuenta.', 'Cerrar', { duration: 5000 });
+    }
+  }
+}
+
 }
