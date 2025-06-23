@@ -1,7 +1,17 @@
 <div class="productos-bg">
-  <h1 class="productos-title">Tus Productos</h1>
+  <h1 class="productos-title" id="categorias-menu">Tus Productos</h1>
+  <div class="categorias-menu" >
+    <a
+      *ngFor="let categoria of categorias$ | async"
+      href="javascript:void(0)"
+      class="categoria-link"
+      (click)="scrollToCategoria('cat-' + categoria.id)"
+    >
+      {{ categoria.nombre }}
+    </a>
+  </div>
   <div *ngFor="let categoria of categorias$ | async">
-    <h2>{{ categoria.nombre }}</h2>
+    <h2 [id]="'cat-' + categoria.id">{{ categoria.nombre }}</h2>
     <div class="productos-grid">
       <div class="producto-card" *ngFor="let p of (productosPorCategoria$ | async)?.[categoria.id]">
         <img [src]="p.imagen" alt="img" *ngIf="p.imagen" />
@@ -25,38 +35,57 @@
           <label style="color: var(--primary-red);" for="precioEdicion">Precio</label>
           <input id="precioEdicion" [(ngModel)]="editandoProducto.precio" type="number" placeholder="Precio" />
 
-          <label style="color: var(--primary-red);">Modo de Imagen</label>
-          <label>
-            <input type="radio" name="modoImagen" [(ngModel)]="modoImagen" [value]="'local'" />
-            Subir archivo local
-          </label>
-          <label>
-            <input type="radio" name="modoImagen" [(ngModel)]="modoImagen" [value]="'publica'" />
-            Elegir imagen pública
-          </label>
+          <div class="modo-imagen-radio-group">
+            <label class="custom-radio">
+              <input type="radio" name="modoImagen{{editandoId}}" [(ngModel)]="modoImagen" [value]="'local'" />
+              <span class="custom-radio-mark"></span>
+              Subir archivo local
+            </label>
+            <label class="custom-radio">
+              <input type="radio" name="modoImagen{{editandoId}}" [(ngModel)]="modoImagen" [value]="'publica'" />
+              <span class="custom-radio-mark"></span>
+              Elegir imagen pública
+            </label>
+          </div>
 
-          <input
-            *ngIf="modoImagen === 'local'"
-            type="file"
-            (change)="onArchivoSeleccionado($event)"
-            accept="image/*"
-          />
+          <!-- Selector de imagen local (editar) -->
+          <div class="selector-imagen-local" *ngIf="modoImagen === 'local'">
+            <input
+              type="file"
+              id="inputImagenLocalEdicion"
+              (change)="onArchivoSeleccionado($event, true)"
+              accept="image/*"
+              hidden
+            />
+            <button type="button" (click)="abrirInputImagenLocal('inputImagenLocalEdicion')">
+              <span class="subir material-icons">upload</span> Seleccionar imagen local
+            </button>
+            <span *ngIf="imagenSeleccionada">{{ imagenSeleccionada.name }}</span>
+            <div *ngIf="imagenLocalPreview" class="preview-publica">
+              <p>Previsualización:</p>
+              <img [src]="imagenLocalPreview" alt="Imagen seleccionada" />
+              <button type="button" (click)="borrarPreviewLocal()" class="btn-borrar-preview">Quitar imagen</button>
+            </div>
+          </div>
 
-          <div *ngIf="modoImagen === 'publica'">
-            <p>Imágenes públicas disponibles</p>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <!-- Selector de imagen pública (editar) -->
+          <div *ngIf="modoImagen === 'publica'" class="selector-imagen-publica">
+            <!-- Solo muestra la galería si NO hay imagen seleccionada -->
+            <div class="galeria-publica" *ngIf="!imagenPublicaSeleccionada">
               <img
-                *ngFor="let img of imagenesPublicasUrls "
+                *ngFor="let img of imagenesPublicasUrls"
                 [src]="img"
-                [class.selected]="img === imagenPublicaSeleccionada "
-                (click)="imagenPublicaSeleccionada  = img"
-                style="width: 100px; height: 100px; cursor: pointer; border: 2px solid transparent;"
-                [style.border-color]="img === imagenPublicaSeleccionada  ? 'blue' : 'transparent'"
+                (click)="imagenPublicaSeleccionada = img"
+                alt="Imagen pública"
               />
             </div>
-            <div *ngIf="imagenPublicaSeleccionada " style="margin-top: 10px;">
-              <p>Imagen seleccionada</p>
-              <img [src]="imagenPublicaSeleccionada " alt="Imagen seleccionada" style="width:150px; height:auto;" />
+            <!-- Solo muestra la imagen seleccionada y el botón para cambiar -->
+            <div *ngIf="imagenPublicaSeleccionada" class="preview-publica">
+              <p>Imagen seleccionada:</p>
+              <img [src]="imagenPublicaSeleccionada" alt="Imagen seleccionada" />
+              <button type="button" (click)="imagenPublicaSeleccionada = ''" class="btn-cambiar-imagen">
+                Cambiar imagen seleccionada
+              </button>
             </div>
           </div>
 
@@ -94,38 +123,55 @@
     <label style="color: var(--primary-red);" for="precioNuevo">Precio</label>
     <input id="precioNuevo" [(ngModel)]="nuevo.precio" type="number" placeholder="Precio" />
 
-    <label style="color: var(--primary-red);">Modo de Imagen</label>
-    <label>
-      <input type="radio" name="modoImagenNuevo" [(ngModel)]="modoImagenNuevo" [value]="'local'" />
-      Subir archivo local
-    </label>
-    <label>
-      <input type="radio" name="modoImagenNuevo" [(ngModel)]="modoImagenNuevo" [value]="'publica'" />
-      Elegir imagen pública
-    </label>
+    <div class="modo-imagen-radio-group">
+      <label class="custom-radio">
+        <input type="radio" name="modoImagenNuevo" [(ngModel)]="modoImagenNuevo" [value]="'local'" />
+        <span class="custom-radio-mark"></span>
+        Subir archivo local
+      </label>
+      <label class="custom-radio">
+        <input type="radio" name="modoImagenNuevo" [(ngModel)]="modoImagenNuevo" [value]="'publica'" />
+        <span class="custom-radio-mark"></span>
+        Elegir imagen pública
+      </label>
+    </div>
 
-    <input
-      *ngIf="modoImagenNuevo === 'local'"
-      type="file"
-      (change)="onArchivoSeleccionado($event)"
-      accept="image/*"
-    />
+    <!-- Selector de imagen local (nuevo) -->
+    <div class="selector-imagen-local" *ngIf="modoImagenNuevo === 'local'">
+      <input
+        type="file"
+        id="inputImagenLocalNuevo"
+        (change)="onArchivoSeleccionado($event)"
+        accept="image/*"
+        hidden
+      />
+      <button type="button" (click)="abrirInputImagenLocal('inputImagenLocalNuevo')">
+        <span class="subir material-icons">upload</span> Seleccionar imagen local
+      </button>
+      <span *ngIf="imagenSeleccionada">{{ imagenSeleccionada.name }}</span>
+      <div *ngIf="imagenLocalPreview" class="preview-publica">
+        <p>Previsualización:</p>
+        <img [src]="imagenLocalPreview" alt="Imagen seleccionada" />
+        <button type="button" (click)="borrarPreviewLocal()" class="btn-borrar-preview">Quitar imagen</button>
+      </div>
+    </div>
 
-    <div *ngIf="modoImagenNuevo === 'publica'">
-      <p>Imágenes públicas disponibles</p>
-      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+    <!-- Selector de imagen pública (nuevo) -->
+    <div *ngIf="modoImagenNuevo === 'publica'" class="selector-imagen-publica">
+      <div class="galeria-publica" *ngIf="!imagenPublicaSeleccionadaNuevo">
         <img
           *ngFor="let img of imagenesPublicasUrls"
           [src]="img"
-          [class.selected]="img === imagenPublicaSeleccionadaNuevo"
           (click)="imagenPublicaSeleccionadaNuevo = img"
-          style="width: 100px; height: 100px; cursor: pointer; border: 2px solid transparent;"
-          [style.border-color]="img === imagenPublicaSeleccionadaNuevo ? 'blue' : 'transparent'"
+          alt="Imagen pública"
         />
       </div>
-      <div *ngIf="imagenPublicaSeleccionadaNuevo" style="margin-top: 10px;">
-        <p>Imagen seleccionada</p>
-        <img [src]="imagenPublicaSeleccionadaNuevo" alt="Imagen seleccionada" style="width:150px; height:auto;" />
+      <div *ngIf="imagenPublicaSeleccionadaNuevo" class="preview-publica">
+        <p>Imagen seleccionada:</p>
+        <img [src]="imagenPublicaSeleccionadaNuevo" alt="Imagen seleccionada" />
+        <button type="button" (click)="imagenPublicaSeleccionadaNuevo = ''" class="btn-cambiar-imagen">
+          Cambiar imagen seleccionada
+        </button>
       </div>
     </div>
 
@@ -144,4 +190,16 @@
     <button (click)="agregarProducto()">Agregar</button>
     <button (click)="mostrarFormNuevo = false">Cancelar</button>
   </div>
+
+  <button
+    class="btn-volver-arriba"
+    (click)="scrollToTop()"
+    aria-label="Volver arriba"
+  >
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="2" fill="none"/>
+      <path d="M12 8v8M12 8l-4 4M12 8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Volver arriba
+  </button>
 </div>

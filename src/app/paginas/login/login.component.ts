@@ -34,7 +34,8 @@ export class LoginComponent {
   loginWithGoogle(): void {
     this.authService.loginWithGoogle().catch(error => {
       this.snackBar.open(`Error al iniciar sesión con Google: ${error.message}`, 'Cerrar', {
-        duration: 5000
+        duration: 5000,
+        panelClass: 'snackbar-error'
       });
     });
   }
@@ -43,12 +44,14 @@ export class LoginComponent {
     if (this.email && this.password) {
       this.authService.loginWithEmail(this.email, this.password).catch(error => {
         this.snackBar.open(`Error al iniciar sesión: ${error.message}`, 'Cerrar', {
-          duration: 5000
+          duration: 5000,
+          panelClass: 'snackbar-error'
         });
       });
     } else {
       this.snackBar.open('Por favor, ingresa tu correo y contraseña.', 'Cerrar', {
-        duration: 5000
+        duration: 5000,
+        panelClass: 'snackbar-error'
       });
     }
   }

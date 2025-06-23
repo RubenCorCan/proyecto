@@ -90,7 +90,7 @@ export class AccountComponent implements OnInit {
   private async loadUserData() {
     const user = this.auth.currentUser;
     if (!user) {
-      this.snackBar.open('Usuario no autenticado.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Usuario no autenticado.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
       return;
     }
 
@@ -102,10 +102,10 @@ export class AccountComponent implements OnInit {
         this.userData = clienteSnap.data();
         this.accountForm.patchValue(this.userData);
       } else {
-        this.snackBar.open('El cliente no existe en la base de datos.', 'Cerrar', { duration: 5000 });
+        this.snackBar.open('El cliente no existe en la base de datos.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
       }
     } catch (error) {
-      this.snackBar.open('Error al cargar los datos del usuario.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Error al cargar los datos del usuario.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
     }
   }
 
@@ -127,9 +127,9 @@ export class AccountComponent implements OnInit {
     try {
       await this.authService.changePassword(newPassword);
       this.passwordForm.reset();
-      this.snackBar.open('Contraseña cambiada exitosamente.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Contraseña cambiada exitosamente.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-success' });
     } catch {
-      this.snackBar.open('Error al cambiar la contraseña.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Error al cambiar la contraseña.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
     }
   }
 
@@ -142,9 +142,9 @@ export class AccountComponent implements OnInit {
     try {
       const clienteRef = doc(this.firestore, `clientes/${user.uid}`);
       await updateDoc(clienteRef, this.accountForm.value);
-      this.snackBar.open('Información actualizada correctamente.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Información actualizada correctamente.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-success' });
     } catch {
-      this.snackBar.open('Error al actualizar la información.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Error al actualizar la información.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
     }
   }
 
@@ -164,7 +164,7 @@ export class AccountComponent implements OnInit {
   async deleteAccount() {
   const user = this.auth.currentUser;
   if (!user) {
-    this.snackBar.open('No se encontró el usuario autenticado.', 'Cerrar', { duration: 5000 });
+    this.snackBar.open('No se encontró el usuario autenticado.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
     return;
   }
 
@@ -180,17 +180,18 @@ export class AccountComponent implements OnInit {
 
     await user.delete();
 
-    this.snackBar.open('Cuenta eliminada correctamente.', 'Cerrar', { duration: 5000 });
+    this.snackBar.open('Cuenta eliminada correctamente.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-success' });
     this.router.navigate(['/']);
   } catch (error: any) {
     if (error.code === 'auth/requires-recent-login') {
       this.snackBar.open('Debes volver a iniciar sesión para eliminar tu cuenta.', 'Cerrar', {
         duration: 5000,
+        panelClass: 'snackbar-error',
       });
       this.router.navigate(['/login']);
     } else {
       console.error('Error al eliminar la cuenta:', error);
-      this.snackBar.open('Ocurrió un error al eliminar tu cuenta.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Ocurrió un error al eliminar tu cuenta.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
     }
   }
 }

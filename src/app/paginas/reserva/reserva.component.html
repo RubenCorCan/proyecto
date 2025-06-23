@@ -57,6 +57,9 @@
   </div>
   <div class="custom-calendar extravagante">
     <div class="calendar-header">
+      <div aria-live="polite" class="sr-only" id="calendar-month-announcer">
+  {{ meses[mesActual] }} {{ anioActual }}
+</div>
       <button
         type="button"
         (click)="prevMonth()"
@@ -73,22 +76,30 @@
         <span class="material-icons">chevron_right</span>
       </button>
     </div>
-    <div class="calendar-days">
-      <span *ngFor="let d of diasSemana" class="calendar-day-name">{{ d }}</span>
-      <ng-container *ngFor="let d of getCalendarDays()">
-        <button
-          type="button"
-          class="calendar-day"
-          [class.today]="isToday(d)"
-          [class.selected]="isSelected(d)"
-          [disabled]="!d || isPastDay(d)"
-          (click)="selectDate(d)"
-        >
-          <span *ngIf="isToday(d)" class="calendar-today-dot"></span>
-          {{ d || '' }}
-        </button>
-      </ng-container>
-    </div>
+    <div class="calendar-days" role="rowgroup">
+  <div aria-live="polite" class="sr-only">{{ getAriaLabel(focusedDay) }}</div>
+  <span *ngFor="let d of diasSemana" class="calendar-day-name">{{ d }}</span>
+  <ng-container *ngFor="let d of getCalendarDays(); let i = index">
+    <button
+      #calendarDayBtn
+      type="button"
+      class="calendar-day"
+      [class.today]="isToday(d)"
+      [class.selected]="isSelected(d)"
+      [class.focused]="focusedDay === d"
+      [disabled]="!d || isPastDay(d)"
+      (click)="selectDate(d)"
+      [attr.aria-label]="getAriaLabel(d)"
+      [attr.aria-selected]="isSelected(d) ? 'true' : 'false'"
+      role="gridcell"
+      [attr.tabindex]="focusedDay === d ? 0 : -1"
+      (keydown)="onCalendarKeydown($event, d)"
+    >
+      <span *ngIf="isToday(d)" class="calendar-today-dot"></span>
+      {{ d || '' }}
+    </button>
+  </ng-container>
+</div>
   </div>
   <input type="hidden" formControlName="fecha" [value]="fechaSeleccionada | date:'yyyy-MM-dd'" />
 </label>

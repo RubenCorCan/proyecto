@@ -22,20 +22,20 @@
       </label>
 
       <label class="form-label-stack" *ngIf="!usuario">
-        <div class="label-row">
-          <span>Teléfono*</span>
-          <span class="error-inline" *ngIf="pedidoForm.get('telefono')?.invalid && pedidoForm.get('telefono')?.touched">
-            <ng-container *ngIf="pedidoForm.get('telefono')?.hasError('required')">
-              <span class="error-icon material-icons">error</span> El teléfono es obligatorio.
-            </ng-container>
-            <ng-container *ngIf="pedidoForm.get('telefono')?.hasError('pattern')">
-              <span class="error-icon material-icons">error</span> Introduce un teléfono válido (9 dígitos).
-            </ng-container>
-          </span>
-        </div>
-        <input type="tel" formControlName="telefono" maxlength="9"
-          (input)="onTelefonoInput($event)" required />
-      </label>
+  <div class="label-row">
+    <span>Teléfono*</span>
+    <span class="error-inline" *ngIf="pedidoForm.get('telefono')?.invalid && pedidoForm.get('telefono')?.touched">
+      <ng-container *ngIf="pedidoForm.get('telefono')?.hasError('required')">
+        <span class="error-icon material-icons">error</span> El teléfono es obligatorio.
+      </ng-container>
+      <ng-container *ngIf="pedidoForm.get('telefono')?.hasError('pattern')">
+        <span class="error-icon material-icons">error</span> Introduce un teléfono válido (9 dígitos).
+      </ng-container>
+    </span>
+  </div>
+  <input type="tel" formControlName="telefono" maxlength="9"
+    (input)="onTelefonoInput($event)" required />
+</label>
 
       <label class="form-label-stack" *ngIf="!usuario">
         <div class="label-row">
@@ -64,6 +64,9 @@
       <!-- Calendario personalizado para fecha de recogida -->
       <div class="custom-calendar extravagante">
         <div class="calendar-header">
+          <div aria-live="polite" class="sr-only" id="calendar-month-announcer">
+  {{ meses[mesActualPedido] }} {{ anioActualPedido }}
+</div>
           <button
             type="button"
             (click)="prevMonthPedido()"
@@ -80,20 +83,28 @@
             <span class="material-icons">chevron_right</span>
           </button>
         </div>
-        <div class="calendar-days">
+        <div class="calendar-days" role="rowgroup">
+          <div aria-live="polite" class="sr-only">{{ getAriaLabel(focusedDay) }}</div>
           <span *ngFor="let d of diasSemana" class="calendar-day-name">{{ d }}</span>
           <ng-container *ngFor="let d of getCalendarDaysPedido()">
             <button
-              type="button"
-              class="calendar-day"
-              [class.today]="isTodayPedido(d)"
-              [class.selected]="isSelectedPedido(d)"
-              [disabled]="!d || isPastDayPedido(d)"
-              (click)="selectDatePedido(d)"
-            >
-              <span *ngIf="isTodayPedido(d)" class="calendar-today-dot"></span>
-              {{ d || '' }}
-            </button>
+  #calendarDayBtn
+  type="button"
+  class="calendar-day"
+  [class.today]="isTodayPedido(d)"
+  [class.selected]="isSelectedPedido(d)"
+  [class.focused]="focusedDay === d"
+  [disabled]="!d || isPastDayPedido(d)"
+  (click)="selectDatePedido(d)"
+  [attr.aria-label]="getAriaLabel(d)"
+  [attr.aria-selected]="isSelectedPedido(d) ? 'true' : 'false'"
+  role="gridcell"
+  [attr.tabindex]="focusedDay === d ? 0 : -1"
+  (keydown)="onCalendarKeydown($event, d)"
+>
+  <span *ngIf="isTodayPedido(d)" class="calendar-today-dot"></span>
+  {{ d || '' }}
+</button>
           </ng-container>
         </div>
       </div>

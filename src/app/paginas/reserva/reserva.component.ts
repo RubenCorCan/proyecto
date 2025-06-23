@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FirestoreService } from '../../servicios/firestore.service';
 import { ViewEncapsulation } from '@angular/core';
 import { AuthService } from '../../servicios/auth.service';
+import { ViewChildren, QueryList, ElementRef, AfterViewInit } from '@angular/core';
 
 @Component({
   encapsulation: ViewEncapsulation.None, 
@@ -29,7 +30,7 @@ import { AuthService } from '../../servicios/auth.service';
   templateUrl: './reserva.component.html',
   styleUrl: './reserva.component.css'
 })
-export class ReservaComponent implements OnInit {
+export class ReservaComponent implements OnInit, AfterViewInit {
   reservaForm: FormGroup;
   loading = false;
 
@@ -54,6 +55,8 @@ export class ReservaComponent implements OnInit {
   anioActual = this.hoy.getFullYear();
   mesActual = this.hoy.getMonth();
   fechaSeleccionada: Date | null = null;
+  focusedDay: number | null = null;
+  @ViewChildren('calendarDayBtn') calendarDayBtns!: QueryList<ElementRef<HTMLButtonElement>>;
 
 
 
@@ -76,6 +79,7 @@ export class ReservaComponent implements OnInit {
     } else {
       this.mesActual--;
     }
+    this.setInitialFocus();
   }
 
   nextMonth() {
@@ -85,6 +89,7 @@ export class ReservaComponent implements OnInit {
     } else {
       this.mesActual++;
     }
+    this.setInitialFocus();
   }
 
   selectDate(d: number | null) {
@@ -178,6 +183,10 @@ export class ReservaComponent implements OnInit {
 
   async ngOnInit() {
     this.aforo = await this.firestoreService.getAforo();
+  }
+
+  ngAfterViewInit() {
+    this.setInitialFocus();
   }
 
   async reservar() {
@@ -295,4 +304,78 @@ onTelefonoInput(event: any) {
   if (value.length > 9) value = value.slice(0, 9);
   this.reservaForm.get('telefono')?.setValue(value, { emitEvent: false });
 }
+
+getAriaLabel(d: number | null): string {
+  if (!d) return '';
+  const fecha = new Date(this.anioActual, this.mesActual, d);
+  let label = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  if (this.isSelected(d)) label += ', seleccionado';
+  if (this.isToday(d)) label += ', hoy';
+  return label;
+}
+
+setInitialFocus() {
+    setTimeout(() => {
+      const dias = this.getCalendarDays();
+      const firstAvailable = dias.find(d => !!d && !this.isPastDay(d));
+      this.focusedDay = firstAvailable || null;
+      this.focusCalendarDay();
+    });
+  }
+
+  focusCalendarDay() {
+    setTimeout(() => {
+      if (!this.calendarDayBtns) return;
+      const btns = this.calendarDayBtns.toArray();
+      const idx = btns.findIndex((btn, i) => {
+        const d = this.getCalendarDays()[i];
+        return d === this.focusedDay;
+      });
+      if (idx >= 0 && btns[idx]) {
+        btns[idx].nativeElement.focus();
+      }
+    });
+  }
+
+onCalendarKeydown(event: KeyboardEvent, d: number | null) {
+    if (!d) return;
+    const dias = this.getCalendarDays().map((day, i) => ({ day, i }))
+      .filter(obj => !!obj.day && !this.isPastDay(obj.day)) as { day: number, i: number }[];
+    const idx = dias.findIndex(obj => obj.day === d);
+
+    if (event.key === 'ArrowRight') {
+      if (idx < dias.length - 1) {
+        this.focusedDay = dias[idx + 1].day;
+        this.focusCalendarDay();
+      } else {
+        this.nextMonth();
+        this.setInitialFocus();
+      }
+      event.preventDefault();
+    }
+    else if (event.key === 'ArrowLeft') {
+      if (idx > 0) {
+        this.focusedDay = dias[idx - 1].day;
+        this.focusCalendarDay();
+      } else {
+        this.prevMonth();
+        this.setInitialFocus();
+      }
+      event.preventDefault();
+    }
+    else if (event.key === 'ArrowDown' && idx + 7 < dias.length) {
+      this.focusedDay = dias[idx + 7].day;
+      this.focusCalendarDay();
+      event.preventDefault();
+    }
+    else if (event.key === 'ArrowUp' && idx - 7 >= 0) {
+      this.focusedDay = dias[idx - 7].day;
+      this.focusCalendarDay();
+      event.preventDefault();
+    }
+    else if (event.key === 'Enter' || event.key === ' ') {
+      this.selectDate(d);
+      event.preventDefault();
+    }
+  }
 }

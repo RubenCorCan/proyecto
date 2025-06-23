@@ -68,39 +68,104 @@ html, body {
     transition: transform 0.3s ease, filter 0.3s ease;
   }
 
-.mat-mdc-snack-bar-container {
-  background-color: #323232;
-  color: white;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+.snackbar-success {
+  background: #388e3c !important;
+}
+.snackbar-success .mat-mdc-snack-bar-label {
+  color: var(--white) !important;
+}
+.snackbar-success .mat-mdc-snack-bar-action {
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+.snackbar-success .mat-mdc-snack-bar-action:hover,
+.snackbar-success .mat-mdc-snack-bar-action:focus {
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
 }
 
-.mat-mdc-snack-bar-label {
-  font-size: 0.95rem;
-  color: white;
+/* Snackbar error */
+.snackbar-error {
+  background: var(--primary-red) !important;
+}
+.snackbar-error .mat-mdc-snack-bar-label {
+  color: #fff !important;
+}
+.snackbar-error .mat-mdc-snack-bar-action {
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+.snackbar-error .mat-mdc-snack-bar-action:hover,
+.snackbar-error .mat-mdc-snack-bar-action:focus {
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
 }
 
-.mat-mdc-snack-bar-action {
-  all: unset;
-  cursor: pointer;
-  padding: 6px 8px;
-  margin-left: 16px;
-  color: red;
-  font-weight: 500;
-  font-size: 0.9rem;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
+/* Snackbar cancel */
+.snackbar-cancel {
+  background: var(--italy-red) !important;
+}
+.snackbar-cancel .mat-mdc-snack-bar-label {
+  color: #fff !important;
+}
+.snackbar-cancel .mat-mdc-snack-bar-action {
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+.snackbar-cancel .mat-mdc-snack-bar-action:hover,
+.snackbar-cancel .mat-mdc-snack-bar-action:focus {
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+/* Snackbar warning */
+.snackbar-warning {
+  background: #ffe066 !important;
+}
+.snackbar-warning .mat-mdc-snack-bar-label {
+  color: #b81426 !important;
+}
+.snackbar-warning .mat-mdc-snack-bar-action {
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+}
+.snackbar-warning .mat-mdc-snack-bar-action:hover,
+.snackbar-warning .mat-mdc-snack-bar-action:focus {
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
 }
 
-.mat-mdc-snack-bar-action:hover,
-.mat-mdc-snack-bar-action:focus {
-  background-color: rgba(255, 202, 40, 0.2);
-  color: red;
-  outline: none;
+/* Elimina cualquier overlay/fondo del botón "Cerrar" del snackbar */
+.mat-mdc-snack-bar-action,
+.mat-mdc-snack-bar-action:focus,
+.mat-mdc-snack-bar-action:hover {
+  background: transparent !important;
+  color: var(--white) !important;
+  background: transparent !important;
+  box-shadow: var(--dark-gray) 0px 0px 3px !important;
+  outline: none !important;
 }
 
-.mat-mdc-snack-bar-container:hover .mdc-button__label {
-  color: red;
+.mat-mdc-snack-bar-action::after,
+.mat-mdc-snack-bar-action::before {
+  background: none !important;
+  background-color: transparent !important;
+  opacity: 0 !important;
+  box-shadow: none !important;
+  content: none !important;
+}
+
+.mat-mdc-snack-bar-action .mdc-button__ripple {
+  display: none !important;
+  background: none !important;
+  opacity: 0 !important;
 }
 
   /* Animaciones globales */

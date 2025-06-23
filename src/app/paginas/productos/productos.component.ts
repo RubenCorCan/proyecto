@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { getStorage, ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-productos',
@@ -23,8 +24,9 @@ export class ProductosComponent {
   editandoId: string | null = null;
   editandoProducto: any = {};
   imagenSeleccionada: File | null = null;
-
+mostrarVolverArriba = true;
   imagenesPublicasUrls: string[] = [];
+  imagenLocalPreview: string | null = null;
 
   // Variables para modo imagen y selección de imagen pública en creación y edición
   modoImagenNuevo: 'local' | 'publica' = 'local';
@@ -166,15 +168,17 @@ export class ProductosComponent {
     this.modoImagen = 'local';
     this.imagenPublicaSeleccionada = '';
     this.imagenSeleccionada = null;
+    this.imagenLocalPreview = null;
   }
 
   cancelarEdicion() {
-    this.editandoId = null;
-    this.editandoProducto = {};
-    this.imagenSeleccionada = null;
-    this.modoImagen = 'local';
-    this.imagenPublicaSeleccionada = '';
-  }
+  this.editandoId = null;
+  this.editandoProducto = {};
+  this.imagenSeleccionada = null;
+  this.imagenLocalPreview = null;
+  this.modoImagen = 'local';
+  this.imagenPublicaSeleccionada = '';
+}
 
   async guardarEdicion(id: string) {
     const oldCategoriaId = this.editandoProducto.categoriaIdOriginal;
@@ -205,23 +209,55 @@ export class ProductosComponent {
     }
 
     try {
-      if (oldCategoriaId !== newCategoriaId) {
-        await setDoc(newDocRef, data);
-        await deleteDoc(oldDocRef);
-      } else {
-        await updateDoc(newDocRef, data);
-      }
-      this.snackBar.open('Producto editado correctamente', 'Cerrar', { duration: 2000, panelClass: 'snackbar-success' });
-      this.cancelarEdicion();
-    } catch (error) {
-      this.snackBar.open('Error al guardar la edición', 'Cerrar', { duration: 2000, panelClass: 'snackbar-error' });
+    if (oldCategoriaId !== newCategoriaId) {
+      await setDoc(newDocRef, data);
+      await deleteDoc(oldDocRef);
+    } else {
+      await updateDoc(newDocRef, data);
     }
+    this.snackBar.open('Producto editado correctamente', 'Cerrar', { duration: 2000, panelClass: 'snackbar-success' });
+    this.cancelarEdicion();
+    this.imagenLocalPreview = null; // Limpia la previsualización
+    this.imagenSeleccionada = null;
+  } catch (error) {
+    this.snackBar.open('Error al guardar la edición', 'Cerrar', { duration: 2000, panelClass: 'snackbar-error' });
+  }
   }
 
-  onArchivoSeleccionado(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.imagenSeleccionada = input.files[0];
-    }
+  onArchivoSeleccionado(event: Event, esEdicion = false) {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    this.imagenSeleccionada = input.files[0];
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.imagenLocalPreview = e.target.result;
+    };
+    reader.readAsDataURL(this.imagenSeleccionada);
   }
+}
+
+  scrollToCategoria(id: string) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+scrollToTop() {
+  const menu = document.getElementById('categorias-menu');
+  if (menu) {
+    menu.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+abrirInputImagenLocal(id: string) {
+  const input = document.getElementById(id) as HTMLInputElement;
+  if (input) input.click();
+}
+
+borrarPreviewLocal() {
+  this.imagenLocalPreview = null;
+  this.imagenSeleccionada = null;
+}
+
 }

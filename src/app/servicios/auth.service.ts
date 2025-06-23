@@ -31,7 +31,7 @@ export class AuthService {
         this.router.navigate(['/account']);
       }
     } catch (error) {
-      this.snackBar.open('Error al iniciar sesión con Google.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Error al iniciar sesión con Google.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
     }
   }
 
@@ -45,10 +45,10 @@ export class AuthService {
         this.router.navigate(['/account']);
       } else {
         await this.auth.signOut();
-        this.snackBar.open('Debes verificar tu correo electrónico antes de iniciar sesión.', 'Cerrar', { duration: 5000 });
+        this.snackBar.open('Debes verificar tu correo electrónico antes de iniciar sesión.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-warning' });
       }
     } catch (error) {
-      this.snackBar.open('Error al iniciar sesión con correo y contraseña.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Error al iniciar sesión con correo y contraseña.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
     }
   }
 
@@ -66,12 +66,12 @@ export class AuthService {
       if (user) {
         await sendEmailVerification(user);
         await this.createUserInFirestore(user, name, telefono, direccion);
-        this.snackBar.open('Se ha enviado un correo de verificación. Verifica tu correo antes de iniciar sesión.', 'Cerrar', { duration: 6000 });
+        this.snackBar.open('Se ha enviado un correo de verificación. Verifica tu correo antes de iniciar sesión.', 'Cerrar', { duration: 6000, panelClass: 'snackbar-success' });
         await this.auth.signOut();
         this.router.navigate(['/login']);
       }
     } catch (error) {
-      this.snackBar.open('Error al registrar usuario.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Error al registrar usuario.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
     }
   }
 
@@ -79,7 +79,7 @@ export class AuthService {
     const user = this.auth.currentUser;
     if (user && !user.emailVerified) {
       await sendEmailVerification(user);
-      this.snackBar.open('Correo de verificación reenviado.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Correo de verificación reenviado.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-success' });
     }
   }
 
@@ -89,18 +89,18 @@ export class AuthService {
       const isGoogleProvider = user.providerData.some(provider => provider.providerId === 'google.com');
       
       if (isGoogleProvider) {
-        this.snackBar.open('No puedes cambiar la contraseña si estás autenticado con Google.', 'Cerrar', { duration: 5000 });
+        this.snackBar.open('No puedes cambiar la contraseña si estás autenticado con Google.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
         return;
       }
 
       try {
         await updatePassword(user, newPassword);
-        this.snackBar.open('Contraseña actualizada correctamente.', 'Cerrar', { duration: 5000 });
+        this.snackBar.open('Contraseña actualizada correctamente.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-success' });
       } catch (error) {
-        this.snackBar.open('Error al actualizar la contraseña.', 'Cerrar', { duration: 5000 });
+        this.snackBar.open('Error al actualizar la contraseña.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
       }
     } else {
-      this.snackBar.open('No hay un usuario autenticado.', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('No hay un usuario autenticado.', 'Cerrar', { duration: 5000, panelClass: 'snackbar-error' });
     }
   }
 

@@ -198,6 +198,7 @@ h2:not(:hover) .h2-mesa-icon,
   display: flex;
   flex-direction: column;
   gap: 26px;
+  box-sizing: border-box;
 }
 
 .reserva-form label {
@@ -372,13 +373,14 @@ button[disabled]:hover .btn-reserva-anim {
   margin: 0.5em 0 1.2em 0;
   background: linear-gradient(135deg, #fffbe9 60%, #ffe066 100%);
   border-radius: 22px 22px 32px 32px;
-  padding: 1.2em 2.2em 1.5em 2.2em; /* Más padding horizontal */
-  max-width: 520px; /* Más ancho */
+  padding: 1.2em 2.2em 1.5em 2.2em;
+  max-width: 520px;
   min-width: 420px;
   font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
   border: 1.5px solid var(--primary-red, #b81426);
   position: relative;
   animation: popIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+   font-size: 1.1rem !important;
 }
 
 .calendar-header {
@@ -473,6 +475,28 @@ button[disabled]:hover .btn-reserva-anim {
   overflow: visible;
 }
 
+.calendar-day:focus {
+  outline: 3px solid var(--primary-red);
+  outline-offset: 2px;
+  z-index: 3;
+}
+
+.calendar-day.focused:not(.selected):not(:disabled) {
+  outline: 2.5px solid var(--primary-red, #b81426);
+  outline-offset: 2px;
+  background: var(--gold, #ffe066);
+  color: var(--primary-red, #b81426);
+  z-index: 3;
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
 .calendar-day.today {
   z-index: 2;
 }
@@ -541,7 +565,6 @@ button[disabled]:hover .btn-reserva-anim {
     min-height: unset !important;
     max-height: unset !important;
    padding: 30px 30px 30px 30px;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: stretch;
